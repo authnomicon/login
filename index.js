@@ -1,4 +1,5 @@
 exports = module.exports = {
+  'oauth/statestore': require('./xom/oauth/statestore'),
   'oauth2/statestore': require('./xom/oauth2/statestore')
 };
 
