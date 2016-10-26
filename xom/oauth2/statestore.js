@@ -5,8 +5,8 @@ exports = module.exports = function(s) {
   return store;
 };
 
-exports['@implements'] = 'http://schema.authnomicon.org/js/aaa/login/oauth2/StateStore';
+exports['@implements'] = 'http://schemas.authnomicon.org/js/aaa/login/oauth2/StateStore';
 exports['@singleton'] = true;
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/flows/StateStore'
+  'http://i.bixbyjs.org/http/ua/flows/StateStore'
 ];

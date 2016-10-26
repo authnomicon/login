@@ -8,6 +8,8 @@ exports = module.exports = function(UIS) {
   
   // WebFinger:
   //   acct:paulej@packetizer.com
+  // Hostmeta:
+  //   acct:paulej@packetizer.com
   function resolve(req, res, next) {
     UIS.resolveServices(req.body.id, function(err, r) {
       console.log('GOT SERVICES:');
