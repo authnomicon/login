@@ -31,6 +31,6 @@
     "test": "node_modules/.bin/mocha test/*.test.js"
   },
   "dependencies": {
-    "clone": "^2.0.0"
+    "http-errors": "^1.5.0"
   }
 }
