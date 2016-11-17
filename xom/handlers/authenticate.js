@@ -1,5 +1,6 @@
 exports = module.exports = function(authenticator, ceremony, stateStore) {
-  var errors = require('http-errors');
+  var errors = require('http-errors')
+    , RepromptError = require('../../lib/errors/reprompterror');
   
   return [
     ceremony.loadState('login'),
@@ -7,48 +8,46 @@ exports = module.exports = function(authenticator, ceremony, stateStore) {
     function unauthorizedErrorHandler(err, req, res, next) {
       if (err.status !== 401) { return next(err); }
       
-      console.log('HANDLE THE AUTH ERROR...');
-      console.log(req.state);
-      console.log(req.session.state);
-      console.log('---');
-      
       var state = req.state || { name: 'login' };
       state.failureCount = state.failureCount ? state.failureCount + 1 : 1;
       
-      console.log('CHECK IT');
-      console.log(state);
-      
-      // This allows the
-    // ceremony to re-prompt the user for credentials a configurable number of
-    // times, redirecting back to the client if and when the limit is exceeded.
+      // If the maximum number of login attempts has been exceeded, fail.  This
+      // allows any initiating ceremony, such as authorization, to resume.
+      //
+      // Note that, if there was no initiating ceremony, then the user is
+      // defaulted into the login ceremony, for which there is no limit on the
+      // number of attempts.  The user will continue to see login prompts until
+      // he or she succesfully authenticates.  Additional protections, against
+      // brute force attacks, are expected to be implemented or injected by the
+      // application.
       if (state.maxAttempts && state.failureCount >= state.maxAttempts) {
-        return next(new errors.Unauthorized('Too many login attempts'));
+        return next(new errors.Unauthorized('Too many failed login attempts'));
       }
       
+      return next(new RepromptError(state));
+    },
+    function repromptErrorHandler(err, req, res, next) {
+      if (!(err instanceof RepromptError)) { return next(err); }
       
       function proceed(ierr, h) {
         if (ierr) { return next(ierr); }
         
-        //req.state = state;
         res.locals.state = h;
         res.render('login');
+        return;
       }
       
       if (req.state) {
-        console.log('UPDATE STATE');
-        
-        stateStore.update(req, req.state.handle, state, proceed);
+        stateStore.update(req, req.state.handle, err.state, proceed);
       } else {
-        console.log('SAVE NEW STATE');
-        
         if (req.body.state) {
-          state.prev = req.body.state;
+          err.state.prev = req.body.state;
         }
-        stateStore.save(req, state, proceed);
+        stateStore.save(req, err.state, proceed);
       }
     },
-    ceremony.resume('login'),
-    ceremony.resumeError('login'),
+    ceremony.complete('login'),
+    ceremony.completeWithError('login'),
   ];
   
 };
