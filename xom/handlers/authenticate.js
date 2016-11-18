@@ -1,4 +1,4 @@
-exports = module.exports = function(authenticator, ceremony, stateStore) {
+exports = module.exports = function(ceremony, stateStore, authenticator) {
   var errors = require('http-errors')
     , RepromptError = require('../../lib/errors/reprompterror');
   
@@ -53,7 +53,7 @@ exports = module.exports = function(authenticator, ceremony, stateStore) {
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/Authenticator',
   'http://i.bixbyjs.org/http/ua/flows/Dispatcher',
-  'http://i.bixbyjs.org/http/ua/flows/StateStore'
+  'http://i.bixbyjs.org/http/ua/flows/StateStore',
+  'http://i.bixbyjs.org/http/Authenticator'
 ];
