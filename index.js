@@ -1,4 +1,5 @@
 exports = module.exports = {
+  'oauth/handle': require('./xom/oauth/handle'),
   'oauth/statestore': require('./xom/oauth/statestore'),
   'oauth2/statestore': require('./xom/oauth2/statestore'),
   'oidc/statestore': require('./xom/oidc/statestore')
