@@ -15,6 +15,7 @@ exports = module.exports = function(store) {
       return res.redirect('/login' + (q ? '?' + q : ''));
     }
     
+    // TODO: need var here
     state = { name: 'login' };
     state.maxAttempts = options.maxAttempts || 3;
     if (options.state) { state.prev = options.state; }
