@@ -1,4 +1,4 @@
-exports = module.exports = function(s) {
+exports = module.exports = function() {
   var MAGIC = 'oauth';
   
   return function(host, token) {
