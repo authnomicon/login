@@ -1,5 +1,5 @@
 {
-  "name": "nodex-aaa-login",
+  "name": "@authnomicon/login",
   "version": "0.0.0",
   "description": "",
   "author": {
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/authnomicon/nodex-aaa-login.git"
+    "url": "git://github.com/authnomicon/nodex-login.git"
   },
   "bugs": {
-    "url": "http://github.com/authnomicon/nodex-aaa-login/issues"
+    "url": "http://github.com/authnomicon/nodex-login/issues"
   },
   "license": "MIT",
   "licenses": [
@@ -22,6 +22,11 @@
     }
   ],
   "main": "./lib",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "csurf": "^1.9.0",
+    "http-errors": "^1.5.0"
+  },
   "devDependencies": {
     "make-node": "^0.3.0",
     "mocha": "^2.0.0",
@@ -30,10 +35,5 @@
   },
   "scripts": {
     "test": "node_modules/.bin/mocha test/*.test.js"
-  },
-  "dependencies": {
-    "body-parser": "^1.15.2",
-    "csurf": "^1.9.0",
-    "http-errors": "^1.5.0"
   }
 }
