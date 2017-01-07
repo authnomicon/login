@@ -1,8 +1,8 @@
-function StateStore(store) {
+function CeremonyStateStore(store) {
   this._store = store;
 }
 
-StateStore.prototype.store = function(req, meta, cb) {
+CeremonyStateStore.prototype.store = function(req, meta, cb) {
   var state = {
     name: 'login/oidc',
     issuer: meta.issuer,
@@ -20,7 +20,7 @@ StateStore.prototype.store = function(req, meta, cb) {
   });
 }
 
-StateStore.prototype.verify = function(req, h, meta, cb) {
+CeremonyStateStore.prototype.verify = function(req, h, meta, cb) {
   function loaded(err, state) {
     if (err) { return cb(err); }
     if (!state) { return cb(null, false); }
@@ -51,9 +51,7 @@ StateStore.prototype.verify = function(req, h, meta, cb) {
 
 
 exports = module.exports = function(s) {
-  var StateStore = require('../../lib/oidc/state/state');
-  
-  var store = new StateStore(s);
+  var store = new CeremonyStateStore(s);
   return store;
 };
 

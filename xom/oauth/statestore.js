@@ -70,9 +70,7 @@ CeremonyStateStore.prototype.destroy = function(req, token, meta, cb) {
 
 
 exports = module.exports = function(toHandle, s) {
-  var StateStore = require('../../lib/oauth/state/state');
-  
-  var store = new StateStore(s, toHandle);
+  var store = new CeremonyStateStore(s, toHandle);
   return store;
 };
 
