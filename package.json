@@ -21,7 +21,7 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
-  "main": "./lib",
+  "main": "./app",
   "dependencies": {
     "body-parser": "^1.15.2",
     "csurf": "^1.9.0",
