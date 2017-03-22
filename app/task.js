@@ -6,7 +6,7 @@ exports = module.exports = function(begin, resume) {
   };
 };
 
-exports['@implements'] = 'http://i.bixbyjs.org/http/flows/Prompt';
+exports['@implements'] = 'http://i.bixbyjs.org/http/flows/Task';
 exports['@name'] = 'login';
 exports['@require'] = [
   './task/begin',

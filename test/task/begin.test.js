@@ -2,10 +2,10 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../lib/ceremony/begin');
+var factory = require('../../app/task/begin');
 
 
-describe('ceremony/begin', function() {
+describe('task/begin', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
