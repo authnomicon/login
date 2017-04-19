@@ -18,7 +18,7 @@ exports = module.exports = function(store) {
     
     state = { name: 'login' };
     state.maxAttempts = options.maxAttempts || 3;
-    if (options.state) { state.prev = options.state; }
+    if (options.state) { state.parent = options.state; }
     
     store.save(req, state, function(err, h) {
       q = qs.stringify({ state: h });
