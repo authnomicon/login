@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/authnomicon/nodex-login.git"
+    "url": "git://github.com/authnomicon/login.git"
   },
   "bugs": {
-    "url": "http://github.com/authnomicon/nodex-login/issues"
+    "url": "http://github.com/authnomicon/login/issues"
   },
   "license": "MIT",
   "licenses": [
