@@ -6,9 +6,9 @@ exports = module.exports = function(begin, resume) {
   };
 };
 
-exports['@implements'] = 'http://i.bixbyjs.org/http/flows/Task';
+exports['@implements'] = 'http://i.bixbyjs.org/http/workflow/Activity';
 exports['@name'] = 'login';
 exports['@require'] = [
-  './task/begin',
-  './task/resume'
+  './login/begin',
+  './login/resume'
 ];

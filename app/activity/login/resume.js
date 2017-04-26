@@ -1,6 +1,6 @@
 exports = module.exports = function(ceremony, stateStore) {
   var errors = require('http-errors')
-    , RepromptError = require('../../lib/errors/reprompterror');
+    , RepromptError = require('../../../lib/errors/reprompterror');
 
 
   return [

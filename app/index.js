@@ -1,5 +1,5 @@
 exports = module.exports = {
-  'task': require('./task')
+  'activity/login': require('./activity/login')
 };
 
 exports.load = function(id) {
