@@ -7,22 +7,20 @@ exports = module.exports = function(store) {
 
   function redirect(req, res, next) {
     var options = req.locals || {}
-      , optlen = Object.keys(options).length
       , state, q;
     
-    if (optlen == 0 || (optlen == 1 && options.state)) {
-      q = qs.stringify(options);
-      return res.redirect('/login' + (q ? '?' + q : ''));
+    if (Object.keys(options).length == 0) {
+      q = req.state ? '?' + qs.stringify({ state: req.state.handle }) : '';
+      return res.redirect('/login' + q);
     }
     
     
     state = { name: 'login' };
     state.maxAttempts = options.maxAttempts || 3;
-    if (options.state) { state.parent = options.state; }
+    if (req.state) { state.parent = req.state.handle; }
     
     store.save(req, state, function(err, h) {
-      q = qs.stringify({ state: h });
-      return res.redirect('/login' + (q ? '?' + q : ''));
+      return res.redirect('/login' + '?' + qs.stringify({ state: h }));
     });
   }
 
