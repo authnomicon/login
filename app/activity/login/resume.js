@@ -53,5 +53,5 @@ exports = module.exports = function(ceremony, stateStore) {
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/state/Dispatcher',
-  'http://i.bixbyjs.org/http/state/Store'
+  'http://i.bixbyjs.org/http/workflow/StateStore'
 ];
