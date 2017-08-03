@@ -46,7 +46,23 @@ exports = module.exports = function(ceremony, stateStore) {
       }
     },
     ceremony.complete('login'),
-    ceremony.completeError('login')
+    ceremony.completeError('login'),
+    function(req, res, next) {
+      console.log('DEFAULT BEHAVIOR, TODO!');
+      console.log(req.state)
+      console.log(req.session.state);
+      
+      res.redirect('/home');
+    },
+    function(err, req, res, next) {
+      console.log('DEFAULT ERROR BEHAVIOR, TODO!');
+      console.log(err);
+      console.log(req.state)
+      console.log(req.session.state);
+      
+      //res.locals.state = res.locals.state || req.query.state;
+      //res.render('login');
+    }
   ];
   
 };
