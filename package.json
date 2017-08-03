@@ -25,7 +25,8 @@
   "assembly": {
     "namespace": "login",
     "components": [
-      "activity/login"
+      "activity/login",
+      "http/handlers/password/authenticate"
     ]
   },
   "dependencies": {

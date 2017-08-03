@@ -6,7 +6,7 @@ exports = module.exports = function(begin, resume) {
   };
 };
 
-exports['@implements'] = 'http://i.bixbyjs.org/http/workflow/Activity';
+exports['@implements'] = 'http://i.bixbyjs.org/http/workflow/Activityx';
 exports['@name'] = 'login';
 exports['@require'] = [
   './login/begin',
