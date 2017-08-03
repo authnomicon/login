@@ -26,10 +26,11 @@
     "namespace": "login",
     "components": [
       "activity/login",
-      "http/handlers/password/authenticate"
+      "http/password"
     ]
   },
   "dependencies": {
+    "express": "^4.15.3",
     "http-errors": "^1.5.0"
   },
   "devDependencies": {
