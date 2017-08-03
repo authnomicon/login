@@ -6,8 +6,17 @@ exports = module.exports = function(store) {
   //       as initial state.
 
   function redirect(req, res, next) {
+    console.log('#### REDIRECT TO LOGIN');
+    console.log(req.locals);
+    //return;
+    
+    
     var options = req.locals || {}
       , state, q;
+    
+    if (options.methods && options.methods.indexOf('otp') != -1) {
+      return res.redirect('/login/otp');
+    }
     
     if (Object.keys(options).length == 0) {
       q = req.state ? '?' + qs.stringify({ state: req.state.handle }) : '';

@@ -26,8 +26,9 @@
     "namespace": "login",
     "components": [
       "activity/login",
-      "http/auth/password",
-      "http/password"
+      "http/otp",
+      "http/password",
+      "http/password/scheme"
     ]
   },
   "dependencies": {
