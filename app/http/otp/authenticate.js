@@ -1,5 +1,16 @@
 exports = module.exports = function(parse, csrfProtection, loadState, authenticate, proceed) {
   
+  /*
+  return [
+    require('body-parser').urlencoded({ extended: false }),
+    ceremony.loadState('mfa'),
+    authenticator.authenticate('session'),
+    authenticator.authenticate('mfa-otp'),
+    ceremony.complete('mfa'),
+    ceremony.completeError('mfa')
+  ];
+  */
+  
   return [
     parse('application/x-www-form-urlencoded'),
     function(req, res, next) {
