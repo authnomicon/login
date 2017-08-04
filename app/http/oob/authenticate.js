@@ -23,7 +23,7 @@ exports = module.exports = function(parse, csrfProtection, loadState, authentica
       console.log(req.body)
       next();
     },
-    csrfProtection(),
+    csrfProtection(), // TODO: ensure this works on GET requests
     //loadState('login'),
     authenticate('www-form/oob'),
     function(req, res, next) {
