@@ -15,7 +15,8 @@ exports = module.exports = function(store) {
       , state, q;
     
     if (options.methods && options.methods.indexOf('otp') != -1) {
-      return res.redirect('/login/otp');
+      //return res.redirect('/login/otp');
+      return res.redirect('/login/oob');
     }
     
     if (Object.keys(options).length == 0) {

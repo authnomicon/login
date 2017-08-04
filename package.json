@@ -26,6 +26,7 @@
     "namespace": "login",
     "components": [
       "activity/login",
+      "http/oob",
       "http/otp",
       "http/otp/scheme",
       "http/password",
