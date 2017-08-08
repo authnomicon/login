@@ -1,4 +1,4 @@
-exports = module.exports = function(Authenticators, initialize, csrfProtection) {
+exports = module.exports = function(OOB, Authenticators, initialize, csrfProtection) {
   var path = require('path');
   
   function loadAuthenticators(req, res, next) {
@@ -25,15 +25,25 @@ exports = module.exports = function(Authenticators, initialize, csrfProtection) 
     next();
   }
   
+  function challengeAuthenticator(req, res, next) {
+    var authnr = req.locals.authnr;
+    
+    OOB.challenge(authnr, function(err, params) {
+      if (err) { return next(err); }
+      
+      if (typeof params == 'string') {
+        params = { ticket: params };
+      }
+      res.locals.ticket = params.ticket;
+      next();
+    });
+  }
+  
   function prompt(req, res, next) {
     res.locals.state = req.query.state;
     res.locals.csrfToken = req.csrfToken();
     
-    console.log(req.session);
     var view = path.join(__dirname, '../../../views/oob/prompt.ejs');
-    console.log(view);
-    
-    //res.render('loginx');
     res.render(view);
   }
   
@@ -43,11 +53,13 @@ exports = module.exports = function(Authenticators, initialize, csrfProtection) 
     csrfProtection(),
     loadAuthenticators,
     selectAuthenticator,
+    challengeAuthenticator,
     prompt
   ];
 };
 
 exports['@require'] = [
+  'http://schemas.authnomicon.org/js/security/authentication/oob',
   'http://schemas.authnomicon.org/js/login/mfa/opt/auth0/UserAuthenticatorsDirectory',
   'http://i.bixbyjs.org/http/middleware/initialize',
   'http://i.bixbyjs.org/http/middleware/csrfProtection'
