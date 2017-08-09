@@ -39,5 +39,5 @@ exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/loadState',
   'http://i.bixbyjs.org/http/middleware/authenticate',
-  '../../activity/login/resume'
+  '../activity/login/resume'
 ];

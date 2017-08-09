@@ -27,7 +27,7 @@
     "components": [
       "activity/login",
       "password",
-      "password/scheme"
+      "password/scheme",
       "otp",
       "otp/scheme",
       "oob",
