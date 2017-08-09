@@ -26,12 +26,12 @@
     "namespace": "login",
     "components": [
       "activity/login",
-      "http/oob",
-      "http/oob/scheme",
-      "http/otp",
-      "http/otp/scheme",
-      "http/password",
-      "http/password/scheme"
+      "password",
+      "password/scheme"
+      "otp",
+      "otp/scheme",
+      "oob",
+      "oob/scheme"
     ]
   },
   "dependencies": {

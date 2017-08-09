@@ -27,7 +27,7 @@ exports = module.exports = function(store) {
     
     state = { name: 'login' };
     state.maxAttempts = options.maxAttempts || 3;
-    if (req.state) { state.parent = req.state.handle; }
+    if (req.state) { state.up = req.state.handle; }
     
     store.save(req, state, function(err, h) {
       return res.redirect('/login' + '?' + qs.stringify({ state: h }));
