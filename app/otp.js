@@ -8,7 +8,7 @@ exports = module.exports = function(promptHandler, authenticateHandler) {
   return router;
 };
 
-exports['@implements'] = 'http://schemas.authnomicon.org/js/http/login/OTPService';
+exports['@implements'] = 'http://schemas.authnomicon.org/js/login/http/OTPService';
 exports['@require'] = [
   './otp/prompt',
   './otp/authenticate'

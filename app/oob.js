@@ -8,7 +8,7 @@ exports = module.exports = function(promptHandler, authenticateHandler) {
   return router;
 };
 
-exports['@implements'] = 'http://schemas.authnomicon.org/js/http/login/OOBService';
+exports['@implements'] = 'http://schemas.authnomicon.org/js/login/http/OOBService';
 exports['@require'] = [
   './oob/prompt',
   './oob/authenticate'

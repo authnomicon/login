@@ -7,7 +7,7 @@ exports = module.exports = function(authenticateHandler) {
   return router;
 };
 
-exports['@implements'] = 'http://schemas.authnomicon.org/js/http/login/PasswordService';
+exports['@implements'] = 'http://schemas.authnomicon.org/js/login/http/PasswordService';
 exports['@require'] = [
   './password/authenticate'
 ];
