@@ -32,6 +32,7 @@
       "otp/scheme",
       "oob/service",
       "oob/scheme",
+      "session/manager",
       "state/scheme"
     ]
   },
