@@ -5,8 +5,13 @@ exports = module.exports = function(parse, csrfProtection, loadState, authentica
     require('body-parser').urlencoded({ extended: false }),
     ceremony.loadState('mfa'),
     authenticator.authenticate('session'),
-    authenticator.authenticate('mfa-otp'),
+    authenticator.authenticate('mfa-oob'),
     ceremony.complete('mfa'),
+    function(err, req, res, next) {
+      console.log(err);
+      console.log(err.stack);
+      next(err);
+    },
     ceremony.completeError('mfa')
   ];
   */
@@ -18,9 +23,9 @@ exports = module.exports = function(parse, csrfProtection, loadState, authentica
       console.log(req.body)
       next();
     },
-    csrfProtection(),
+    csrfProtection(), // TODO: ensure this works on GET requests
     //loadState('login'),
-    authenticate('www-form/otp'),
+    authenticate('www/oob'),
     function(req, res, next) {
       console.log('OTP AUTHENTICATED!');
       next();
@@ -34,5 +39,5 @@ exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/loadState',
   'http://i.bixbyjs.org/http/middleware/authenticate',
-  '../activity/login/resume'
+  '../../activity/login/resume'
 ];

@@ -9,5 +9,5 @@ exports = module.exports = function(authenticateHandler) {
 
 exports['@implements'] = 'http://schemas.authnomicon.org/js/login/http/PasswordService';
 exports['@require'] = [
-  './password/authenticate'
+  './handlers/authenticate'
 ];

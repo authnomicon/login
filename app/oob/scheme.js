@@ -5,7 +5,7 @@ exports = module.exports = function(verify) {
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
-exports['@scheme'] = 'www-form/oob';
+exports['@scheme'] = 'www/oob';
 exports['@require'] = [
   './scheme/verify'
 ];

@@ -10,6 +10,6 @@ exports = module.exports = function(promptHandler, authenticateHandler) {
 
 exports['@implements'] = 'http://schemas.authnomicon.org/js/login/http/OOBService';
 exports['@require'] = [
-  './oob/prompt',
-  './oob/authenticate'
+  './handlers/prompt',
+  './handlers/authenticate'
 ];

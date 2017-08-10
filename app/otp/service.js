@@ -10,6 +10,6 @@ exports = module.exports = function(promptHandler, authenticateHandler) {
 
 exports['@implements'] = 'http://schemas.authnomicon.org/js/login/http/OTPService';
 exports['@require'] = [
-  './otp/prompt',
-  './otp/authenticate'
+  './handlers/prompt',
+  './handlers/authenticate'
 ];

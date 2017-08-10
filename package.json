@@ -26,11 +26,11 @@
     "namespace": "login",
     "components": [
       "activity/login",
-      "password",
+      "password/service",
       "password/scheme",
-      "otp",
+      "otp/service",
       "otp/scheme",
-      "oob",
+      "oob/service",
       "oob/scheme",
       "state/scheme"
     ]
