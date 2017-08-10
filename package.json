@@ -31,13 +31,15 @@
       "otp",
       "otp/scheme",
       "oob",
-      "oob/scheme"
+      "oob/scheme",
+      "state/scheme"
     ]
   },
   "dependencies": {
     "express": "^4.15.3",
     "http-errors": "^1.5.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "passport-state": "0.0.2"
   },
   "devDependencies": {
     "make-node": "^0.3.0",
