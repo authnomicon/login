@@ -1,12 +1,9 @@
-exports = module.exports = function(directory) {
+exports = module.exports = function() {
 
   return function(id, cb) {
-    directory.find(id, function(err, user) {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      return cb(null, user);
-    });
+    // TODO: Serialize more limited set of data (name, email, etc)
+    return cb(null, { id: id });
   };
 };
 
-exports['@require'] = [ 'http://i.bixbyjs.org/ds/Directory' ];
+exports['@require'] = [];

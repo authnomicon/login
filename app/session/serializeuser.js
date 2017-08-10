@@ -1,8 +1,9 @@
-exports = module.exports = function(directory) {
+exports = module.exports = function() {
 
   return function(user, cb) {
+    // TODO: Serialize set of commonly needed properties
     return cb(null, user.id);
   };
 };
 
-exports['@require'] = [ 'http://i.bixbyjs.org/ds/Directory' ];
+exports['@require'] = [];
