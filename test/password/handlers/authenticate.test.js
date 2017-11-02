@@ -2,10 +2,10 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../app/task/begin');
+var factory = require('../../../app/password/handlers/authenticate');
 
 
-describe('task/begin', function() {
+describe('handlers/authenticate', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');

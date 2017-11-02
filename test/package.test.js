@@ -1,13 +1,14 @@
 /* global describe, it */
 
-var pkg = require('..');
 var expect = require('chai').expect;
 
 
 describe('@authnomicon/login', function() {
   
-  it('should export manifest', function() {
-    expect(pkg).to.be.an('object');
+  it('should throw if required', function() {
+    expect(function() {
+      var pkg = require('..');
+    }).to.throw(Error).with.property('code', 'MODULE_NOT_FOUND');
   });
   
 });
