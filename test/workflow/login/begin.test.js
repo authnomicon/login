@@ -22,7 +22,6 @@ describe('workflow/login/begin', function() {
         
         chai.express.handler(handler)
           .end(function(res) {
-            console.log('END!')
             response = res;
             done();
           })

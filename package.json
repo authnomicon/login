@@ -37,7 +37,6 @@
     ]
   },
   "dependencies": {
-    "chai-express-handler": "0.0.2",
     "express": "^4.15.3",
     "http-errors": "^1.5.0",
     "passport-local": "^1.0.0",
@@ -47,6 +46,7 @@
     "make-node": "^0.3.0",
     "mocha": "^4.0.1",
     "chai": "^4.1.1",
+    "chai-express-handler": "0.0.2",
     "sinon": "^4.0.2",
     "sinon-chai": "^2.14.0",
     "proxyquire": "^1.8.0"
