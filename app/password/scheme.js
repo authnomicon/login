@@ -8,6 +8,5 @@ exports = module.exports = function(verifyPassword) {
 // TODO: Set this name to www/password
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
 exports['@require'] = [
-  // TODO: Rename this interface to verify
-  'http://i.bixbyjs.org/security/authentication/password/authenticate'
+  'http://i.bixbyjs.org/security/authentication/password/verify'
 ];
