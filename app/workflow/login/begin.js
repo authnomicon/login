@@ -10,6 +10,8 @@ exports = module.exports = function(store) {
     console.log(req.locals);
     //return;
     
+    //return res.redirect('/login/oob');
+    
     
     var options = req.locals || {}
       , state, q;
