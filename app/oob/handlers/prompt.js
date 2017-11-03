@@ -10,6 +10,9 @@ exports = module.exports = function(OOB, Authenticators, initialize, csrfProtect
       if (err) { return next(err); }
       res.locals.authnrs = authnrs;
       
+      console.log('GOT AUTHNRS!');
+      console.log(authnrs);
+      
       if (!authnrs || authnrs.length == 0 || authnrs[0].active === false) {
         // TODO: Make this a better error.
         res.json({ error: 'enrollment_required' });
@@ -22,6 +25,7 @@ exports = module.exports = function(OOB, Authenticators, initialize, csrfProtect
   
   function selectAuthenticator(req, res, next) {
     req.locals.authnr = res.locals.authnrs[0];
+    req.locals.authnr.channel = req.locals.authnr.channels[0]
     next();
   }
   

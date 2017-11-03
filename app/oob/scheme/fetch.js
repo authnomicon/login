@@ -1,12 +1,24 @@
-exports = module.exports = function(verify, authenticatorsDir, stateStore) {
+exports = module.exports = function(Authenticators, verify, authenticatorsDir, stateStore) {
 
-  return function(req, user, token, cb) {
+  return function(req, token, cb) {
     // TODO: Wrap the state store in a tokens-like interface, so that 
     //      revocation and status checks can be consistent.
     
     console.log('OOB AUTH THIS!');
-    console.log(user)
     console.log(token)
+    
+    // TODO: First decode the ticket to get the userID (and authenticator ID?)
+    
+    var user = { id: '1' }
+    
+    Authenticators.list(user, function(err, authnrs) {
+      console.log(err);
+      console.log(authnrs);
+      
+      var authnr = authnrs[0];
+      authnr.channel = authnr.channels[0]
+      return cb(null, user, authnr);
+    });
     
     /*
     stateStore.load(req, token, function(err, state) {
@@ -42,6 +54,8 @@ exports = module.exports = function(verify, authenticatorsDir, stateStore) {
 };
 
 exports['@require'] = [
+  'http://schemas.authnomicon.org/js/login/mfa/opt/auth0/UserAuthenticatorsDirectory',
+  
   //'http://schemas.authnomicon.org/js/login/mfa/opt/duo/oob/verify',
   //'http://schemas.authnomicon.org/js/login/mfa/opt/duo/UserAuthenticatorsDirectory',
   //'http://i.bixbyjs.org/http/state/Store'

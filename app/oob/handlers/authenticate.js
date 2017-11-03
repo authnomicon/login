@@ -1,4 +1,5 @@
 exports = module.exports = function(parse, csrfProtection, loadState, authenticate, proceed) {
+  var path = require('path');
   
   /*
   return [
@@ -28,7 +29,22 @@ exports = module.exports = function(parse, csrfProtection, loadState, authentica
     authenticate('www/oob'),
     function(req, res, next) {
       console.log('OTP AUTHENTICATED!');
-      next();
+      console.log(req.user)
+      
+      if (!req.user) {
+        console.log('again...');
+        
+        res.locals.ticket = req.body.ticket || req.query.ticket;
+        
+        var view = path.join(__dirname, '../../../views/oob/prompt.ejs');
+        res.render(view);
+        return;
+      }
+      
+      console.log('LOGGED IN!');
+      console.log(req.user);
+      
+      //next();
     },
     proceed
   ];
