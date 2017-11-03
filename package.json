@@ -37,6 +37,7 @@
     ]
   },
   "dependencies": {
+    "chai-express-handler": "0.0.2",
     "express": "^4.15.3",
     "http-errors": "^1.5.0",
     "passport-local": "^1.0.0",
