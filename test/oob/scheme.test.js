@@ -19,15 +19,16 @@ describe('oob/scheme', function() {
   
   describe('creating scheme', function() {
     var StrategySpy = sinon.spy(Strategy);
+    var gateway = { verify: function(){} };
     var fetch = function(){};
     
     var factory = $require('../../app/oob/scheme',
       { 'passport-oob': StrategySpy });
-    var strategy = factory(fetch);
+    var strategy = factory(gateway, fetch);
     
     it('should construct strategy', function() {
       expect(StrategySpy).to.have.been.calledOnce;
-      expect(StrategySpy).to.have.been.calledWithExactly({ passReqToCallback: true }, fetch);
+      expect(StrategySpy).to.have.been.calledWithExactly({ passReqToCallback: true }, gateway, fetch);
     });
     
     it('should return strategy', function() {

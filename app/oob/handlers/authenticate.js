@@ -28,7 +28,7 @@ exports = module.exports = function(parse, csrfProtection, loadState, authentica
     //loadState('login'),
     authenticate('www/oob'),
     function(req, res, next) {
-      console.log('OTP AUTHENTICATED!');
+      console.log('OOB AUTHENTICATED!');
       console.log(req.user)
       
       if (!req.user) {
