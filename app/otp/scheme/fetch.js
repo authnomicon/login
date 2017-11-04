@@ -1,10 +1,13 @@
 exports = module.exports = function(verify, authenticatorsDir) {
 
-  return function(req, username, otp, cb) {
+  return function(req, uid, cb) {
     console.log('AUTH THIS!');
-    console.log(username);
-    console.log(otp);
+    console.log(uid);
     
+    var user = { id: '1' }
+    var authnr = { algorithm: 'totp' };
+    
+    return cb(null, user, authnr)
     
     /*
     function proceed(err, authenticators) {
