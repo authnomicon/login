@@ -26,7 +26,7 @@ exports = module.exports = function(parse, csrfProtection, loadState, authentica
     },
     csrfProtection(), // TODO: ensure this works on GET requests
     //loadState('login'),
-    authenticate('www/oob'),
+    authenticate('www-oob'),
     function(req, res, next) {
       console.log('OOB AUTHENTICATED!');
       console.log(req.user)

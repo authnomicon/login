@@ -3,7 +3,7 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../app/password/scheme');
+var factory = require('../../app/oob/scheme');
 var Strategy = require('passport-oob');
 
 
@@ -15,6 +15,7 @@ describe('oob/scheme', function() {
   
   it('should be annotated', function() {
     expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/auth/Scheme');
+    expect(factory['@scheme']).to.equal('www-oob');
   });
   
   describe('creating scheme', function() {

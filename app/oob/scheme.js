@@ -5,7 +5,7 @@ exports = module.exports = function(oob, fetch) {
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
-exports['@scheme'] = 'www/oob';
+exports['@scheme'] = 'www-oob';
 exports['@require'] = [
   'http://schemas.authnomicon.org/js/security/authentication/oob',
   './scheme/fetch'
