@@ -24,7 +24,7 @@ describe('otp/handlers/enroll/new', function() {
     };
     
     
-    describe.only('default behavior', function() {
+    describe('default behavior', function() {
       var response, layout;
       
       before(function() {
