@@ -1,10 +1,10 @@
-exports = module.exports = function(directory) {
+exports = module.exports = function(Users) {
 
   return function(uid, state, cb){
     uid = '5001';
     
     if (!uid) { return cb(null, false); }
-    directory.find(uid, function(err, user) {
+    Users.get(uid, function(err, user) {
       if (err) { return cb(err); }
       if (!user) { return cb(null, false); }
       return cb(null, user);
@@ -12,4 +12,4 @@ exports = module.exports = function(directory) {
   };
 };
 
-exports['@require'] = [ 'http://i.bixbyjs.org/ds/Directory' ];
+exports['@require'] = [ 'http://schemas.authnomicon.org/js/ds/Users' ];
