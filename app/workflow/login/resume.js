@@ -1,9 +1,16 @@
-exports = module.exports = function(ceremony, stateStore) {
+exports = module.exports = function(stateStore) {
   var errors = require('http-errors')
     , RepromptError = require('../../../lib/errors/reprompterror');
 
 
   return [
+    function dump(req, res, next) {
+      console.log('RESUMING LOGIN ACTIVITY...');
+      console.log(req.state)
+      console.log(req.yieldState)
+      //return;
+      next();
+    },
     function unauthorizedErrorHandler(err, req, res, next) {
       if (err.status !== 401) { return next(err); }
       
@@ -45,8 +52,18 @@ exports = module.exports = function(ceremony, stateStore) {
         stateStore.save(req, err.state, proceed);
       }
     },
-    ceremony.complete('login'),
-    ceremony.completeError('login'),
+    function finished(req, res, next) {
+      console.log('FINISHED!');
+      console.log(res.finishedTask)
+      
+      res.completePrompt(next);
+    },
+    function finishedError(err, req, res, next) {
+      console.log('FINISHED!');
+      console.log(res.finishedTask)
+      
+      res.completePrompt(err, next);
+    },
     function(req, res, next) {
       console.log('DEFAULT BEHAVIOR, TODO!');
       console.log(req.state)
@@ -67,7 +84,12 @@ exports = module.exports = function(ceremony, stateStore) {
   
 };
 
+  // FIXME: Implement this again, when circular dependecny is fixed
+  //        (login/task/resume) needs this Dispatcher.
+  //        Also, electrolyte needs a test for this in promise based mode.
+  //     add, 'http://i.bixbyjs.org/http/state/Dispatcher' to @require, to create a circular
+  //     dependency, which triggers a silent crash in current electrolyte (when promises are being used)
+
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/state/Dispatcher',
   'http://i.bixbyjs.org/http/workflow/StateStore'
 ];

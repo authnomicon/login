@@ -21,7 +21,8 @@ exports = module.exports = function(store) {
       return res.redirect('/login/oob');
     }
     
-    if (Object.keys(options).length == 0) {
+    //if (Object.keys(options).length == 0) {
+    if (true) {
       q = req.state ? '?' + qs.stringify({ state: req.state.handle }) : '';
       return res.redirect('/login' + q);
     }
@@ -29,7 +30,7 @@ exports = module.exports = function(store) {
     
     state = { name: 'login' };
     state.maxAttempts = options.maxAttempts || 3;
-    if (req.state) { state.up = req.state.handle; }
+    if (req.state) { state.prev = req.state.handle; }
     
     store.save(req, state, function(err, h) {
       return res.redirect('/login' + '?' + qs.stringify({ state: h }));
