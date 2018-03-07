@@ -1,4 +1,4 @@
-exports = module.exports = function(parse, csrfProtection, loadState, authenticate, proceed) {
+exports = module.exports = function(parse, flow, csrfProtection, authenticate) {
   var path = require('path');
   
   /*
@@ -19,41 +19,41 @@ exports = module.exports = function(parse, csrfProtection, loadState, authentica
   
   return [
     parse('application/x-www-form-urlencoded'),
-    function(req, res, next) {
-      console.log('OTP AUTHENTICATING...');
-      console.log(req.body)
-      next();
-    },
-    csrfProtection(), // TODO: ensure this works on GET requests
-    //loadState('login'),
-    authenticate('www-oob'),
-    function(req, res, next) {
-      console.log('OOB AUTHENTICATED!');
-      console.log(req.user)
+    flow('authenticate-oob',
+      function(req, res, next) {
+        console.log('OTP AUTHENTICATING...');
+        console.log(req.body)
+        next();
+      },
+      csrfProtection(), // TODO: ensure this works on GET requests
+      //loadState('login'),
+      authenticate('www-oob'),
+      function(req, res, next) {
+        console.log('OOB AUTHENTICATED!');
+        console.log(req.user)
       
-      if (!req.user) {
-        console.log('again...');
+        if (!req.user) {
+          console.log('again...');
         
-        res.locals.ticket = req.body.ticket || req.query.ticket;
+          res.locals.ticket = req.body.ticket || req.query.ticket;
         
-        var view = path.join(__dirname, '../../../views/oob/prompt.ejs');
-        res.render(view);
-        return;
-      }
+          var view = path.join(__dirname, '../../../views/oob/prompt.ejs');
+          res.render(view);
+          return;
+        }
       
-      console.log('LOGGED IN!');
-      console.log(req.user);
+        console.log('LOGGED IN!');
+        console.log(req.user);
       
-      //next();
-    },
-    proceed
+        //next();
+      },
+    { through: 'login' })
   ];
 };
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/parse',
+  'http://i.bixbyjs.org/http/middleware/state/flow',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/loadState',
-  'http://i.bixbyjs.org/http/middleware/authenticate',
-  '../../workflow/login/resume'
+  'http://i.bixbyjs.org/http/middleware/authenticate'
 ];
