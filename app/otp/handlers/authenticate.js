@@ -1,4 +1,4 @@
-exports = module.exports = function(parse, csrfProtection, loadState, authenticate, proceed) {
+exports = module.exports = function(parse, flow, csrfProtection, authenticate) {
   
   /*
   return [
@@ -13,26 +13,26 @@ exports = module.exports = function(parse, csrfProtection, loadState, authentica
   
   return [
     parse('application/x-www-form-urlencoded'),
-    function(req, res, next) {
-      console.log('OTP AUTHENTICATING...');
-      console.log(req.body)
-      next();
-    },
-    csrfProtection(),
-    //loadState('login'),
-    authenticate('www-otp'),
-    function(req, res, next) {
-      console.log('OTP AUTHENTICATED!');
-      next();
-    },
-    proceed
+    flow('authenticate-otp',
+      function(req, res, next) {
+        console.log('OTP AUTHENTICATING...');
+        console.log(req.body)
+        next();
+      },
+      csrfProtection(),
+      //loadState('login'),
+      authenticate('www-otp'),
+      function(req, res, next) {
+        console.log('OTP AUTHENTICATED!');
+        next();
+      },
+    { through: 'login' })
   ];
 };
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/parse',
+  'http://i.bixbyjs.org/http/middleware/state/flow',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/loadState',
-  'http://i.bixbyjs.org/http/middleware/authenticate',
-  '../../workflow/login/resume'
+  'http://i.bixbyjs.org/http/middleware/authenticate'
 ];
