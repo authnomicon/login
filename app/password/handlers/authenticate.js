@@ -1,20 +1,17 @@
-exports = module.exports = function(parse, csrfProtection, loadState, authenticate, proceed) {
-  
-  // TODO: Move this file to "password/handlers/authenticate"
+exports = module.exports = function(parse, flow, csrfProtection, authenticate) {
   
   return [
     parse('application/x-www-form-urlencoded'),
-    csrfProtection(),
-    loadState('login'),
-    authenticate('local'),
-    proceed
+    flow('authenticate-password',
+      csrfProtection(),
+      authenticate([ 'local' ]),
+    { through: 'login' })
   ];
 };
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/parse',
+  'http://i.bixbyjs.org/http/middleware/state/flow',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/loadState',
-  'http://i.bixbyjs.org/http/middleware/authenticate',
-  '../../workflow/login/resume'
+  'http://i.bixbyjs.org/http/middleware/authenticate'
 ];
