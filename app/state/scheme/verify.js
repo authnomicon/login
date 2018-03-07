@@ -1,9 +1,18 @@
-exports = module.exports = function(Users) {
+exports = module.exports = function(realms) {
 
   return function(uid, state, cb){
-    uid = '5001';
-    
     console.log('TODO: authnomicon-login, state/scheme/verify - port to realms');
+    console.log(uid)
+    console.log(state);
+    
+    //uid = '5001';
+    
+    if (!uid) { return cb(null, false); }
+    
+    var subject = { id: uid };
+    return cb(null, subject);
+    
+    
     /*
     if (!uid) { return cb(null, false); }
     Users.get(uid, function(err, user) {
@@ -15,6 +24,4 @@ exports = module.exports = function(Users) {
   };
 };
 
-exports['@require'] = [
-  //'http://schemas.authnomicon.org/js/ds/Users'
-];
+exports['@require'] = [];
