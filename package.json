@@ -31,9 +31,9 @@
       "http/otp/scheme",
       "http/password/service",
       "http/password/scheme",
+      "http/prompt",
       "http/session/manager",
-      "http/state/scheme",
-      "workflow/login"
+      "http/state/scheme"
     ]
   },
   "dependencies": {
