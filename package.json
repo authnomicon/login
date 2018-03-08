@@ -25,13 +25,13 @@
   "assembly": {
     "namespace": "org.authnomicon/login",
     "components": [
+      "http/oob/service",
+      "http/oob/scheme",
+      "http/otp/service",
+      "http/otp/scheme",
       "http/password/service",
       "http/password/scheme",
       "http/state/scheme",
-      "otp/service",
-      "otp/scheme",
-      "oob/service",
-      "oob/scheme",
       "session/manager",
       "workflow/login"
     ]
