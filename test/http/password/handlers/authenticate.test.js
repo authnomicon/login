@@ -11,4 +11,9 @@ describe('password/handlers/authenticate', function() {
     expect(factory).to.be.a('function');
   });
   
+  it('should be annotated', function() {
+    expect(factory['@implements']).to.be.undefined;
+    expect(factory['@singleton']).to.be.undefined;
+  });
+  
 });

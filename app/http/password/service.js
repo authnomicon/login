@@ -7,7 +7,11 @@ exports = module.exports = function(authenticateHandler) {
   return router;
 };
 
-exports['@implements'] = 'http://schemas.authnomicon.org/js/login/http/PasswordService';
+exports['@implements'] = [
+  'http://i.bixbyjs.org/http/Service',
+  'http://schemas.authnomicon.org/js/http/login/PasswordService'
+];
+exports['@path'] = '/login/password';
 exports['@require'] = [
   './handlers/authenticate'
 ];
