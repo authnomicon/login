@@ -12,7 +12,11 @@ exports = module.exports = function(promptHandler, authenticateHandler, newHandl
   return router;
 };
 
-exports['@implements'] = 'http://schemas.authnomicon.org/js/login/http/OTPService';
+exports['@implements'] = [
+  'http://i.bixbyjs.org/http/Service',
+  'http://schemas.authnomicon.org/js/http/login/OTPService'
+];
+exports['@path'] = '/login/otp';
 exports['@require'] = [
   './handlers/prompt',
   './handlers/authenticate',
