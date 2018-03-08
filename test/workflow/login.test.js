@@ -12,7 +12,7 @@ describe('workflow/login', function() {
   });
   
   it('should be annotated', function() {
-    expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/workflow/Activityx');
+    expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/state/Prompt');
     expect(factory['@name']).to.equal('login');
   });
   

@@ -23,7 +23,7 @@
   ],
   "main": "./app",
   "assembly": {
-    "namespace": "login",
+    "namespace": "org.authnomicon/login",
     "components": [
       "password/service",
       "password/scheme",
