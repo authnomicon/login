@@ -8,7 +8,11 @@ exports = module.exports = function(promptHandler, authenticateHandler) {
   return router;
 };
 
-exports['@implements'] = 'http://schemas.authnomicon.org/js/login/http/OOBService';
+exports['@implements'] = [
+  'http://i.bixbyjs.org/http/Service',
+  'http://schemas.authnomicon.org/js/http/login/OOBService'
+];
+exports['@path'] = '/login/oob';
 exports['@require'] = [
   './handlers/prompt',
   './handlers/authenticate'
