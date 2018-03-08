@@ -4,7 +4,7 @@ exports = module.exports = function(parse, flow, csrfProtection, authenticate) {
     parse('application/x-www-form-urlencoded'),
     flow('authenticate-password',
       csrfProtection(),
-      authenticate([ 'local' ]),
+      authenticate('password'),
     { through: 'login' })
   ];
 };
