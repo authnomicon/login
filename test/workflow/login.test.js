@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../app/workflow/login');
+var factory = require('../../app/http/prompt');
 
 
 describe('workflow/login', function() {
