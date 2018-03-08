@@ -3,7 +3,7 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../app/password/scheme');
+var factory = require('../../app/http/password/scheme');
 var Strategy = require('passport-local');
 
 
@@ -21,7 +21,7 @@ describe('password/scheme', function() {
     var StrategySpy = sinon.spy(Strategy);
     var verifyPassword = function(){};
     
-    var factory = $require('../../app/password/scheme',
+    var factory = $require('../../app/http/password/scheme',
       { 'passport-local': StrategySpy });
     var strategy = factory(verifyPassword);
     
