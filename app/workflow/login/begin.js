@@ -45,5 +45,5 @@ exports = module.exports = function(store) {
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/workflow/StateStore'
+  'http://i.bixbyjs.org/http/state/Store'
 ];

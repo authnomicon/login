@@ -91,5 +91,5 @@ exports = module.exports = function(stateStore) {
   //     dependency, which triggers a silent crash in current electrolyte (when promises are being used)
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/workflow/StateStore'
+  'http://i.bixbyjs.org/http/state/Store'
 ];
