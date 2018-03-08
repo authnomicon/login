@@ -2,10 +2,10 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../app/http/prompt');
+var factory = require('../app/http/prompt');
 
 
-describe('workflow/login', function() {
+describe('prompt', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -14,6 +14,7 @@ describe('workflow/login', function() {
   it('should be annotated', function() {
     expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/state/Prompt');
     expect(factory['@name']).to.equal('login');
+    expect(factory['@singleton']).to.be.undefined;
   });
   
 });

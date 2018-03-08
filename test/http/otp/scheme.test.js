@@ -16,6 +16,7 @@ describe('http/otp/scheme', function() {
   it('should be annotated', function() {
     expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/auth/Scheme');
     expect(factory['@scheme']).to.equal('otp');
+    expect(factory['@singleton']).to.be.undefined;
   });
   
   describe('creating scheme', function() {
