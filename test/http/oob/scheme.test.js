@@ -3,11 +3,11 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../app/http/oob/scheme');
+var factory = require('../../../app/http/oob/scheme');
 var Strategy = require('passport-oob');
 
 
-describe('oob/scheme', function() {
+describe('http/oob/scheme', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -15,7 +15,8 @@ describe('oob/scheme', function() {
   
   it('should be annotated', function() {
     expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/auth/Scheme');
-    expect(factory['@scheme']).to.equal('www-oob');
+    expect(factory['@scheme']).to.equal('oob');
+    expect(factory['@singleton']).to.be.undefined;
   });
   
   describe('creating scheme', function() {
@@ -23,7 +24,7 @@ describe('oob/scheme', function() {
     var gateway = { verify: function(){} };
     var fetch = function(){};
     
-    var factory = $require('../../app/http/oob/scheme',
+    var factory = $require('../../../app/http/oob/scheme',
       { 'passport-oob': StrategySpy });
     var strategy = factory(gateway, fetch);
     
