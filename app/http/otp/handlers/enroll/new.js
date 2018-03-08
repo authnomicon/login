@@ -18,7 +18,7 @@ exports = module.exports = function(OTP, csrfProtection) {
     res.locals.state = req.query.state;
     res.locals.csrfToken = req.csrfToken();
     
-    var view = path.join(__dirname, '../../../../views/otp/enroll.ejs');
+    var view = path.join(__dirname, '../../../../../views/otp/enroll.ejs');
     res.render(view);
   }
   
