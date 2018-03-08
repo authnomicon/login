@@ -5,7 +5,7 @@ var sinon = require('sinon');
 var factory = require('../../../../app/http/password/handlers/authenticate');
 
 
-describe('password/handlers/authenticate', function() {
+describe('http/password/handlers/authenticate', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');

@@ -21,7 +21,7 @@ exports = module.exports = function(parse, flow, csrfProtection, authenticate) {
       },
       csrfProtection(),
       //loadState('login'),
-      authenticate('www-otp'),
+      authenticate('otp'),
       function(req, res, next) {
         console.log('OTP AUTHENTICATED!');
         next();

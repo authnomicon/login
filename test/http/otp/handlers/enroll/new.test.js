@@ -7,7 +7,7 @@ var sinon = require('sinon');
 var factory = require('../../../../app/http/otp/handlers/enroll/new');
 
 
-describe('otp/handlers/enroll/new', function() {
+describe('http/otp/handlers/enroll/new', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');

@@ -3,11 +3,11 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../app/http/otp/scheme');
+var factory = require('../../../app/http/otp/scheme');
 var Strategy = require('passport-otp');
 
 
-describe('otb/scheme', function() {
+describe('http/otp/scheme', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -23,7 +23,7 @@ describe('otb/scheme', function() {
     var algorithms = { verify: function(){} };
     var fetch = function(){};
     
-    var factory = $require('../../app/http/otp/scheme',
+    var factory = $require('../../../app/http/otp/scheme',
       { 'passport-otp': StrategySpy });
     var strategy = factory(algorithms, fetch);
     
