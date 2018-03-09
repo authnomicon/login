@@ -2,8 +2,8 @@ exports = module.exports = function(realms) {
 
   return function(uid, state, cb){
     console.log('TODO: authnomicon-login, state/scheme/verify - port to realms');
-    console.log(uid)
-    console.log(state);
+    //console.log(uid)
+    //console.log(state);
     
     //uid = '5001';
     

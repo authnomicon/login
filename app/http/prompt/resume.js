@@ -5,9 +5,9 @@ exports = module.exports = function(stateStore) {
 
   return [
     function dump(req, res, next) {
-      console.log('RESUMING LOGIN ACTIVITY...');
-      console.log(req.state)
-      console.log(req.yieldState)
+      //console.log('RESUMING LOGIN ACTIVITY...');
+      //console.log(req.state)
+      //console.log(req.yieldState)
       //return;
       next();
     },
@@ -53,29 +53,29 @@ exports = module.exports = function(stateStore) {
       }
     },
     function finished(req, res, next) {
-      console.log('FINISHED!');
-      console.log(res.finishedTask)
+      //console.log('FINISHED!');
+      //console.log(res.finishedTask)
       
       res.completePrompt(next);
     },
     function finishedError(err, req, res, next) {
-      console.log('FINISHED!');
-      console.log(res.finishedTask)
+      //console.log('FINISHED!');
+      //console.log(res.finishedTask)
       
       res.completePrompt(err, next);
     },
     function(req, res, next) {
-      console.log('DEFAULT BEHAVIOR, TODO!');
-      console.log(req.state)
-      console.log(req.session.state);
+      //console.log('DEFAULT BEHAVIOR, TODO!');
+      //console.log(req.state)
+      //console.log(req.session.state);
       
       res.redirect('/home');
     },
     function(err, req, res, next) {
-      console.log('DEFAULT ERROR BEHAVIOR, TODO!');
-      console.log(err);
-      console.log(req.state)
-      console.log(req.session.state);
+      //console.log('DEFAULT ERROR BEHAVIOR, TODO!');
+      //console.log(err);
+      //console.log(req.state)
+      //console.log(req.session.state);
       
       //res.locals.state = res.locals.state || req.query.state;
       //res.render('login');
