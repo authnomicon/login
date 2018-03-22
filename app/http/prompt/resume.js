@@ -12,6 +12,8 @@ exports = module.exports = function(stateStore) {
       next();
     },
     function unauthorizedErrorHandler(err, req, res, next) {
+      console.log('LOGIN ERROR');
+      
       if (err.status !== 401) { return next(err); }
       
       var state = req.state || { name: 'login' };

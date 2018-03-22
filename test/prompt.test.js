@@ -12,7 +12,7 @@ describe('prompt', function() {
   });
   
   it('should be annotated', function() {
-    expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/state/Prompt');
+    expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/state/State');
     expect(factory['@name']).to.equal('login');
     expect(factory['@singleton']).to.be.undefined;
   });
