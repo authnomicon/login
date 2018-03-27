@@ -5,6 +5,10 @@ exports = module.exports = function(stateStore) {
 
   return [
     function dump(req, res, next) {
+      console.log('RESUME: login');
+      console.log(req.body)
+      console.log(req.state);
+      
       //console.log('RESUMING LOGIN ACTIVITY...');
       //console.log(req.state)
       //console.log(req.yieldState)
@@ -55,23 +59,26 @@ exports = module.exports = function(stateStore) {
       }
     },
     function finished(req, res, next) {
-      //console.log('FINISHED!');
+      console.log('FINISHED!');
       //console.log(res.finishedTask)
+      next();
       
-      res.completePrompt(next);
+      //res.completePrompt(next);
     },
     function finishedError(err, req, res, next) {
       //console.log('FINISHED!');
       //console.log(res.finishedTask)
+      next(err)
       
-      res.completePrompt(err, next);
+      //res.completePrompt(err, next);
     },
+    /*
     function(req, res, next) {
       //console.log('DEFAULT BEHAVIOR, TODO!');
       //console.log(req.state)
       //console.log(req.session.state);
       
-      res.redirect('/home');
+      //res.redirect('/home');
     },
     function(err, req, res, next) {
       //console.log('DEFAULT ERROR BEHAVIOR, TODO!');
@@ -82,6 +89,7 @@ exports = module.exports = function(stateStore) {
       //res.locals.state = res.locals.state || req.query.state;
       //res.render('login');
     }
+    */
   ];
   
 };
