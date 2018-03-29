@@ -23,8 +23,9 @@ exports = module.exports = function(store) {
     
     //if (Object.keys(options).length == 0) {
     if (true) {
-      q = req.state ? '?' + qs.stringify({ state: req.state.handle }) : '';
-      return res.redirect('/login' + q);
+      //q = req.state ? '?' + qs.stringify({ state: req.state.handle }) : '';
+      //return res.redirect('/login' + q);
+      return res.redirect('/login');
     }
     
     
