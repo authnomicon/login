@@ -1,4 +1,4 @@
-exports = module.exports = function(parse, flow, csrfProtection, authenticate) {
+exports = module.exports = function(parse, ceremony, csrfProtection, authenticate) {
   
   /*
   return [
@@ -13,7 +13,7 @@ exports = module.exports = function(parse, flow, csrfProtection, authenticate) {
   
   return [
     parse('application/x-www-form-urlencoded'),
-    flow('authenticate-otp',
+    ceremony('authenticate-otp',
       function(req, res, next) {
         console.log('OTP AUTHENTICATING...');
         console.log(req.body)
@@ -32,7 +32,7 @@ exports = module.exports = function(parse, flow, csrfProtection, authenticate) {
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/parse',
-  'http://i.bixbyjs.org/http/middleware/state/flow',
+  'http://i.bixbyjs.org/http/middleware/ceremony',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/authenticate'
 ];
