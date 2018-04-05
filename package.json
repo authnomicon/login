@@ -26,13 +26,13 @@
     "namespace": "org.authnomicon/login",
     "components": [
       "http/login/service",
+      "http/login/state",
       "http/oob/service",
       "http/oob/scheme",
       "http/otp/service",
       "http/otp/scheme",
       "http/password/service",
       "http/password/scheme",
-      "http/prompt",
       "http/session/manager",
       "http/state/scheme"
     ]
