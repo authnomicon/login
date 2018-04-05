@@ -2,7 +2,7 @@ exports = module.exports = function(authenticateHandler) {
   var express = require('express');
   var router = new express.Router();
   
-  router.post('/password', authenticateHandler);
+  router.post('/', authenticateHandler);
   
   return router;
 };
