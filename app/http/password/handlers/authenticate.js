@@ -2,7 +2,7 @@ exports = module.exports = function(parse, ceremony, csrfProtection, authenticat
   
   return [
     parse('application/x-www-form-urlencoded'),
-    ceremony('authenticate-password',
+    ceremony('authenticate/password',
       csrfProtection(),
       authenticate('password'),
     { through: 'login' })

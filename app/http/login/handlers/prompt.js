@@ -5,7 +5,6 @@ exports = module.exports = function(ceremony, csrfProtection, authenticate, erro
   
   function render(req, res, next) {
     res.locals.csrfToken = req.csrfToken();
-    res.locals.state = req.query.state;
     
     res.render('loginx', function(err, str) {
       if (err && err.view) {

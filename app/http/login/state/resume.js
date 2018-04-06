@@ -1,5 +1,7 @@
 exports = module.exports = function(stateStore) {
-  var errors = require('http-errors')
+  var path = require('path')
+    , ejs = require('ejs')
+    , errors = require('http-errors')
     , RepromptError = require('../../../../lib/errors/reprompterror');
 
 
@@ -16,12 +18,14 @@ exports = module.exports = function(stateStore) {
       next();
     },
     function unauthorizedErrorHandler(err, req, res, next) {
-      console.log('LOGIN ERROR');
-      
       if (err.status !== 401) { return next(err); }
       
-      var state = req.state || { name: 'login' };
-      state.failureCount = state.failureCount ? state.failureCount + 1 : 1;
+      console.log('UNAUTHORIZED!');
+      console.log(req.state);
+      
+      
+      //var state = req.state || { name: 'login' };
+      req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
       
       // If the maximum number of login attempts has been exceeded, fail.  This
       // allows any initiating ceremony, such as authorization, to resume.
@@ -32,15 +36,40 @@ exports = module.exports = function(stateStore) {
       // he or she succesfully authenticates.  Additional protections, against
       // brute force attacks, are expected to be implemented or injected by the
       // application.
-      if (state.maxAttempts && state.failureCount >= state.maxAttempts) {
+      if (req.state.maxAttempts && state.failureCount >= state.maxAttempts) {
         return next(new errors.Unauthorized('Too many failed login attempts'));
+      } else {
+        console.log('RERENDER!!!!')
+        console.log(req.yieldState);
+        console.log(err);
+        console.log(req.authInfo);
+        
+        res.locals.csrfToken = req.csrfToken();
+    
+        res.render('loginx', function(err, str) {
+          if (err && err.view) {
+            var view = path.resolve(__dirname, '../../password/views/login.ejs');
+            ejs.renderFile(view, res.locals, function(err, str) {
+              if (err) { return next(err); }
+              res.send(str);
+            });
+            return;
+          } else if (err) {
+            return next(err);
+          }
+          res.send(str);
+        });
       }
       
-      return next(new RepromptError(state));
+      //return next(new RepromptError(state));
     },
     function repromptErrorHandler(err, req, res, next) {
-      if (!(err instanceof RepromptError)) { return next(err); }
+      next(err);
       
+      //if (!(err instanceof RepromptError)) { return next(err); }
+      
+      
+      /*
       function proceed(ierr, h) {
         if (ierr) { return next(ierr); }
         
@@ -57,6 +86,7 @@ exports = module.exports = function(stateStore) {
         }
         stateStore.save(req, err.state, proceed);
       }
+      */
     },
     function finished(req, res, next) {
       console.log('FINISHED!');
