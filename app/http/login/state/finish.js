@@ -9,10 +9,6 @@ exports = module.exports = function() {
   }
   
   function unauthorizedErrorHandler(err, req, res, next) {
-    console.log('*******');
-    console.log(err.status)
-    console.log(err.statusCode)
-    
     if (err.status !== 401) { return next(err); }
     
     // Handles maxAttempts case, where there's nothing to resume to, in which case
