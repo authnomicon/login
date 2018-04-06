@@ -22,12 +22,14 @@ exports = module.exports = function(ceremony, csrfProtection, authenticate, erro
   }
   
   
-  return ceremony('login',
-    //authenticate([ 'session', 'anonymous' ]),
-    csrfProtection(),
-    render,
+  return [
+    ceremony('login',
+      //authenticate([ 'session', 'anonymous' ]),
+      csrfProtection(),
+      render
+    ),
     errorLogging()
-  );
+  ]
 };
 
 exports['@require'] = [
