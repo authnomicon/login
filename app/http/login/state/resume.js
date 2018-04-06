@@ -8,6 +8,8 @@ exports = module.exports = function(stateStore) {
     if (err.status !== 401) { return next(err); }
     
     req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
+    res.locals.message = 'Invalid username or password';
+    
     
     // If the maximum number of login attempts has been exceeded, fail.  This
     // allows any initiating ceremony, such as authorization, to resume.
