@@ -1,9 +1,8 @@
-exports = module.exports = function(promptHandler, initiateHandler) {
+exports = module.exports = function(promptHandler) {
   var express = require('express');
   var router = new express.Router();
   
   router.get('/', promptHandler);
-  router.post('/', initiateHandler);
   
   return router;
 };
@@ -14,6 +13,5 @@ exports['@implements'] = [
 ];
 exports['@path'] = '/login';
 exports['@require'] = [
-  './handlers/prompt',
-  './handlers/initiate'
+  './handlers/prompt'
 ];
