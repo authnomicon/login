@@ -1,8 +1,9 @@
-exports = module.exports = function(promptHandler) {
+exports = module.exports = function(promptHandler, initiateHandler) {
   var express = require('express');
   var router = new express.Router();
   
   router.get('/', promptHandler);
+  router.post('/', initiateHandler);
   
   return router;
 };
@@ -12,4 +13,7 @@ exports['@implements'] = [
   'http://schemas.authnomicon.org/js/http/login/Service'
 ];
 exports['@path'] = '/login';
-exports['@require'] = [ './handlers/prompt' ];
+exports['@require'] = [
+  './handlers/prompt',
+  './handlers/initiate'
+];
