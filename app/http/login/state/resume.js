@@ -21,6 +21,7 @@ exports = module.exports = function(stateStore) {
     // brute force attacks, are expected to be implemented or injected by the
     // application.
     if (req.state.maxAttempts && state.failureCount >= state.maxAttempts) {
+      if (!req.state.parent) { req.state.keep(); }
       return next(new errors.Unauthorized('Too many failed login attempts'));
     } else {
       res.locals.csrfToken = req.csrfToken();
