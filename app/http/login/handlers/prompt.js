@@ -11,7 +11,7 @@ exports = module.exports = function(render, ceremony, csrfProtection, authentica
 };
 
 exports['@require'] = [
-  '../include/render', 
+  '../common/render',
   'http://i.bixbyjs.org/http/middleware/ceremony',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/authenticate',
