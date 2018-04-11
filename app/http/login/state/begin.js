@@ -1,4 +1,4 @@
-exports = module.exports = function(store) {
+exports = module.exports = function() {
   var qs = require('querystring');
 
 
@@ -29,6 +29,7 @@ exports = module.exports = function(store) {
     }
     
     
+    /*
     state = { name: 'login' };
     state.maxAttempts = options.maxAttempts || 3;
     if (req.state) { state.prev = req.state.handle; }
@@ -36,6 +37,7 @@ exports = module.exports = function(store) {
     store.save(req, state, function(err, h) {
       return res.redirect('/login' + '?' + qs.stringify({ state: h }));
     });
+    */
   }
 
 
@@ -45,6 +47,4 @@ exports = module.exports = function(store) {
   
 };
 
-exports['@require'] = [
-  'http://i.bixbyjs.org/http/state/Store'
-];
+exports['@require'] = [];
