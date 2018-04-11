@@ -1,4 +1,4 @@
-exports = module.exports = function(stateStore) {
+exports = module.exports = function() {
   var path = require('path')
     , ejs = require('ejs')
     , errors = require('http-errors');
@@ -54,6 +54,4 @@ exports = module.exports = function(stateStore) {
   //     add, 'http://i.bixbyjs.org/http/state/Dispatcher' to @require, to create a circular
   //     dependency, which triggers a silent crash in current electrolyte (when promises are being used)
 
-exports['@require'] = [
-  'http://i.bixbyjs.org/http/state/Store'
-];
+exports['@require'] = [];
