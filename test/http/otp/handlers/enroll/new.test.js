@@ -4,7 +4,7 @@ var path = require('path');
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/http/otp/handlers/enroll/new');
+var factory = require('../../../../../app/http/otp/handlers/enroll/new');
 
 
 describe('http/otp/handlers/enroll/new', function() {
