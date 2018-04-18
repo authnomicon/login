@@ -1,8 +1,8 @@
-exports = module.exports = function(parse, ceremony, csrfProtection, authenticate) {
+exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   
   return [
     parse('application/x-www-form-urlencoded'),
-    ceremony('authenticate/password',
+    ceremony('login/password',
       csrfProtection(),
       authenticate('password'),
     { through: 'login' })
@@ -11,7 +11,7 @@ exports = module.exports = function(parse, ceremony, csrfProtection, authenticat
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/parse',
-  'http://i.bixbyjs.org/http/middleware/ceremony',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/authenticate'
+  'http://i.bixbyjs.org/http/middleware/authenticate',
+  'http://i.bixbyjs.org/http/middleware/ceremony'
 ];
