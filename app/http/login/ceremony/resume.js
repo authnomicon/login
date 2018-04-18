@@ -5,6 +5,9 @@ exports = module.exports = function() {
 
 
   function unauthorizedErrorHandler(err, req, res, next) {
+    console.log('LOGIN RESUME!');
+    console.log(err);
+    
     if (err.status !== 401) { return next(err); }
     
     req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;

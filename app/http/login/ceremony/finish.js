@@ -5,6 +5,8 @@ exports = module.exports = function() {
 
 
   function redirect(req, res, next) {
+    console.log('LOGIN FINISH!');
+    
     res.redirect('/home')
   }
   

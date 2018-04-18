@@ -1,8 +1,9 @@
-exports = module.exports = function(launch, resume, finish) {
+exports = module.exports = function(launch, resume, process, finish) {
   
   return {
     launch: launch,
     resume: resume,
+    process: process,
     finish: finish
   };
 };
@@ -12,5 +13,6 @@ exports['@name'] = 'login';
 exports['@require'] = [
   './ceremony/launch',
   './ceremony/resume',
+  './ceremony/process',
   './ceremony/finish'
 ];
