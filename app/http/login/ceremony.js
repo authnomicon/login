@@ -1,7 +1,7 @@
-exports = module.exports = function(begin, resume, finish) {
+exports = module.exports = function(launch, resume, finish) {
   
   return {
-    launch: begin,
+    launch: launch,
     resume: resume,
     finish: finish
   };
@@ -10,7 +10,7 @@ exports = module.exports = function(begin, resume, finish) {
 exports['@implements'] = 'http://i.bixbyjs.org/http/ceremony/Prompt';
 exports['@name'] = 'login';
 exports['@require'] = [
-  './state/begin',
-  './state/resume',
-  './state/finish'
+  './ceremony/launch',
+  './ceremony/resume',
+  './ceremony/finish'
 ];
