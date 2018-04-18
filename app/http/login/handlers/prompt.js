@@ -1,4 +1,4 @@
-exports = module.exports = function(render, ceremony, csrfProtection, authenticate, errorLogging) {
+exports = module.exports = function(ceremony, csrfProtection, authenticate, errorLogging) {
   
   return [
     ceremony('login',
@@ -13,7 +13,6 @@ exports = module.exports = function(render, ceremony, csrfProtection, authentica
 };
 
 exports['@require'] = [
-  '../common/render',
   'http://i.bixbyjs.org/http/middleware/ceremony',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/authenticate',
