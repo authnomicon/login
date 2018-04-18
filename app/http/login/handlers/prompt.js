@@ -6,6 +6,8 @@ exports = module.exports = function(render, ceremony, csrfProtection, authentica
       //authenticate([ 'session', 'anonymous' ]),
       render
     ),
+    // Should GET requests that error with a state destroy the state?  I think not
+    // There needs to be an option for it (external?) that does, for eg OAuth
     errorLogging()
   ]
 };
