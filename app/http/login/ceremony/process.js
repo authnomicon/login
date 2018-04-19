@@ -1,6 +1,6 @@
 exports = module.exports = function() {
   var path = require('path')
-    , ejs = require('ejs')
+    , ejs = require('ejs');
   
   
   function render(req, res, next) {

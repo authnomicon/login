@@ -4,7 +4,7 @@ exports = module.exports = function(launch, resume, process, finish) {
     spawn: launch,
     resume: resume,
     process: process,
-    finish: finish
+    exit: finish
   };
 };
 

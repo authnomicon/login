@@ -1,11 +1,11 @@
+<% if (typeof message !== 'undefined') { %>
+  <b>Failed attempts: <%= failureCount %></b>
+<% } %>
+
 <form action="/login/otp" method="post">
 	<div>
-	<label>User Name:</label>
-	<input type="text" name="uid"/><br/>
-	</div>
-	<div>
 	<label>OTP:</label>
-	<input type="password" name="otp"/>
+	<input type="text" name="otp"/>
 	</div>
 	<div>
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">

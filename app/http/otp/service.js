@@ -2,12 +2,12 @@ exports = module.exports = function(promptHandler, authenticateHandler, newHandl
   var express = require('express');
   var router = new express.Router();
   
-  router.get('/otp', promptHandler);
-  router.post('/otp', authenticateHandler);
+  router.get('/', promptHandler);
+  router.post('/', authenticateHandler);
   
   // TODO: Move this to a separate service
   
-  router.get('/otp/enroll', newHandler);
+  //router.get('/otp/enroll', newHandler);
   
   return router;
 };

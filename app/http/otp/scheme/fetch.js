@@ -7,6 +7,8 @@ exports = module.exports = function(verify, authenticatorsDir) {
     var user = { id: '1' }
     var authnr = { algorithm: 'totp' };
     
+    //return cb(null, false);
+    
     return cb(null, user, authnr)
     
     /*
