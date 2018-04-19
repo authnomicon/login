@@ -11,8 +11,8 @@ exports = module.exports = function(launch, resume, process, finish) {
 exports['@implements'] = 'http://i.bixbyjs.org/http/ceremony/Prompt';
 exports['@name'] = 'login';
 exports['@require'] = [
-  './ceremony/launch',
+  './ceremony/spawn',
   './ceremony/resume',
-  './ceremony/process',
+  './ceremony/prompt',
   './ceremony/finish'
 ];
