@@ -1,4 +1,4 @@
-<% if (typeof message !== 'undefined') { %>
+<% if (typeof failureCount !== 'undefined') { %>
   <b>Failed attempts: <%= failureCount %></b>
 <% } %>
 
@@ -9,6 +9,9 @@
 	</div>
 	<div>
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <% if (typeof state !== 'undefined') { %>
+    <input type="hidden" name="state" value="<%= state %>"/>
+  <% } %>
 	<input type="submit" value="Submit"/>
 	</div>
 </form>

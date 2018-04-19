@@ -20,7 +20,7 @@ var path = require('path')
       function unauthorizedErrorHandler(err, req, res, next) {
         if (err.status !== 401) { return next(err); }
         
-        //req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
+        req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
         next();
       },
       function prompt(req, res, next) {

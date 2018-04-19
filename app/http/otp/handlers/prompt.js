@@ -1,4 +1,4 @@
-exports = module.exports = function(csrfProtection) {
+exports = module.exports = function(csrfProtection, ceremony) {
   var path = require('path')
     , ejs = require('ejs');
   
@@ -22,12 +22,13 @@ exports = module.exports = function(csrfProtection) {
   }
   
   
-  return [
+  return ceremony('login/otp',
     csrfProtection(),
     prompt
-  ];
+  );
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/csrfProtection'
+  'http://i.bixbyjs.org/http/middleware/csrfProtection',
+  'http://i.bixbyjs.org/http/middleware/ceremony'
 ];
