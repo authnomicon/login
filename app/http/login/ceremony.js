@@ -3,7 +3,7 @@ exports = module.exports = function(launch, resume, process, finish) {
   return {
     spawn: launch,
     resume: resume,
-    process: process,
+    prompt: process,
     exit: finish
   };
 };
