@@ -1,6 +1,9 @@
 <% if (typeof message !== 'undefined') { %>
   <b><%= message %></b>
 <% } %>
+<% if (typeof failureCount !== 'undefined') { %>
+  <b>Failed attempts: <%= failureCount %></b>
+<% } %>
 
 <form action="/login/password" method="post">
 	<div>
