@@ -1,8 +1,6 @@
 exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   var errors = require('http-errors');
-var path = require('path')
-  , ejs = require('ejs');
-
+  
   
   return [
     parse('application/x-www-form-urlencoded'),
@@ -23,7 +21,6 @@ var path = require('path')
         req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
         res.locals.failureCount = req.state.failureCount;
         res.prompt();
-        
         // TODO: Have some maxAttempt limit
       },
     { through: 'login' })
