@@ -30,6 +30,7 @@
       "http/oob/service",
       "http/oob/scheme",
       "http/otp/service",
+      "http/otp/ceremony",
       "http/otp/scheme",
       "http/password/service",
       "http/password/scheme",

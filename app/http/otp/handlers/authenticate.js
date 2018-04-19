@@ -21,27 +21,10 @@ var path = require('path')
         if (err.status !== 401) { return next(err); }
         
         req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
-        next();
-      },
-      function prompt(req, res, next) {
-        if (req.user) { return next(); }
-        
-        res.locals.csrfToken = req.csrfToken();
         res.locals.failureCount = req.state.failureCount;
-    
-        res.render('login/otp', function(err, str) {
-          if (err && err.view) {
-            var view = path.resolve(__dirname, '../views/prompt.ejs');
-            ejs.renderFile(view, res.locals, function(err, str) {
-              if (err) { return next(err); }
-              res.send(str);
-            });
-            return;
-          } else if (err) {
-            return next(err);
-          }
-          res.send(str);
-        });
+        res.prompt();
+        
+        // TODO: Have some maxAttempt limit
       },
     { through: 'login' })
   ];
