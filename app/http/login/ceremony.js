@@ -1,10 +1,10 @@
-exports = module.exports = function(launch, resume, process, finish) {
+exports = module.exports = function(spawn, resume, prompt, exit) {
   
   return {
-    spawn: launch,
+    spawn: spawn,
     resume: resume,
-    prompt: process,
-    exit: finish
+    prompt: prompt,
+    exit: exit
   };
 };
 
@@ -14,5 +14,5 @@ exports['@require'] = [
   './ceremony/spawn',
   './ceremony/resume',
   './ceremony/prompt',
-  './ceremony/finish'
+  './ceremony/exit'
 ];

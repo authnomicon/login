@@ -26,6 +26,9 @@ describe('http/login/ceremony/spawn', function() {
         var handler = factory();
         
         chai.express.handler(handler)
+          .req(function(req) {
+            req.state = {};
+          })
           .end(function(res) {
             response = res;
             done();
