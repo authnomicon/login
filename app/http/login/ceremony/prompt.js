@@ -4,12 +4,6 @@ exports = module.exports = function() {
   
   
   function render(req, res, next) {
-    console.log('LOGIN RENDER!');
-    console.log(req.user);
-    
-    if (req.user) { return next(); } // finish
-    
-    
     res.locals.csrfToken = req.csrfToken();
     
     res.render('loginx', function(err, str) {

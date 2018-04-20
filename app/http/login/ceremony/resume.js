@@ -5,9 +5,6 @@ exports = module.exports = function() {
 
 
   function unauthorizedErrorHandler(err, req, res, next) {
-    console.log('LOGIN RESUME!');
-    console.log(err);
-    
     if (err.status !== 401) { return next(err); }
     
     req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
@@ -23,25 +20,11 @@ exports = module.exports = function() {
     // he or she succesfully authenticates.  Additional protections, against
     // brute force attacks, are expected to be implemented or injected by the
     // application.
-    if (req.state.maxAttempts && state.failureCount >= state.maxAttempts) {
-      if (!req.state.parent) { req.state.keep(); }
+    if (req.state.parent && req.state.maxAttempts && state.failureCount >= state.maxAttempts) {
+      //if (!req.state.parent) { req.state.keep(); }
       return next(new errors.Unauthorized('Too many failed login attempts'));
     } else {
-      res.locals.csrfToken = req.csrfToken();
-  
-      res.render('loginx', function(err, str) {
-        if (err && err.view) {
-          var view = path.resolve(__dirname, '../../password/views/login.ejs');
-          ejs.renderFile(view, res.locals, function(err, str) {
-            if (err) { return next(err); }
-            res.send(str);
-          });
-          return;
-        } else if (err) {
-          return next(err);
-        }
-        res.send(str);
-      });
+      res.prompt();
     }
   }
 
