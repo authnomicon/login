@@ -13,6 +13,8 @@ exports = module.exports = function() {
     //return res.redirect('/login/oob');
     
     
+    req.state.maxAttempts = 3;
+    
     var options = req.locals || {}
       , state, q;
     

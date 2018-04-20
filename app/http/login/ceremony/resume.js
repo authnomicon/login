@@ -20,8 +20,7 @@ exports = module.exports = function() {
     // he or she succesfully authenticates.  Additional protections, against
     // brute force attacks, are expected to be implemented or injected by the
     // application.
-    if (req.state.parent && req.state.maxAttempts && state.failureCount >= state.maxAttempts) {
-      //if (!req.state.parent) { req.state.keep(); }
+    if (req.state.parent && req.state.maxAttempts && req.state.failureCount >= req.state.maxAttempts) {
       return next(new errors.Unauthorized('Too many failed login attempts'));
     } else {
       res.prompt();
