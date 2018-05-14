@@ -8,6 +8,7 @@ exports = module.exports = function() {
     if (err.status !== 401) { return next(err); }
     
     req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
+    // TODO: Preserve the error message, if there is one
     res.locals.message = 'Invalid username or password';
     res.locals.failureCount = req.state.failureCount;
     
