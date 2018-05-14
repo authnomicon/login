@@ -1,7 +1,5 @@
 exports = module.exports = function() {
-  var path = require('path')
-    , ejs = require('ejs')
-    , errors = require('http-errors');
+  var errors = require('http-errors');
 
 
   function unauthorizedErrorHandler(err, req, res, next) {
