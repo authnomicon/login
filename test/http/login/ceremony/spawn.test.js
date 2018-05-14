@@ -49,6 +49,37 @@ describe('http/login/ceremony/spawn', function() {
       });
     }); // default behavior
     
+    describe('spawning OTP login ceremony', function() {
+      var request, response;
+      
+      before(function(done) {
+        var handler = factory();
+        
+        chai.express.handler(handler)
+          .req(function(req) {
+            request = req;
+            req.state = {};
+            req.locals = { method: 'otp' };
+          })
+          .end(function(res) {
+            response = res;
+            done();
+          })
+          .dispatch();
+      });
+      
+      it('should set state', function() {
+        expect(request.state).to.deep.equal({
+          maxAttempts: 3
+        });
+      });
+      
+      it('should redirect', function() {
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/login/otp');
+      });
+    }); // spawning OTP login ceremony
+    
   }); // handler
   
 });
