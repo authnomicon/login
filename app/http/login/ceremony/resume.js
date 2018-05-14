@@ -1,3 +1,8 @@
+/**
+ * Resume login ceremony.
+ *
+ * This component provides an HTTP handler that resumes a login ceremony.
+ */
 exports = module.exports = function() {
   var errors = require('http-errors');
 
