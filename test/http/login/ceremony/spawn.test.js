@@ -20,13 +20,14 @@ describe('http/login/ceremony/spawn', function() {
   describe('handler', function() {
     
     describe('default behavior', function() {
-      var response;
+      var request, response;
       
       before(function(done) {
         var handler = factory();
         
         chai.express.handler(handler)
           .req(function(req) {
+            request = req;
             req.state = {};
           })
           .end(function(res) {
@@ -36,11 +37,16 @@ describe('http/login/ceremony/spawn', function() {
           .dispatch();
       });
       
+      it('should set state', function() {
+        expect(request.state).to.deep.equal({
+          maxAttempts: 3
+        });
+      });
+      
       it('should redirect', function() {
         expect(response.statusCode).to.equal(302);
         expect(response.getHeader('Location')).to.equal('/login');
       });
-      
     }); // default behavior
     
   }); // handler

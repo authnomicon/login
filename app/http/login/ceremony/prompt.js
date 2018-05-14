@@ -6,7 +6,7 @@ exports = module.exports = function() {
   function render(req, res, next) {
     res.locals.csrfToken = req.csrfToken();
     
-    res.render('loginx', function(err, str) {
+    res.render('login', function(err, str) {
       if (err && err.view) {
         var view = path.resolve(__dirname, '../../password/views/login.ejs');
         //var view = path.resolve(__dirname, '../views/identifier-first.ejs');
