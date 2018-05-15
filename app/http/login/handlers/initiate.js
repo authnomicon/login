@@ -1,3 +1,8 @@
+/**
+ * Identifier-first login initiation.
+ *
+ * This component provides an HTTP handler that initiates identifier-first login.
+ */
 exports = module.exports = function(ns, parse, UIS, client) {
   
   // https://docs.google.com/presentation/d/1I0pYw5xbxI8w0UuMBmj1q55mixhvV3vFHYgA6Y76Trc/edit#slide=id.gb08776a72_1_22
