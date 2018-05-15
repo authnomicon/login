@@ -72,6 +72,7 @@ describe('http/login/handlers/prompt', function() {
         expect(request.state).to.deep.equal({
           name: 'login'
         });
+        expect(request.state.isComplete()).to.equal(false);
       });
       
       it('should set locals', function() {
