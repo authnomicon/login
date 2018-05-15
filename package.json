@@ -50,6 +50,7 @@
     "mocha": "^4.0.1",
     "chai": "^4.1.1",
     "chai-express-handler": "0.0.2",
+    "flowstate": "^0.5.0",
     "sinon": "^4.0.2",
     "sinon-chai": "^2.14.0",
     "proxyquire": "^1.8.0"
