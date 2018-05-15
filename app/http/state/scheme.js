@@ -1,3 +1,6 @@
+/**
+ * State authentication scheme.
+ */
 exports = module.exports = function(verify) {
   var Strategy = require('passport-state');
   
