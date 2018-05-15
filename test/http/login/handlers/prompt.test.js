@@ -56,9 +56,6 @@ describe('http/login/handlers/prompt', function() {
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
-            req.csrfToken = function() {
-              return 'xxxxxxxx';
-            }
           })
           .res(function(res) {
             response = res;
