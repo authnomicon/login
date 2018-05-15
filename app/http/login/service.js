@@ -1,11 +1,12 @@
 /**
  * Login service.
  */
-exports = module.exports = function(promptHandler) {
+exports = module.exports = function(promptHandler, initiateHandler) {
   var express = require('express');
   var router = new express.Router();
   
   router.get('/', promptHandler);
+  router.post('/', promptHandler);
   
   return router;
 };
@@ -16,5 +17,6 @@ exports['@implements'] = [
 ];
 exports['@path'] = '/login';
 exports['@require'] = [
-  './handlers/prompt'
+  './handlers/prompt',
+  './handlers/initiate'
 ];
