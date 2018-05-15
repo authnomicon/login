@@ -28,7 +28,7 @@
       "http/login/service",
       "http/login/ceremony",
       "http/password/service",
-      "http/password/scheme",
+      "http/password/auth/scheme",
       "http/oob/service",
       "http/oob/scheme",
       "http/otp/service",
