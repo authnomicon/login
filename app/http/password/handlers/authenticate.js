@@ -1,3 +1,9 @@
+/**
+ * Password authentication.
+ *
+ * This component provides an HTTP handler that authenticates a username and
+ * password.
+ */
 exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   
   return [

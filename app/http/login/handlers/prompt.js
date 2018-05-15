@@ -1,3 +1,8 @@
+/**
+ * Login prompt.
+ *
+ * This component provides an HTTP handler that prompts for login.
+ */
 exports = module.exports = function(csrfProtection, authenticate, errorLogging, ceremony) {
   
   return [

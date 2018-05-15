@@ -1,7 +1,7 @@
 /**
  * Login prompt.
  *
- * This component provides an HTTP handler that prompts for login.
+ * This component provides a middleware stack that prompts for login.
  */
 exports = module.exports = function() {
   var path = require('path')

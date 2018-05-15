@@ -1,7 +1,7 @@
 /**
  * Spawn login ceremony.
  *
- * This component provides an HTTP handler that spawns a login ceremony.
+ * This component provides a middleware stack that spawns a login ceremony.
  */
 exports = module.exports = function() {
 

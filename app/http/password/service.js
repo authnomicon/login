@@ -1,3 +1,6 @@
+/**
+ * Password service.
+ */
 exports = module.exports = function(authenticateHandler) {
   var express = require('express');
   var router = new express.Router();

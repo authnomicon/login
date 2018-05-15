@@ -1,7 +1,7 @@
 /**
  * Exit login ceremony.
  *
- * This component provides an HTTP handler that exits a login ceremony.
+ * This component provides a middleware stack that exits a login ceremony.
  */
 exports = module.exports = function() {
   

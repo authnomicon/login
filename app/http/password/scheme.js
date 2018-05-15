@@ -1,7 +1,10 @@
-exports = module.exports = function(verifyPassword) {
+/**
+ * Password authentication scheme.
+ */
+exports = module.exports = function(verify) {
   var Strategy = require('passport-local');
   
-  var strategy = new Strategy(verifyPassword);
+  var strategy = new Strategy(verify);
   return strategy;
 };
 

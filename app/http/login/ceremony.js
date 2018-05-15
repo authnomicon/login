@@ -1,3 +1,6 @@
+/**
+ * Login ceremony.
+ */
 exports = module.exports = function(spawn, resume, prompt, exit) {
   
   return {
