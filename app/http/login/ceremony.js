@@ -2,8 +2,8 @@ exports = module.exports = function(spawn, resume, prompt, exit) {
   
   return {
     spawn: spawn,
-    resume: resume,
     prompt: prompt,
+    resume: resume,
     exit: exit
   };
 };
