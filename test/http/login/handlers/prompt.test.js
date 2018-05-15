@@ -71,6 +71,12 @@ describe('http/login/handlers/prompt', function() {
           .dispatch();
       });
       
+      it('should set state', function() {
+        expect(request.state).to.deep.equal({
+          name: 'login'
+        });
+      });
+      
       it('should set locals', function() {
         expect(response.locals).to.deep.equal({
           csrfToken: 'xxxxxxxx'
