@@ -19,6 +19,19 @@ describe('http/password/handlers/authenticate', function() {
   });
   
   describe('handler', function() {
+    var manager = new flowstate.Manager();
+    manager.use('login', {
+      resume:  [
+        function(req, res, next) {
+          res.end();
+        }
+      ]
+    })
+    
+    function ceremony(name) {
+      return manager.flow.apply(manager, arguments);
+    }
+    
     function parse() {
       return function(req, res, next) {
         next();
@@ -40,21 +53,7 @@ describe('http/password/handlers/authenticate', function() {
     
     
     describe('default behavior', function() {
-      var manager = new flowstate.Manager();
-      manager.use('login', {
-        resume:  [
-          function(req, res, next) {
-            res.end();
-          }
-        ]
-      })
-      
-      function ceremony(name) {
-        return manager.flow.apply(manager, arguments);
-      }
-      
-      
-      var request, response, view;
+      var request, response;
       var parseSpy;
       
       before(function(done) {
@@ -80,18 +79,18 @@ describe('http/password/handlers/authenticate', function() {
         expect(parseSpy).to.be.calledWithExactly('application/x-www-form-urlencoded');
       });
       
-      it('should set yieldState', function() {
-        expect(request.yieldState).to.deep.equal({
-          name: 'login/password'
-        });
-        expect(request.yieldState.isComplete()).to.equal(true);
-      });
-      
       it('should set state', function() {
         expect(request.state).to.deep.equal({
           name: 'login'
         });
         expect(request.state.isComplete()).to.equal(false);
+      });
+      
+      it('should set yieldState', function() {
+        expect(request.yieldState).to.deep.equal({
+          name: 'login/password'
+        });
+        expect(request.yieldState.isComplete()).to.equal(true);
       });
       
       it('should set authentication info', function() {

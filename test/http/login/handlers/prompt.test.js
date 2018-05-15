@@ -19,6 +19,19 @@ describe('http/login/handlers/prompt', function() {
   });
   
   describe('handler', function() {
+    var manager = new flowstate.Manager();
+    manager.use('login', {
+      prompt:  [
+        function(req, res, next) {
+          res.render('login');
+        }
+      ]
+    })
+    
+    function ceremony(name) {
+      return manager.flow.apply(manager, arguments);
+    }
+    
     function csrfProtection() {
       return function(req, res, next) {
         res.locals.csrfToken = 'xxxxxxxx';
@@ -33,21 +46,8 @@ describe('http/login/handlers/prompt', function() {
     }
     
     
+    
     describe('default behavior', function() {
-      var manager = new flowstate.Manager();
-      manager.use('login', {
-        prompt:  [
-          function(req, res, next) {
-            res.render('login');
-          }
-        ]
-      })
-      
-      function ceremony(name) {
-        return manager.flow.apply(manager, arguments);
-      }
-      
-      
       var request, response, view;
       
       before(function(done) {
