@@ -20,4 +20,16 @@ describe('http/login/service', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
+  describe('create', function() {
+    function promptHandler() {};
+    function initiateHandler() {};
+    
+    var service = factory(promptHandler, initiateHandler);
+  
+    it('should construct handler', function() {
+      expect(service).to.be.a('function');
+      expect(service.length).to.equal(3);
+    });
+  });
+  
 });

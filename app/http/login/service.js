@@ -6,7 +6,7 @@ exports = module.exports = function(promptHandler, initiateHandler) {
   var router = new express.Router();
   
   router.get('/', promptHandler);
-  router.post('/', promptHandler);
+  router.post('/', initiateHandler);
   
   return router;
 };
