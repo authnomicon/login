@@ -13,7 +13,7 @@ exports = module.exports = function(promptHandler, initiateHandler) {
 
 exports['@implements'] = [
   'http://i.bixbyjs.org/http/Service',
-  'http://schemas.authnomicon.org/js/http/login/Service'
+  'http://schemas.authnomicon.org/js/login/HTTPService'
 ];
 exports['@path'] = '/login';
 exports['@require'] = [

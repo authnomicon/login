@@ -14,7 +14,7 @@ describe('http/login/service', function() {
   it('should be annotated', function() {
     expect(factory['@implements']).to.deep.equal([
       'http://i.bixbyjs.org/http/Service',
-      'http://schemas.authnomicon.org/js/http/login/Service'
+      'http://schemas.authnomicon.org/js/login/HTTPService'
     ]);
     expect(factory['@path']).to.equal('/login');
     expect(factory['@singleton']).to.be.undefined;
