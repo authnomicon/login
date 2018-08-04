@@ -14,7 +14,7 @@ exports = module.exports = function(promptHandler, authenticateHandler, newHandl
 
 exports['@implements'] = [
   'http://i.bixbyjs.org/http/Service',
-  'http://schemas.authnomicon.org/js/http/login/OTPService'
+  'http://schemas.authnomicon.org/js/login/otp/HTTPService'
 ];
 exports['@path'] = '/login/otp';
 exports['@require'] = [

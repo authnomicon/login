@@ -14,7 +14,7 @@ describe('otp/http/service', function() {
   it('should be annotated', function() {
     expect(factory['@implements']).to.deep.equal([
       'http://i.bixbyjs.org/http/Service',
-      'http://schemas.authnomicon.org/js/http/login/OTPService'
+      'http://schemas.authnomicon.org/js/login/otp/HTTPService'
     ]);
     expect(factory['@path']).to.equal('/login/otp');
     expect(factory['@singleton']).to.be.undefined;
