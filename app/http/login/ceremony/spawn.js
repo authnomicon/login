@@ -10,6 +10,8 @@ exports = module.exports = function() {
 
   function redirect(req, res, next) {
     var options = req.locals || {};
+    //options.method = 'otp';
+    
     
     req.state.maxAttempts = 3;
     

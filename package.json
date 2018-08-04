@@ -29,11 +29,11 @@
       "http/login/ceremony",
       "password/http/service",
       "password/http/scheme",
+      "otp/http/service",
+      "otp/http/ceremony",
+      "otp/http/scheme",
       "http/oob/service",
       "http/oob/scheme",
-      "http/otp/service",
-      "http/otp/ceremony",
-      "http/otp/scheme",
       "http/session/manager",
       "http/state/scheme"
     ]

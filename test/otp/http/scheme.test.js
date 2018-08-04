@@ -3,7 +3,7 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../app/http/otp/scheme');
+var factory = require('../../../app/otp/http/scheme');
 var Strategy = require('passport-otp');
 
 
@@ -24,7 +24,7 @@ describe('http/otp/scheme', function() {
     var algorithms = { verify: function(){} };
     var fetch = function(){};
     
-    var factory = $require('../../../app/http/otp/scheme',
+    var factory = $require('../../../app/otp/http/scheme',
       { 'passport-otp': StrategySpy });
     var strategy = factory(algorithms, fetch);
     
