@@ -20,7 +20,7 @@ exports = module.exports = function(authenticateHandler) {
 
 exports['@implements'] = [
   'http://i.bixbyjs.org/http/Service',
-  'http://schemas.authnomicon.org/js/http/login/PasswordService'
+  'http://schemas.authnomicon.org/js/login/password/HTTPService'
 ];
 exports['@path'] = '/login/password';
 exports['@require'] = [
