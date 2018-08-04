@@ -5,7 +5,7 @@ var sinon = require('sinon');
 var factory = require('../../../app/otp/http/service');
 
 
-describe('http/otp/service', function() {
+describe('otp/http/service', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -18,6 +18,18 @@ describe('http/otp/service', function() {
     ]);
     expect(factory['@path']).to.equal('/login/otp');
     expect(factory['@singleton']).to.be.undefined;
+  });
+  
+  describe('create', function() {
+    function promptHandler() {};
+    function authenticateHandler() {};
+    
+    var service = factory(promptHandler, authenticateHandler);
+  
+    it('should construct handler', function() {
+      expect(service).to.be.a('function');
+      expect(service.length).to.equal(3);
+    });
   });
   
 });
