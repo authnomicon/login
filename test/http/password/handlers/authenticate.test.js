@@ -3,8 +3,8 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/http/password/handlers/authenticate');
 var flowstate = require('flowstate');
+var factory = require('../../../../app/http/password/handlers/authenticate');
 
 
 describe('http/password/handlers/authenticate', function() {
@@ -32,8 +32,10 @@ describe('http/password/handlers/authenticate', function() {
       return manager.flow.apply(manager, arguments);
     }
     
-    function parse() {
+    function parse(type) {
       return function(req, res, next) {
+        req.__ = req.__ || {};
+        req.__.supportedMediaType = type;
         next();
       };
     }
@@ -52,14 +54,11 @@ describe('http/password/handlers/authenticate', function() {
     }
     
     
-    describe('default behavior', function() {
+    describe('authenticating', function() {
       var request, response;
-      var parseSpy;
       
       before(function(done) {
-        parseSpy = sinon.spy(parse);
-        
-        var handler = factory(parseSpy, csrfProtection, authenticate, ceremony);
+        var handler = factory(parse, csrfProtection, authenticate, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
@@ -74,16 +73,14 @@ describe('http/password/handlers/authenticate', function() {
           .dispatch();
       });
       
-      it('should add parse middleware to stack', function() {
-        expect(parseSpy.callCount).to.equal(1);
-        expect(parseSpy).to.be.calledWithExactly('application/x-www-form-urlencoded');
+      it('should parse request body', function() {
+        expect(request.__.supportedMediaType).to.equal('application/x-www-form-urlencoded');
       });
       
-      it('should set state', function() {
-        expect(request.state).to.deep.equal({
-          name: 'login'
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: 'password'
         });
-        expect(request.state.isComplete()).to.equal(false);
       });
       
       it('should set yieldState', function() {
@@ -93,16 +90,17 @@ describe('http/password/handlers/authenticate', function() {
         expect(request.yieldState.isComplete()).to.equal(true);
       });
       
-      it('should set authentication info', function() {
-        expect(request.authInfo).to.deep.equal({
-          method: 'password'
+      it('should set state', function() {
+        expect(request.state).to.deep.equal({
+          name: 'login'
         });
+        expect(request.state.isComplete()).to.equal(false);
       });
       
       it('should end', function() {
         expect(response.statusCode).to.equal(200);
       });
-    }); // default behavior
+    }); // authenticating
     
   }); // handler
   

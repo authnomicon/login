@@ -1,8 +1,8 @@
 /**
- * Password service.
+ * Password authentication service.
  *
  * This component provides an HTTP service that authenticates an end-user using
- * a password.
+ * a username and password.
  *
  * This service is intended to be used by web applications using HTML forms (as
  * opposed to user agents using headers defined by the HTTP Authentication
