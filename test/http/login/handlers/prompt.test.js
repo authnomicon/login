@@ -3,8 +3,8 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/http/login/handlers/prompt');
 var flowstate = require('flowstate');
+var factory = require('../../../../app/http/login/handlers/prompt');
 
 
 describe('http/login/handlers/prompt', function() {
@@ -39,19 +39,29 @@ describe('http/login/handlers/prompt', function() {
       };
     }
     
+    function authenticate(method) {
+      return function(req, res, next) {
+        req.authInfo = { method: method };
+        next();
+      };
+    }
+    
     function errorLogging() {
       return function(err, req, res, next) {
+        req.__ = req.__ || {};
+        req.__.log = req.__.log || [];
+        req.__.log.push(err.message);
         next(err);
       };
     }
     
     
     
-    describe('default behavior', function() {
+    describe('prompting', function() {
       var request, response, view;
       
       before(function(done) {
-        var handler = factory(csrfProtection, null, errorLogging, ceremony);
+        var handler = factory(csrfProtection, authenticate, errorLogging, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
@@ -75,6 +85,12 @@ describe('http/login/handlers/prompt', function() {
         expect(request.state.isComplete()).to.equal(false);
       });
       
+      it.skip('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: [ 'anonymous' ]
+        });
+      });
+      
       it('should set locals', function() {
         expect(response.locals).to.deep.equal({
           csrfToken: 'xxxxxxxx'
@@ -85,7 +101,7 @@ describe('http/login/handlers/prompt', function() {
         expect(response.statusCode).to.equal(200);
         expect(view).to.equal('login');
       });
-    }); // default behavior
+    }); // prompting
     
   }); // handler
   
