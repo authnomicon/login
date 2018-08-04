@@ -27,8 +27,8 @@
     "components": [
       "http/login/service",
       "http/login/ceremony",
-      "http/password/service",
-      "http/password/auth/scheme",
+      "password/http/service",
+      "password/http/scheme",
       "http/oob/service",
       "http/oob/scheme",
       "http/otp/service",

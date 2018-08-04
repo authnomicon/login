@@ -4,10 +4,10 @@ var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var flowstate = require('flowstate');
-var factory = require('../../../../app/http/password/handlers/authenticate');
+var factory = require('../../../../app/password/http/handlers/authenticate');
 
 
-describe('http/password/handlers/authenticate', function() {
+describe('password/http/handlers/authenticate', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
