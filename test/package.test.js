@@ -13,6 +13,7 @@ describe('@authnomicon/login', function() {
       
       expect(json.assembly.components).to.have.length(11);
       expect(json.assembly.components).to.include('password/http/service');
+      expect(json.assembly.components).to.include('password/http/scheme');
     });
   });
   
