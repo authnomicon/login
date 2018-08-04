@@ -20,4 +20,15 @@ describe('http/password/service', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
+  describe('create', function() {
+    function authenticateHandler() {};
+    
+    var service = factory(authenticateHandler);
+  
+    it('should construct handler', function() {
+      expect(service).to.be.a('function');
+      expect(service.length).to.equal(3);
+    });
+  });
+  
 });
