@@ -7,7 +7,7 @@ var factory = require('../../../app/otp/http/scheme');
 var Strategy = require('passport-otp');
 
 
-describe('http/otp/scheme', function() {
+describe('otp/http/scheme', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -21,16 +21,16 @@ describe('http/otp/scheme', function() {
   
   describe('creating scheme', function() {
     var StrategySpy = sinon.spy(Strategy);
-    var algorithms = { verify: function(){} };
+    var otp = { verify: function(){} };
     var fetch = function(){};
     
     var factory = $require('../../../app/otp/http/scheme',
       { 'passport-otp': StrategySpy });
-    var strategy = factory(algorithms, fetch);
+    var strategy = factory(otp, fetch);
     
     it('should construct strategy', function() {
       expect(StrategySpy).to.have.been.calledOnce;
-      expect(StrategySpy).to.have.been.calledWithExactly({ passReqToCallback: true }, algorithms, fetch);
+      expect(StrategySpy).to.have.been.calledWithExactly({ passReqToCallback: true }, otp, fetch);
     });
     
     it('should return strategy', function() {
