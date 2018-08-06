@@ -10,7 +10,7 @@ exports = module.exports = function() {
 
   function redirect(req, res, next) {
     var options = req.locals || {};
-    //options.method = 'otp';
+    //options.method = 'oob';
     
     
     req.state.maxAttempts = 3;
@@ -18,6 +18,8 @@ exports = module.exports = function() {
     switch (options.method) {
     case 'otp':
       return res.redirect('/login/otp');
+    case 'oob':
+      return res.redirect('/login/oob');
     default:
       return res.redirect('/login');
     }
