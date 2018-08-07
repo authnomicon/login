@@ -17,7 +17,7 @@ describe('http/login/ceremony/spawn', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
-  describe('handler', function() {
+  describe.skip('handler', function() {
     
     describe('default behavior', function() {
       var request, response;

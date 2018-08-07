@@ -25,6 +25,7 @@
   "assembly": {
     "namespace": "org.authnomicon/login",
     "components": [
+      "authenticatorservice",
       "http/login/service",
       "http/login/ceremony",
       "password/http/service",
@@ -41,6 +42,7 @@
   "dependencies": {
     "ejs": "^2.5.8",
     "express": "^4.15.3",
+    "fluidfactory": "^0.1.0",
     "http-errors": "^1.5.0",
     "passport-local": "^1.0.0",
     "passport-state": "0.0.2"

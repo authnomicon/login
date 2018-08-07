@@ -1,10 +1,31 @@
-exports = module.exports = function(OOB, Authenticators, initialize, csrfProtection) {
+exports = module.exports = function(SVC, OOB, Authenticators, initialize, csrfProtection) {
   var path = require('path');
   
   function loadAuthenticators(req, res, next) {
     // TODO: Determine user correctly.
     var user = req.user;
     user = { id: '1' }
+    
+    SVC.list(user, function(err, authnrs) {
+      if (err) { return next(err); }
+      res.locals.authnrs = authnrs;
+      
+      console.log(err);
+      console.log(authnrs);
+      
+      if (!authnrs || authnrs.length == 0 || authnrs[0].active === false) {
+        // TODO: Make this a better error.
+        res.json({ error: 'enrollment_required' });
+        return;
+      }
+      
+      next();
+    });
+    
+    return;
+    
+    
+    /*
     
     Authenticators.list(user, function(err, authnrs) {
       if (err) { return next(err); }
@@ -21,6 +42,7 @@ exports = module.exports = function(OOB, Authenticators, initialize, csrfProtect
       
       next();
     });
+    */
   }
   
   function selectAuthenticator(req, res, next) {
@@ -63,6 +85,7 @@ exports = module.exports = function(OOB, Authenticators, initialize, csrfProtect
 };
 
 exports['@require'] = [
+  'http://schemas.modulate.io/js/login/AuthenticatorService',
   'http://schemas.authnomicon.org/js/security/authentication/oob',
   'http://schemas.authnomicon.org/js/login/mfa/opt/auth0/UserAuthenticatorsDirectory',
   'http://i.bixbyjs.org/http/middleware/initialize',
