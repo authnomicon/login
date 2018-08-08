@@ -1,12 +1,18 @@
-exports = module.exports = function(SVC, OOB, Authenticators, initialize, csrfProtection) {
+exports = module.exports = function(authenticators, OOB, csrfProtection) {
   var path = require('path');
+  
+  
+  function initialize(req, res, next) {
+    req.locals = req.locals || {};
+    next();
+  };
   
   function loadAuthenticators(req, res, next) {
     // TODO: Determine user correctly.
     var user = req.user;
     user = { id: '1' }
     
-    SVC.list(user, function(err, authnrs) {
+    authenticators.list(user, function(err, authnrs) {
       if (err) { return next(err); }
       res.locals.authnrs = authnrs;
       
@@ -21,33 +27,12 @@ exports = module.exports = function(SVC, OOB, Authenticators, initialize, csrfPr
       
       next();
     });
-    
-    return;
-    
-    
-    /*
-    
-    Authenticators.list(user, function(err, authnrs) {
-      if (err) { return next(err); }
-      res.locals.authnrs = authnrs;
-      
-      console.log('GOT AUTHNRS!');
-      console.log(authnrs);
-      
-      if (!authnrs || authnrs.length == 0 || authnrs[0].active === false) {
-        // TODO: Make this a better error.
-        res.json({ error: 'enrollment_required' });
-        return;
-      }
-      
-      next();
-    });
-    */
   }
   
   function selectAuthenticator(req, res, next) {
     req.locals.authnr = res.locals.authnrs[0];
-    req.locals.authnr.channel = req.locals.authnr.channels[0]
+    req.locals.authnr.channel = req.locals.authnr.channel;
+    //req.locals.authnr.channel = req.locals.authnr.channels[0]
     next();
   }
   
@@ -75,8 +60,8 @@ exports = module.exports = function(SVC, OOB, Authenticators, initialize, csrfPr
   
   
   return [
-    initialize(),
     csrfProtection(),
+    initialize,
     loadAuthenticators,
     selectAuthenticator,
     challengeAuthenticator,
@@ -87,7 +72,6 @@ exports = module.exports = function(SVC, OOB, Authenticators, initialize, csrfPr
 exports['@require'] = [
   'http://schemas.modulate.io/js/login/AuthenticatorService',
   'http://schemas.authnomicon.org/js/security/authentication/oob',
-  'http://schemas.authnomicon.org/js/login/mfa/opt/auth0/UserAuthenticatorsDirectory',
-  'http://i.bixbyjs.org/http/middleware/initialize',
+  //'http://schemas.authnomicon.org/js/login/mfa/opt/auth0/UserAuthenticatorsDirectory',
   'http://i.bixbyjs.org/http/middleware/csrfProtection'
 ];
