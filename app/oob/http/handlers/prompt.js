@@ -1,4 +1,4 @@
-exports = module.exports = function(authenticators, OOB, csrfProtection) {
+exports = module.exports = function(authenticators, OOB, csrfProtection, ceremony) {
   var path = require('path');
   
   
@@ -14,7 +14,7 @@ exports = module.exports = function(authenticators, OOB, csrfProtection) {
     
     authenticators.list(user, function(err, authnrs) {
       if (err) { return next(err); }
-      res.locals.authnrs = authnrs;
+      res.locals.authenticators = authnrs;
       
       console.log(err);
       console.log(authnrs);
@@ -30,7 +30,7 @@ exports = module.exports = function(authenticators, OOB, csrfProtection) {
   }
   
   function selectAuthenticator(req, res, next) {
-    req.locals.authnr = res.locals.authnrs[0];
+    req.locals.authnr = res.locals.authenticators[0];
     req.locals.authnr.channel = req.locals.authnr.channel;
     //req.locals.authnr.channel = req.locals.authnr.channels[0]
     next();
@@ -50,28 +50,20 @@ exports = module.exports = function(authenticators, OOB, csrfProtection) {
     });
   }
   
-  function prompt(req, res, next) {
-    res.locals.state = req.query.state;
-    res.locals.csrfToken = req.csrfToken();
-    
-    var view = path.join(__dirname, '../../../views/oob/prompt.ejs');
-    res.render(view);
-  }
   
-  
-  return [
+  return ceremony('login/oob',
     csrfProtection(),
     initialize,
     loadAuthenticators,
     selectAuthenticator,
-    challengeAuthenticator,
-    prompt
-  ];
+    challengeAuthenticator
+  );
 };
 
 exports['@require'] = [
   'http://schemas.modulate.io/js/login/AuthenticatorService',
   'http://schemas.authnomicon.org/js/security/authentication/oob',
   //'http://schemas.authnomicon.org/js/login/mfa/opt/auth0/UserAuthenticatorsDirectory',
-  'http://i.bixbyjs.org/http/middleware/csrfProtection'
+  'http://i.bixbyjs.org/http/middleware/csrfProtection',
+  'http://i.bixbyjs.org/http/middleware/ceremony'
 ];

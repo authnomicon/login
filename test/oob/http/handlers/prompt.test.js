@@ -19,6 +19,19 @@ describe('oob/http/handlers/prompt', function() {
   });
   
   describe('handler', function() {
+    var manager = new flowstate.Manager();
+    manager.use('login/oob', {
+      prompt:  [
+        function(req, res, next) {
+          res.render('login/oob');
+        }
+      ]
+    });
+    
+    function ceremony(name) {
+      return manager.flow.apply(manager, arguments);
+    }
+    
     var authenticators = {
       list: function(){}
     };
@@ -43,7 +56,7 @@ describe('oob/http/handlers/prompt', function() {
       
       before(function() {
         sinon.stub(authenticators, 'list').yields(null, [ { id: '1', channel: 'test' }]);
-        sinon.stub(oob, 'challenge').yields(null, { ticket: 't1ck3t' });
+        sinon.stub(oob, 'challenge').yields(null, 't1ck3t');
       });
     
       after(function() {
@@ -51,7 +64,7 @@ describe('oob/http/handlers/prompt', function() {
       });
       
       before(function(done) {
-        var handler = factory(authenticators, oob, csrfProtection);
+        var handler = factory(authenticators, oob, csrfProtection, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
@@ -86,9 +99,23 @@ describe('oob/http/handlers/prompt', function() {
         });
       });
       
-      it.skip('should render', function() {
+      it('should provide CSRF protection', function() {
+        expect(request.csrfToken()).to.equal('xxxxxxxx');
+      });
+      
+      it('should set locals', function() {
+        expect(response.locals).to.deep.equal({
+          ticket: 't1ck3t',
+          authenticators: [ {
+            id: '1',
+            channel: 'test',
+          } ]
+        });
+      });
+      
+      it('should render', function() {
         expect(response.statusCode).to.equal(200);
-        expect(view).to.equal('login');
+        expect(view).to.equal('login/oob');
       });
     });
     

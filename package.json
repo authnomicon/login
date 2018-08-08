@@ -34,6 +34,7 @@
       "otp/http/ceremony",
       "otp/http/scheme",
       "oob/http/service",
+      "oob/http/ceremony",
       "oob/http/scheme",
       "http/session/manager",
       "http/state/scheme"
