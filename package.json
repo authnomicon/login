@@ -26,6 +26,8 @@
     "namespace": "org.authnomicon/login",
     "components": [
       "authenticatorservice",
+      "signup/http/service",
+      "signup/http/ceremony",
       "http/login/service",
       "http/login/ceremony",
       "password/http/service",
