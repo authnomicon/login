@@ -1,7 +1,7 @@
-exports = module.exports = function(prompt) {
+exports = module.exports = function(promptHandler) {
   
   return {
-    prompt: prompt
+    prompt: promptHandler
   };
 };
 
