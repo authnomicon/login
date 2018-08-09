@@ -1,12 +1,8 @@
-exports = module.exports = function(ceremony, errorLogging) {
+exports = module.exports = function(ceremony) {
   
-  return [
-    ceremony('signup'),
-    errorLogging()
-  ];
+  return ceremony('signup');
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/ceremony',
-  'http://i.bixbyjs.org/http/middleware/errorLogging'
+  'http://i.bixbyjs.org/http/middleware/ceremony'
 ];
