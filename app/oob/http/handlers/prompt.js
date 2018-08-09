@@ -33,6 +33,13 @@ exports = module.exports = function(authenticators, OOB, csrfProtection, ceremon
     req.locals.authnr = res.locals.authenticators[0];
     req.locals.authnr.channel = req.locals.authnr.channel;
     //req.locals.authnr.channel = req.locals.authnr.channels[0]
+    
+    /*
+    req.state.authenticator = {
+      id: req.locals.authnr.id
+    };
+    */
+    
     next();
   }
   

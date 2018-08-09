@@ -1,4 +1,4 @@
-exports = module.exports = function(parse, ceremony, csrfProtection, authenticate) {
+exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   var path = require('path');
   
   /*
@@ -16,6 +16,38 @@ exports = module.exports = function(parse, ceremony, csrfProtection, authenticat
     ceremony.completeError('mfa')
   ];
   */
+  
+  
+  return [
+    parse('application/x-www-form-urlencoded'),
+    ceremony('login/oob',
+      csrfProtection(),
+      authenticate('oob'),
+      function(req, res, next) {
+        console.log('AUTHENTICATE!');
+        console.log(req.body)
+        
+        return;
+        
+        if (req.body.otp == '123') {
+          req.user = { id: '1', displayName: 'joe'}
+          return next();
+        }
+        
+        return next(new errors.Unauthorized('Invalid otp'));
+      },
+      function unauthorizedErrorHandler(err, req, res, next) {
+        if (err.status !== 401) { return next(err); }
+        
+        req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
+        res.locals.failureCount = req.state.failureCount;
+        res.prompt();
+        // TODO: Have some maxAttempt limit
+      },
+    { through: 'login' })
+  ];
+  
+  
   
   return [
     parse('application/x-www-form-urlencoded'),
@@ -53,7 +85,7 @@ exports = module.exports = function(parse, ceremony, csrfProtection, authenticat
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/parse',
-  'http://i.bixbyjs.org/http/middleware/ceremony',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/authenticate'
+  'http://i.bixbyjs.org/http/middleware/authenticate',
+  'http://i.bixbyjs.org/http/middleware/ceremony',
 ];

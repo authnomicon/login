@@ -3,6 +3,7 @@ exports = module.exports = function(promptHandler, authenticateHandler) {
   var router = new express.Router();
   
   router.get('/oob', promptHandler);
+  router.post('/oob', authenticateHandler);
   router.get('/oob/verify', authenticateHandler);
   
   return router;

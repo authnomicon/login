@@ -1,4 +1,4 @@
-exports = module.exports = function(Authenticators, verify, authenticatorsDir, stateStore) {
+exports = module.exports = function(authenticators, Authenticators, verify, authenticatorsDir, stateStore) {
 
   return function(req, token, cb) {
     // TODO: Wrap the state store in a tokens-like interface, so that 
@@ -6,6 +6,16 @@ exports = module.exports = function(Authenticators, verify, authenticatorsDir, s
     
     console.log('OOB AUTH THIS!');
     console.log(token)
+    console.log(req.state);
+    
+    var authnrID = req.state.authenticator.id;
+    
+    authenticators.get(authnrID, function(err, authnr) {
+      console.log(err);
+      console.log(authnr);
+    });
+    
+    return;
     
     // TODO: First decode the ticket to get the userID (and authenticator ID?)
     
@@ -54,6 +64,7 @@ exports = module.exports = function(Authenticators, verify, authenticatorsDir, s
 };
 
 exports['@require'] = [
+  'http://schemas.modulate.io/js/login/AuthenticatorService',
   'http://schemas.authnomicon.org/js/login/mfa/opt/auth0/UserAuthenticatorsDirectory',
   
   //'http://schemas.authnomicon.org/js/login/mfa/opt/duo/oob/verify',
