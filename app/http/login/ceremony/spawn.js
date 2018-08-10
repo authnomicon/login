@@ -10,7 +10,7 @@ exports = module.exports = function() {
 
   function redirect(req, res, next) {
     var options = req.locals || {};
-    options.method = 'oob';
+    //options.method = 'oob';
     
     
     req.state.maxAttempts = 3;
