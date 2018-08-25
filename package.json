@@ -26,10 +26,10 @@
     "namespace": "org.authnomicon/login",
     "components": [
       "authenticatorservice",
+      "login/http/service",
+      "login/http/ceremony",
       "signup/http/service",
       "signup/http/ceremony",
-      "http/login/service",
-      "http/login/ceremony",
       "password/http/service",
       "password/http/scheme",
       "otp/http/service",
