@@ -1,5 +1,6 @@
-exports = module.exports = function(authenticators, OOB, csrfProtection, ceremony) {
-  var path = require('path');
+exports = module.exports = function(authenticators, OOB, authenticate, csrfProtection, ceremony) {
+  var path = require('path')
+    , BindingRequiredError = require('../../../../lib/errors/authenticatorbindingrequired')
   
   
   function initialize(req, res, next) {
@@ -10,7 +11,7 @@ exports = module.exports = function(authenticators, OOB, csrfProtection, ceremon
   function loadAuthenticators(req, res, next) {
     // TODO: Determine user correctly.
     var user = req.user;
-    user = { id: '1' }
+    //user = { id: '1' }
     
     authenticators.list(user, function(err, authnrs) {
       if (err) { return next(err); }
@@ -20,9 +21,7 @@ exports = module.exports = function(authenticators, OOB, csrfProtection, ceremon
       console.log(authnrs);
       
       if (!authnrs || authnrs.length == 0 || authnrs[0].active === false) {
-        // TODO: Make this a better error.
-        res.json({ error: 'enrollment_required' });
-        return;
+        return next(new BindingRequiredError('MFA binding required'));
       }
       
       next();
@@ -57,13 +56,21 @@ exports = module.exports = function(authenticators, OOB, csrfProtection, ceremon
     });
   }
   
+  function bindingRequiredErrorHandler(err, req, res, next) {
+    if (!(err instanceof BindingRequiredError)) { return next(err); }
+    
+    res.prompt('mfa/enroll', { method: 'oob' })
+  }
+  
   
   return ceremony('login/oob',
     csrfProtection(),
+    authenticate('session'),
     initialize,
     loadAuthenticators,
     selectAuthenticator,
-    challengeAuthenticator
+    challengeAuthenticator,
+    bindingRequiredErrorHandler
   );
 };
 
@@ -71,6 +78,7 @@ exports['@require'] = [
   'http://schemas.modulate.io/js/login/AuthenticatorService',
   'http://schemas.authnomicon.org/js/security/authentication/oob',
   //'http://schemas.authnomicon.org/js/login/mfa/opt/auth0/UserAuthenticatorsDirectory',
+  'http://i.bixbyjs.org/http/middleware/authenticate',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/ceremony'
 ];

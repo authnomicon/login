@@ -33,6 +33,20 @@ exports = module.exports = function() {
 
 
   return [
+    function(req, res, next) {
+      req.login(req.user, function(err) {
+        if (err) { return next(err); }
+        next();
+      });
+    },
+    function(req, res, next) {
+      if (req.yieldState && req.yieldState.name == 'login/password') {
+        //res.prompt('login', { method: 'oob' })
+        //return;
+      }
+      
+      next();
+    },
     unauthorizedErrorHandler
   ];
 };

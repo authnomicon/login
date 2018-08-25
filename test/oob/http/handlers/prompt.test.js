@@ -50,6 +50,13 @@ describe('oob/http/handlers/prompt', function() {
       };
     }
     
+    function authenticate(method) {
+      return function(req, res, next) {
+        req.authInfo = { method: method };
+        next();
+      };
+    }
+    
     
     describe('prompting', function() {
       var request, response, view;
@@ -64,11 +71,12 @@ describe('oob/http/handlers/prompt', function() {
       });
       
       before(function(done) {
-        var handler = factory(authenticators, oob, csrfProtection, ceremony);
+        var handler = factory(authenticators, oob, authenticate, csrfProtection, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
+            req.user = { id: '501' };
             req.query = {};
           })
           .res(function(res) {
@@ -86,7 +94,7 @@ describe('oob/http/handlers/prompt', function() {
         expect(authenticators.list.callCount).to.equal(1);
         var call = authenticators.list.getCall(0)
         expect(call.args[0]).to.deep.equal({
-          id: '1'
+          id: '501'
         });
       });
       

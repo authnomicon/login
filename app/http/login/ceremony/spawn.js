@@ -12,7 +12,6 @@ exports = module.exports = function() {
     var options = req.locals || {};
     //options.method = 'oob';
     
-    
     req.state.maxAttempts = 3;
     
     switch (options.method) {
