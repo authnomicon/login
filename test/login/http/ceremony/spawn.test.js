@@ -49,6 +49,37 @@ describe('login/http/ceremony/spawn', function() {
       });
     }); // default behavior
     
+    describe('spawning password authentication', function() {
+      var request, response;
+      
+      before(function(done) {
+        var handler = factory();
+        
+        chai.express.handler(handler)
+          .req(function(req) {
+            request = req;
+            req.state = {};
+            req.locals = { method: 'password' };
+          })
+          .end(function(res) {
+            response = res;
+            done();
+          })
+          .dispatch();
+      });
+      
+      it('should set state', function() {
+        expect(request.state).to.deep.equal({
+          maxAttempts: 3
+        });
+      });
+      
+      it('should redirect', function() {
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/login/password');
+      });
+    }); // spawning password authentication
+    
     describe('spawning one-time password authentication', function() {
       var request, response;
       

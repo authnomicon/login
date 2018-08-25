@@ -14,6 +14,8 @@ exports = module.exports = function() {
     req.state.maxAttempts = 3;
     
     switch (options.method) {
+    case 'password':
+      return res.redirect('/login/password');
     case 'otp':
       return res.redirect('/login/otp');
     case 'oob':
