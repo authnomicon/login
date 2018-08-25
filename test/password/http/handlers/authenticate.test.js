@@ -42,6 +42,10 @@ describe('password/http/handlers/authenticate', function() {
     
     function csrfProtection() {
       return function(req, res, next) {
+        req.csrfToken = function() {
+          return 'xxxxxxxx';
+        };
+        
         next();
       };
     }
@@ -75,6 +79,10 @@ describe('password/http/handlers/authenticate', function() {
       
       it('should parse request body', function() {
         expect(request.__.supportedMediaType).to.equal('application/x-www-form-urlencoded');
+      });
+      
+      it('should provide CSRF protection', function() {
+        expect(request.csrfToken()).to.equal('xxxxxxxx');
       });
       
       it('should authenticate', function() {

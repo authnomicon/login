@@ -7,7 +7,7 @@ var flowstate = require('flowstate');
 var factory = require('../../../../app/login/http/handlers/prompt');
 
 
-describe('http/login/handlers/prompt', function() {
+describe('login/http/handlers/prompt', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -34,7 +34,10 @@ describe('http/login/handlers/prompt', function() {
     
     function csrfProtection() {
       return function(req, res, next) {
-        res.locals.csrfToken = 'xxxxxxxx';
+        req.csrfToken = function() {
+          return 'xxxxxxxx';
+        };
+        
         next();
       };
     }
@@ -69,7 +72,6 @@ describe('http/login/handlers/prompt', function() {
           })
           .res(function(res) {
             response = res;
-            res.locals = {};
           })
           .render(function(res, v) {
             view = v;
@@ -78,11 +80,8 @@ describe('http/login/handlers/prompt', function() {
           .dispatch();
       });
       
-      it('should set state', function() {
-        expect(request.state).to.deep.equal({
-          name: 'login'
-        });
-        expect(request.state.isComplete()).to.equal(false);
+      it('should provide CSRF protection', function() {
+        expect(request.csrfToken()).to.equal('xxxxxxxx');
       });
       
       it.skip('should authenticate', function() {
@@ -91,10 +90,11 @@ describe('http/login/handlers/prompt', function() {
         });
       });
       
-      it('should set locals', function() {
-        expect(response.locals).to.deep.equal({
-          csrfToken: 'xxxxxxxx'
+      it('should set state', function() {
+        expect(request.state).to.deep.equal({
+          name: 'login'
         });
+        expect(request.state.isComplete()).to.equal(false);
       });
       
       it('should render', function() {
