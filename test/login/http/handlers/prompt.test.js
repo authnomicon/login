@@ -4,7 +4,7 @@ var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var flowstate = require('flowstate');
-var factory = require('../../../../app/http/login/handlers/prompt');
+var factory = require('../../../../app/login/http/handlers/prompt');
 
 
 describe('http/login/handlers/prompt', function() {

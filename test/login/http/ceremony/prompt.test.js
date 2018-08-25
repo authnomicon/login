@@ -3,10 +3,10 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/http/login/ceremony/exit');
+var factory = require('../../../../app/login/http/ceremony/prompt');
 
 
-describe('http/login/ceremony/exit', function() {
+describe('http/login/ceremony/prompt', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -20,7 +20,7 @@ describe('http/login/ceremony/exit', function() {
   describe('handler', function() {
     
     describe('default behavior', function() {
-      var request, response;
+      var request, response, view;
       
       before(function(done) {
         var handler = factory();
@@ -28,17 +28,30 @@ describe('http/login/ceremony/exit', function() {
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
+            req.csrfToken = function() {
+              return 'xxxxxxxx';
+            }
           })
-          .end(function(res) {
+          .res(function(res) {
             response = res;
+            res.locals = {};
+          })
+          .render(function(res, v) {
+            view = v;
             done();
           })
           .dispatch();
       });
       
-      it('should redirect', function() {
-        expect(response.statusCode).to.equal(302);
-        expect(response.getHeader('Location')).to.equal('/home');
+      it('should set locals', function() {
+        expect(response.locals).to.deep.equal({
+          csrfToken: 'xxxxxxxx'
+        });
+      });
+      
+      it('should render', function() {
+        expect(response.statusCode).to.equal(200);
+        expect(view).to.equal('login');
       });
     }); // default behavior
     

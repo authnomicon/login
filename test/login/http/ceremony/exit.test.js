@@ -3,10 +3,10 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/http/login/ceremony/prompt');
+var factory = require('../../../../app/login/http/ceremony/exit');
 
 
-describe('http/login/ceremony/prompt', function() {
+describe('http/login/ceremony/exit', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -20,7 +20,7 @@ describe('http/login/ceremony/prompt', function() {
   describe('handler', function() {
     
     describe('default behavior', function() {
-      var request, response, view;
+      var request, response;
       
       before(function(done) {
         var handler = factory();
@@ -28,30 +28,17 @@ describe('http/login/ceremony/prompt', function() {
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
-            req.csrfToken = function() {
-              return 'xxxxxxxx';
-            }
           })
-          .res(function(res) {
+          .end(function(res) {
             response = res;
-            res.locals = {};
-          })
-          .render(function(res, v) {
-            view = v;
             done();
           })
           .dispatch();
       });
       
-      it('should set locals', function() {
-        expect(response.locals).to.deep.equal({
-          csrfToken: 'xxxxxxxx'
-        });
-      });
-      
-      it('should render', function() {
-        expect(response.statusCode).to.equal(200);
-        expect(view).to.equal('login');
+      it('should redirect', function() {
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/home');
       });
     }); // default behavior
     

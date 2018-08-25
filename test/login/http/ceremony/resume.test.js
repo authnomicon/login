@@ -3,7 +3,7 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/http/login/ceremony/resume');
+var factory = require('../../../../app/login/http/ceremony/resume');
 var httpErrors = require('http-errors');
 
 
