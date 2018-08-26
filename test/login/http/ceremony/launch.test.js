@@ -49,7 +49,7 @@ describe('login/http/ceremony/launch', function() {
       });
     }); // default behavior
     
-    describe('launching password authentication', function() {
+    describe('launching authentication with password method', function() {
       var request, response;
       
       before(function(done) {
@@ -78,9 +78,9 @@ describe('login/http/ceremony/launch', function() {
         expect(response.statusCode).to.equal(302);
         expect(response.getHeader('Location')).to.equal('/login/password');
       });
-    }); // launching password authentication
+    }); // launching authentication with password method
     
-    describe('launching one-time password authentication', function() {
+    describe('launching authentication with one-time password method', function() {
       var request, response;
       
       before(function(done) {
@@ -109,9 +109,9 @@ describe('login/http/ceremony/launch', function() {
         expect(response.statusCode).to.equal(302);
         expect(response.getHeader('Location')).to.equal('/login/otp');
       });
-    }); // launching one-time password authentication
+    }); // launching authentication with one-time password method
     
-    describe('launching out-of-band authentication', function() {
+    describe('launching authentication with SMS method', function() {
       var request, response;
       
       before(function(done) {
@@ -121,7 +121,7 @@ describe('login/http/ceremony/launch', function() {
           .req(function(req) {
             request = req;
             req.state = {};
-            req.locals = { method: 'oob' };
+            req.locals = { method: 'sms' };
           })
           .end(function(res) {
             response = res;
@@ -138,9 +138,9 @@ describe('login/http/ceremony/launch', function() {
       
       it('should redirect', function() {
         expect(response.statusCode).to.equal(302);
-        expect(response.getHeader('Location')).to.equal('/login/oob');
+        expect(response.getHeader('Location')).to.equal('/login/oob/sms');
       });
-    }); // launching out-of-band authentication
+    }); // launching authentication with SMS method
     
   }); // handler
   

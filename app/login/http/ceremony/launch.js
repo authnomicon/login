@@ -18,8 +18,8 @@ exports = module.exports = function() {
       return res.redirect('/login/password');
     case 'otp':
       return res.redirect('/login/otp');
-    case 'oob':
-      return res.redirect('/login/oob');
+    case 'sms':
+      return res.redirect('/login/oob/sms');
     default:
       return res.redirect('/login');
     }
