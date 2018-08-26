@@ -1,13 +1,13 @@
 /**
  * Login ceremony.
  */
-exports = module.exports = function(launch, prompt, resume, exit) {
+exports = module.exports = function(launchHandler, promptHandler, resumeHandler, exitHandler) {
   
   return {
-    launch: launch,
-    prompt: prompt,
-    resume: resume,
-    exit: exit
+    launch: launchHandler,
+    prompt: promptHandler,
+    resume: resumeHandler,
+    exit: exitHandler
   };
 };
 
