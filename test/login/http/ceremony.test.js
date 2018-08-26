@@ -18,16 +18,16 @@ describe('login/http/ceremony', function() {
   });
   
   describe('create', function() {
-    function spawnHandler() {};
+    function launchHandler() {};
     function promptHandler() {};
     function resumeHandler() {};
     function exitHandler() {};
     
-    var ceremony = factory(spawnHandler, promptHandler, resumeHandler, exitHandler);
+    var ceremony = factory(launchHandler, promptHandler, resumeHandler, exitHandler);
   
     it('should construct ceremony', function() {
       expect(ceremony).to.be.an('object');
-      expect(ceremony.spawn).to.equal(spawnHandler);
+      expect(ceremony.launch).to.equal(launchHandler);
       expect(ceremony.prompt).to.equal(promptHandler);
       expect(ceremony.resume).to.equal(resumeHandler);
       expect(ceremony.exit).to.equal(exitHandler);

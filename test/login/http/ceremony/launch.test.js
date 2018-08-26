@@ -3,10 +3,10 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/login/http/ceremony/spawn');
+var factory = require('../../../../app/login/http/ceremony/launch');
 
 
-describe('login/http/ceremony/spawn', function() {
+describe('login/http/ceremony/launch', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -49,7 +49,7 @@ describe('login/http/ceremony/spawn', function() {
       });
     }); // default behavior
     
-    describe('spawning password authentication', function() {
+    describe('launching password authentication', function() {
       var request, response;
       
       before(function(done) {
@@ -78,9 +78,9 @@ describe('login/http/ceremony/spawn', function() {
         expect(response.statusCode).to.equal(302);
         expect(response.getHeader('Location')).to.equal('/login/password');
       });
-    }); // spawning password authentication
+    }); // launching password authentication
     
-    describe('spawning one-time password authentication', function() {
+    describe('launching one-time password authentication', function() {
       var request, response;
       
       before(function(done) {
@@ -109,9 +109,9 @@ describe('login/http/ceremony/spawn', function() {
         expect(response.statusCode).to.equal(302);
         expect(response.getHeader('Location')).to.equal('/login/otp');
       });
-    }); // spawning one-time password authentication
+    }); // launching one-time password authentication
     
-    describe('spawning out-of-band authentication', function() {
+    describe('launching out-of-band authentication', function() {
       var request, response;
       
       before(function(done) {
@@ -140,7 +140,7 @@ describe('login/http/ceremony/spawn', function() {
         expect(response.statusCode).to.equal(302);
         expect(response.getHeader('Location')).to.equal('/login/oob');
       });
-    }); // spawning out-of-band authentication
+    }); // launching out-of-band authentication
     
   }); // handler
   

@@ -7,7 +7,7 @@ var factory = require('../../../../app/login/http/ceremony/resume');
 var httpErrors = require('http-errors');
 
 
-describe('http/login/ceremony/resume', function() {
+describe('login/http/ceremony/resume', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');

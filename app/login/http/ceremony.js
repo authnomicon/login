@@ -1,10 +1,10 @@
 /**
  * Login ceremony.
  */
-exports = module.exports = function(spawn, prompt, resume, exit) {
+exports = module.exports = function(launch, prompt, resume, exit) {
   
   return {
-    spawn: spawn,
+    launch: launch,
     prompt: prompt,
     resume: resume,
     exit: exit
@@ -14,7 +14,7 @@ exports = module.exports = function(spawn, prompt, resume, exit) {
 exports['@implements'] = 'http://i.bixbyjs.org/http/ceremony/Prompt';
 exports['@name'] = 'login';
 exports['@require'] = [
-  './ceremony/spawn',
+  './ceremony/launch',
   './ceremony/prompt',
   './ceremony/resume',
   './ceremony/exit'
