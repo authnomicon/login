@@ -7,6 +7,13 @@ exports = module.exports = function() {
   var errors = require('http-errors');
 
 
+  function establishSession(req, res, next) {
+    req.login(req.user, function(err) {
+      if (err) { return next(err); }
+      next();
+    });
+  }
+
   function unauthorizedErrorHandler(err, req, res, next) {
     if (err.status !== 401) { return next(err); }
     
@@ -33,12 +40,7 @@ exports = module.exports = function() {
 
 
   return [
-    function(req, res, next) {
-      req.login(req.user, function(err) {
-        if (err) { return next(err); }
-        next();
-      });
-    },
+    establishSession,
     function(req, res, next) {
       if (req.yieldState && req.yieldState.name == 'login/password') {
         //res.prompt('login', { method: 'oob' })

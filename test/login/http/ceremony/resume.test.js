@@ -20,7 +20,7 @@ describe('login/http/ceremony/resume', function() {
   
   describe('handler', function() {
     
-    describe.skip('handling an unauthorized error', function() {
+    describe('handling an unauthorized error', function() {
       var request, response;
       
       before(function(done) {
