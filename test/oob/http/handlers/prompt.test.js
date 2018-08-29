@@ -78,6 +78,7 @@ describe('oob/http/handlers/prompt', function() {
             request = req;
             req.user = { id: '501' };
             req.query = {};
+            req.state = {};
           })
           .res(function(res) {
             response = res;

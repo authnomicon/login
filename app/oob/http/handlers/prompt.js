@@ -1,4 +1,4 @@
-exports = module.exports = function(authenticators, OOB, authenticate, csrfProtection, ceremony) {
+exports = module.exports = function(authenticators, oob, authenticate, csrfProtection, ceremony) {
   var path = require('path')
     , BindingRequiredError = require('../../../../lib/errors/authenticatorbindingrequired')
   
@@ -45,7 +45,9 @@ exports = module.exports = function(authenticators, OOB, authenticate, csrfProte
   function challengeAuthenticator(req, res, next) {
     var authnr = req.locals.authnr;
     
-    OOB.challenge(authnr, function(err, params) {
+    req.state.authenticator = { id: authnr.id }
+    
+    oob.challenge(authnr, function(err, params) {
       if (err) { return next(err); }
       
       if (typeof params == 'string') {
@@ -59,7 +61,7 @@ exports = module.exports = function(authenticators, OOB, authenticate, csrfProte
   function bindingRequiredErrorHandler(err, req, res, next) {
     if (!(err instanceof BindingRequiredError)) { return next(err); }
     
-    res.prompt('mfa/enroll', { method: 'oob' })
+    res.prompt('credentials/bind', { method: 'oob' })
   }
   
   
@@ -76,8 +78,7 @@ exports = module.exports = function(authenticators, OOB, authenticate, csrfProte
 
 exports['@require'] = [
   'http://schemas.modulate.io/js/login/AuthenticatorService',
-  'http://schemas.authnomicon.org/js/security/authentication/oob',
-  //'http://schemas.authnomicon.org/js/login/mfa/opt/auth0/UserAuthenticatorsDirectory',
+  'http://schemas.authnomicon.org/js/cs/oob',
   'http://i.bixbyjs.org/http/middleware/authenticate',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/ceremony'
