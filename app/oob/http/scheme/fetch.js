@@ -16,7 +16,7 @@ exports = module.exports = function(authenticators, Authenticators, verify, auth
       console.log(authnr);
       
       if (err) { return cb(err); }
-      return cb(null, user, authnr);
+      return cb(null, req.user, authnr);
     });
     
     return;

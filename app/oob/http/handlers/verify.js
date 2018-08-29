@@ -1,16 +1,10 @@
 exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   
-  /*
-        if (!req.user) {
-          console.log('again...');
-        
-          res.locals.ticket = req.body.ticket || req.query.ticket;
-        
-          var view = path.join(__dirname, '../../../views/oob/prompt.ejs');
-          res.render(view);
-          return;
-        }
-  */
+  
+  function pending(req, res, next) {
+    if (req.authInfo.pending === false) { return next(); }
+    res.prompt();
+  }
   
   
   return [
@@ -19,15 +13,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
       csrfProtection(),
       authenticate('state'),
       authenticate('oob'),
-      // TODO: re-prompt if authentication passed...
-      function unauthorizedErrorHandler(err, req, res, next) {
-        if (err.status !== 401) { return next(err); }
-        
-        req.state.failureCount = req.state.failureCount ? req.state.failureCount + 1 : 1;
-        res.locals.failureCount = req.state.failureCount;
-        res.prompt();
-        // TODO: Have some maxAttempt limit
-      },
+      pending,
     { through: 'login' })
   ];
 };

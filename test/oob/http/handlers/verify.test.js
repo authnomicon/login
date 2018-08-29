@@ -52,8 +52,9 @@ describe('oob/http/handlers/verify', function() {
     
     function authenticate(method) {
       return function(req, res, next) {
-        req.authInfo = req.authInfo || [];
-        req.authInfo.push({ method: method });
+        req.authInfo = req.authInfo || { methods: [] };
+        req.authInfo.methods.push(method);
+        req.authInfo.pending = false;
         next();
       };
     }
@@ -87,11 +88,10 @@ describe('oob/http/handlers/verify', function() {
       });
       
       it('should authenticate', function() {
-        expect(request.authInfo).to.deep.equal([{
-          method: 'state'
-        }, {
-          method: 'oob'
-        }]);
+        expect(request.authInfo).to.deep.equal({
+          methods: [ 'state', 'oob' ],
+          pending: false
+        });
       });
       
       it('should set yieldState', function() {
