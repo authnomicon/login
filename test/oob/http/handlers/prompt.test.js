@@ -32,7 +32,7 @@ describe('oob/http/handlers/prompt', function() {
       return manager.flow.apply(manager, arguments);
     }
     
-    var authenticators = {
+    var credentials = {
       list: function(){}
     };
     
@@ -62,16 +62,17 @@ describe('oob/http/handlers/prompt', function() {
       var request, response, view;
       
       before(function() {
-        sinon.stub(authenticators, 'list').yields(null, [ { id: '1', channel: 'test' }]);
+        sinon.stub(credentials, 'list').yields(null, [ { id: '1', channel: 'test' }]);
         sinon.stub(oob, 'challenge').yields(null, 't1ck3t');
       });
     
       after(function() {
-        authenticators.list.restore();
+        oob.challenge.restore();
+        credentials.list.restore();
       });
       
       before(function(done) {
-        var handler = factory(authenticators, oob, authenticate, csrfProtection, ceremony);
+        var handler = factory(credentials, oob, csrfProtection, authenticate, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
@@ -92,8 +93,8 @@ describe('oob/http/handlers/prompt', function() {
       });
       
       it('should list authenticators', function() {
-        expect(authenticators.list.callCount).to.equal(1);
-        var call = authenticators.list.getCall(0)
+        expect(credentials.list.callCount).to.equal(1);
+        var call = credentials.list.getCall(0)
         expect(call.args[0]).to.deep.equal({
           id: '501'
         });
@@ -110,6 +111,12 @@ describe('oob/http/handlers/prompt', function() {
       
       it('should provide CSRF protection', function() {
         expect(request.csrfToken()).to.equal('xxxxxxxx');
+      });
+      
+      it('should set state', function() {
+        expect(request.state).to.deep.equal({
+          authenticator: { id: '1' }
+        });
       });
       
       it('should set locals', function() {

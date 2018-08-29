@@ -1,4 +1,4 @@
-exports = module.exports = function(authenticators, oob, authenticate, csrfProtection, ceremony) {
+exports = module.exports = function(credentials, oob, csrfProtection, authenticate, ceremony) {
   var path = require('path')
     , BindingRequiredError = require('../../../../lib/errors/authenticatorbindingrequired')
   
@@ -8,19 +8,12 @@ exports = module.exports = function(authenticators, oob, authenticate, csrfProte
     next();
   };
   
-  function loadAuthenticators(req, res, next) {
-    // TODO: Determine user correctly.
-    var user = req.user;
-    //user = { id: '1' }
-    
-    authenticators.list(user, function(err, authnrs) {
+  function retrieveCredentials(req, res, next) {
+    credentials.list(req.user, function(err, creds) {
       if (err) { return next(err); }
-      res.locals.authenticators = authnrs;
+      res.locals.authenticators = creds;
       
-      console.log(err);
-      console.log(authnrs);
-      
-      if (!authnrs || authnrs.length == 0 || authnrs[0].active === false) {
+      if (!creds || creds.length == 0 || creds[0].active === false) {
         return next(new BindingRequiredError('MFA binding required'));
       }
       
@@ -28,7 +21,7 @@ exports = module.exports = function(authenticators, oob, authenticate, csrfProte
     });
   }
   
-  function selectAuthenticator(req, res, next) {
+  function selectCredential(req, res, next) {
     req.locals.authnr = res.locals.authenticators[0];
     req.locals.authnr.channel = req.locals.authnr.channel;
     //req.locals.authnr.channel = req.locals.authnr.channels[0]
@@ -42,7 +35,7 @@ exports = module.exports = function(authenticators, oob, authenticate, csrfProte
     next();
   }
   
-  function challengeAuthenticator(req, res, next) {
+  function challenge(req, res, next) {
     var authnr = req.locals.authnr;
     
     req.state.authenticator = { id: authnr.id }
@@ -69,9 +62,9 @@ exports = module.exports = function(authenticators, oob, authenticate, csrfProte
     csrfProtection(),
     authenticate('session'),
     initialize,
-    loadAuthenticators,
-    selectAuthenticator,
-    challengeAuthenticator,
+    retrieveCredentials,
+    selectCredential,
+    challenge,
     bindingRequiredErrorHandler
   );
 };
@@ -79,7 +72,7 @@ exports = module.exports = function(authenticators, oob, authenticate, csrfProte
 exports['@require'] = [
   'http://schemas.modulate.io/js/login/AuthenticatorService',
   'http://schemas.authnomicon.org/js/cs/oob',
-  'http://i.bixbyjs.org/http/middleware/authenticate',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
+  'http://i.bixbyjs.org/http/middleware/authenticate',
   'http://i.bixbyjs.org/http/middleware/ceremony'
 ];
