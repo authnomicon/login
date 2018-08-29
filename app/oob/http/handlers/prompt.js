@@ -11,7 +11,7 @@ exports = module.exports = function(credentials, oob, csrfProtection, authentica
   function retrieveCredentials(req, res, next) {
     credentials.list(req.user, function(err, creds) {
       if (err) { return next(err); }
-      res.locals.authenticators = creds;
+      res.locals.credentials = creds;
       
       if (!creds || creds.length == 0 || creds[0].active === false) {
         return next(new BindingRequiredError('MFA binding required'));
@@ -22,31 +22,25 @@ exports = module.exports = function(credentials, oob, csrfProtection, authentica
   }
   
   function selectCredential(req, res, next) {
-    req.locals.authnr = res.locals.authenticators[0];
-    req.locals.authnr.channel = req.locals.authnr.channel;
-    //req.locals.authnr.channel = req.locals.authnr.channels[0]
+    var cred = res.locals.credentials[0];
     
-    /*
-    req.state.authenticator = {
-      id: req.locals.authnr.id
-    };
-    */
-    
+    req.locals.cred = cred;
     next();
   }
   
   function challenge(req, res, next) {
-    var authnr = req.locals.authnr;
+    var cred = req.locals.cred;
     
-    req.state.authenticator = { id: authnr.id }
-    
-    oob.challenge(authnr, function(err, params) {
+    oob.challenge(cred, function(err, params) {
       if (err) { return next(err); }
-      
       if (typeof params == 'string') {
         params = { ticket: params };
       }
-      res.locals.ticket = params.ticket;
+      
+      req.state.credential = {
+        id: cred.id
+      };
+      req.state.ticket = params.ticket;
       next();
     });
   }

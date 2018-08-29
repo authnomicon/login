@@ -62,7 +62,7 @@ describe('oob/http/handlers/prompt', function() {
       var request, response, view;
       
       before(function() {
-        sinon.stub(credentials, 'list').yields(null, [ { id: '1', channel: 'test' }]);
+        sinon.stub(credentials, 'list').yields(null, [ { id: '1', channel: 'test' } ]);
         sinon.stub(oob, 'challenge').yields(null, 't1ck3t');
       });
     
@@ -92,7 +92,17 @@ describe('oob/http/handlers/prompt', function() {
           .dispatch();
       });
       
-      it('should list authenticators', function() {
+      it('should provide CSRF protection', function() {
+        expect(request.csrfToken()).to.equal('xxxxxxxx');
+      });
+      
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: 'session'
+        });
+      });
+      
+      it('should list credentials', function() {
         expect(credentials.list.callCount).to.equal(1);
         var call = credentials.list.getCall(0)
         expect(call.args[0]).to.deep.equal({
@@ -109,23 +119,19 @@ describe('oob/http/handlers/prompt', function() {
         });
       });
       
-      it('should provide CSRF protection', function() {
-        expect(request.csrfToken()).to.equal('xxxxxxxx');
+      it('should set locals', function() {
+        expect(response.locals).to.deep.equal({
+          credentials: [ {
+            id: '1',
+            channel: 'test',
+          } ]
+        });
       });
       
       it('should set state', function() {
         expect(request.state).to.deep.equal({
-          authenticator: { id: '1' }
-        });
-      });
-      
-      it('should set locals', function() {
-        expect(response.locals).to.deep.equal({
-          ticket: 't1ck3t',
-          authenticators: [ {
-            id: '1',
-            channel: 'test',
-          } ]
+          credential: { id: '1' },
+          ticket: 't1ck3t'
         });
       });
       
@@ -133,8 +139,8 @@ describe('oob/http/handlers/prompt', function() {
         expect(response.statusCode).to.equal(200);
         expect(view).to.equal('login/oob');
       });
-    });
+    }); // prompting
     
-  });
+  }); // handler
   
 });
