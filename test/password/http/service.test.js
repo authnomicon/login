@@ -21,9 +21,9 @@ describe('password/http/service', function() {
   });
   
   describe('create', function() {
-    function authenticateHandler() {};
+    function verifyHandler() {};
     
-    var service = factory(authenticateHandler);
+    var service = factory(verifyHandler);
   
     it('should construct handler', function() {
       expect(service).to.be.a('function');
