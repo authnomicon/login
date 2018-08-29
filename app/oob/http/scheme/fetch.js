@@ -8,11 +8,15 @@ exports = module.exports = function(authenticators, Authenticators, verify, auth
     console.log(token)
     console.log(req.state);
     
-    var authnrID = req.state.authenticator.id;
+    var authnrID = req.state.credential.id;
     
     authenticators.get(authnrID, function(err, authnr) {
+      console.log('GOT AUTHNR');
       console.log(err);
       console.log(authnr);
+      
+      if (err) { return cb(err); }
+      return cb(null, user, authnr);
     });
     
     return;

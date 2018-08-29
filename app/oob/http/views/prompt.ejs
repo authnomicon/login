@@ -2,14 +2,11 @@
   <b>Failed attempts: <%= failureCount %></b>
 <% } %>
 
-<p>Ticket: <%= ticket %></p>
-
 <form action="/login/oob" method="post">
 	<div>
 	<label>Ticket: </label>
 	</div>
 	<div>
-  <input type="hidden" name="ticket" value="<%= ticket %>">
   <% if (typeof state !== 'undefined') { %>
     <input type="hidden" name="state" value="<%= state %>"/>
   <% } %>

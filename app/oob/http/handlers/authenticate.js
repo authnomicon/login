@@ -26,6 +26,9 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
       function(req, res, next) {
         console.log('AUTHENTICATE!');
         console.log(req.body)
+        console.log(req.user);
+        console.log(req.authInfo);
+        console.log('----')
         
         return;
         
