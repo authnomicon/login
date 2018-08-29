@@ -20,6 +20,8 @@ exports = module.exports = function() {
       return res.redirect('/login/otp');
     case 'sms':
       return res.redirect('/login/oob/sms');
+    case 'oob':  // TODO: remove this
+      return res.redirect('/login/oob');
     default:
       return res.redirect('/login');
     }

@@ -105,7 +105,7 @@ describe('password/http/handlers/verify', function() {
         expect(request.state.isComplete()).to.equal(false);
       });
       
-      it('should end', function() {
+      it('should resume', function() {
         expect(response.statusCode).to.equal(200);
       });
     }); // authenticating

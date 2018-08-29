@@ -52,7 +52,8 @@ describe('oob/http/handlers/verify', function() {
     
     function authenticate(method) {
       return function(req, res, next) {
-        req.authInfo = { method: method };
+        req.authInfo = req.authInfo || [];
+        req.authInfo.push({ method: method });
         next();
       };
     }
@@ -79,6 +80,36 @@ describe('oob/http/handlers/verify', function() {
       
       it('should parse request body', function() {
         expect(request.__.supportedMediaType).to.equal('application/x-www-form-urlencoded');
+      });
+      
+      it('should provide CSRF protection', function() {
+        expect(request.csrfToken()).to.equal('xxxxxxxx');
+      });
+      
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal([{
+          method: 'state'
+        }, {
+          method: 'oob'
+        }]);
+      });
+      
+      it('should set yieldState', function() {
+        expect(request.yieldState).to.deep.equal({
+          name: 'login/oob'
+        });
+        expect(request.yieldState.isComplete()).to.equal(true);
+      });
+      
+      it('should set state', function() {
+        expect(request.state).to.deep.equal({
+          name: 'login'
+        });
+        expect(request.state.isComplete()).to.equal(false);
+      });
+      
+      it('should resume', function() {
+        expect(response.statusCode).to.equal(200);
       });
     });
     
