@@ -27,6 +27,14 @@ describe('oob/http/handlers/verify', function() {
         }
       ]
     })
+    manager.use('login/oob', {
+      prompt:  [
+        function(req, res, next) {
+          res.statusCode = 302;
+          res.end();
+        }
+      ]
+    })
     
     function ceremony(name) {
       return manager.flow.apply(manager, arguments);
@@ -60,7 +68,7 @@ describe('oob/http/handlers/verify', function() {
     }
     
     
-    describe('authenticating', function() {
+    describe.skip('authenticating', function() {
       var request, response;
       
       before(function(done) {
@@ -111,7 +119,64 @@ describe('oob/http/handlers/verify', function() {
       it('should resume', function() {
         expect(response.statusCode).to.equal(200);
       });
-    });
+    }); // authenticating
+    
+    describe('re-prompting a pending challenge', function() {
+      var request, response;
+      
+      function authenticate(method) {
+        return function(req, res, next) {
+          req.authInfo = req.authInfo || { methods: [] };
+          req.authInfo.methods.push(method);
+          next();
+        };
+      }
+      
+      before(function(done) {
+        var handler = factory(parse, csrfProtection, authenticate, ceremony);
+        
+        chai.express.handler(handler)
+          .req(function(req) {
+            request = req;
+          })
+          .res(function(res) {
+            response = res;
+          })
+          .end(function() {
+            done();
+          })
+          .dispatch();
+      });
+      
+      it('should parse request body', function() {
+        expect(request.__.supportedMediaType).to.equal('application/x-www-form-urlencoded');
+      });
+      
+      it('should provide CSRF protection', function() {
+        expect(request.csrfToken()).to.equal('xxxxxxxx');
+      });
+      
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          methods: [ 'state', 'oob' ]
+        });
+      });
+      
+      it('should not set yieldState', function() {
+        expect(request.yieldState).to.be.undefined;
+      });
+      
+      it('should set state', function() {
+        expect(request.state).to.deep.equal({
+          name: 'login/oob'
+        });
+        expect(request.state.isComplete()).to.equal(false);
+      });
+      
+      it('should prompt', function() {
+        expect(response.statusCode).to.equal(302);
+      });
+    }); // re-prompting a pending challenge
     
   }); // handler
   
