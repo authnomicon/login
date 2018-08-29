@@ -9,11 +9,11 @@
  * framework).  Use of HTML allows the application to present a user interface
  * of its own design.
  */
-exports = module.exports = function(authenticateHandler) {
+exports = module.exports = function(verifyHandler) {
   var express = require('express');
   var router = new express.Router();
   
-  router.post('/', authenticateHandler);
+  router.post('/', verifyHandler);
   
   return router;
 };
@@ -24,5 +24,5 @@ exports['@implements'] = [
 ];
 exports['@path'] = '/login/password';
 exports['@require'] = [
-  './handlers/authenticate'
+  './handlers/verify'
 ];
