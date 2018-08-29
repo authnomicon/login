@@ -130,6 +130,7 @@ describe('oob/http/handlers/prompt', function() {
       
       it('should set state', function() {
         expect(request.state).to.deep.equal({
+          user: { id: '501' },
           credential: { id: '1' },
           ticket: 't1ck3t'
         });

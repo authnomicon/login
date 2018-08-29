@@ -37,6 +37,7 @@ exports = module.exports = function(credentials, oob, csrfProtection, authentica
         params = { ticket: params };
       }
       
+      req.state.user = req.user;
       req.state.credential = {
         id: cred.id
       };
