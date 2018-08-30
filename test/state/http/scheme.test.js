@@ -3,7 +3,7 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../app/http/state/scheme');
+var factory = require('../../../app/state/http/scheme');
 var Strategy = require('passport-state');
 
 
@@ -23,7 +23,7 @@ describe('http/state/scheme', function() {
     var StrategySpy = sinon.spy(Strategy);
     var verify = function(){};
     
-    var factory = $require('../../../app/http/state/scheme',
+    var factory = $require('../../../app/state/http/scheme',
       { 'passport-state': StrategySpy });
     var strategy = factory(verify);
     

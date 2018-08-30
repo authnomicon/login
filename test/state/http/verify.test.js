@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../app/http/state/verify');
+var factory = require('../../../app/state/http/verify');
 
 
 describe('http/state/verify', function() {

@@ -37,7 +37,7 @@
       "oob/http/ceremony",
       "oob/http/scheme",
       "http/session/manager",
-      "http/state/scheme"
+      "state/http/scheme"
     ]
   },
   "dependencies": {
