@@ -22,9 +22,9 @@ describe('otp/http/service', function() {
   
   describe('create', function() {
     function promptHandler() {};
-    function authenticateHandler() {};
+    function verifyHandler() {};
     
-    var service = factory(promptHandler, authenticateHandler);
+    var service = factory(promptHandler, verifyHandler);
   
     it('should construct handler', function() {
       expect(service).to.be.a('function');
