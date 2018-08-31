@@ -1,9 +1,9 @@
-exports = module.exports = function(promptHandler, authenticateHandler) {
+exports = module.exports = function(promptHandler, verifyHandler) {
   var express = require('express');
   var router = new express.Router();
   
   router.get('/', promptHandler);
-  router.post('/', authenticateHandler);
+  router.post('/', verifyHandler);
   
   return router;
 };
@@ -15,5 +15,5 @@ exports['@implements'] = [
 exports['@path'] = '/login/otp';
 exports['@require'] = [
   './handlers/prompt',
-  './handlers/authenticate'
+  './handlers/verify'
 ];
