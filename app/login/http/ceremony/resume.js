@@ -43,7 +43,8 @@ exports = module.exports = function() {
     establishSession,
     function(req, res, next) {
       if (req.yieldState && req.yieldState.name == 'login/password') {
-        res.prompt('login', { method: 'oob' })
+        //res.prompt('login', { method: 'oob' })
+        res.prompt('login', { method: 'otp' })
         return;
       }
       
