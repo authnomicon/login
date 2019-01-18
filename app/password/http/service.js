@@ -18,10 +18,7 @@ exports = module.exports = function(verifyHandler) {
   return router;
 };
 
-exports['@implements'] = [
-  'http://i.bixbyjs.org/http/Service',
-  'http://schemas.authnomicon.org/js/login/password/HTTPService'
-];
+exports['@implements'] = 'http://i.bixbyjs.org/http/Service';
 exports['@path'] = '/login/password';
 exports['@require'] = [
   './handlers/verify'

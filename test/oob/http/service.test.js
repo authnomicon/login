@@ -12,10 +12,7 @@ describe('oob/http/service', function() {
   });
   
   it('should be annotated', function() {
-    expect(factory['@implements']).to.deep.equal([
-      'http://i.bixbyjs.org/http/Service',
-      'http://schemas.authnomicon.org/js/login/oob/HTTPService'
-    ]);
+    expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/Service');
     expect(factory['@path']).to.equal('/login/oob');
     expect(factory['@singleton']).to.be.undefined;
   });
