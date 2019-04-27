@@ -6,10 +6,16 @@
  */
 exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   
+  function goHome(req, res, next) {
+    res.redirect('/')
+  }
+  
+  
   return [
     parse('application/x-www-form-urlencoded'),
     csrfProtection(),
-    authenticate('password')
+    authenticate('password'),
+    goHome
   ];
   
   /*

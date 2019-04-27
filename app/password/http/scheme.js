@@ -8,15 +8,15 @@
  * HTML forms (as opposed to user agents using headers defined by the HTTP
  * Authentication framework).
  */
-exports = module.exports = function(password) {
+exports = module.exports = function(verify) {
   var Strategy = require('passport-local');
   
-  var strategy = new Strategy(password.verify);
+  var strategy = new Strategy(verify);
   return strategy;
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
 exports['@scheme'] = 'password';
 exports['@require'] = [
-  'http://schemas.authnomicon.org/js/cs/password'
+  './scheme/verify'
 ];

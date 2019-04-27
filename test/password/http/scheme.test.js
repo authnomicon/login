@@ -21,15 +21,15 @@ describe('password/http/scheme', function() {
   
   describe('creating scheme', function() {
     var StrategySpy = sinon.spy(Strategy);
-    var password = { verify: function(){} };
+    var verify = function(){};
     
     var factory = $require('../../../app/password/http/scheme',
       { 'passport-local': StrategySpy });
-    var strategy = factory(password);
+    var strategy = factory(verify);
     
     it('should construct strategy', function() {
       expect(StrategySpy).to.have.been.calledOnce;
-      expect(StrategySpy).to.have.been.calledWithExactly(password.verify);
+      expect(StrategySpy).to.have.been.calledWithExactly(verify);
     });
     
     it('should return strategy', function() {
