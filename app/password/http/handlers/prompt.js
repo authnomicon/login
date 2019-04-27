@@ -4,12 +4,10 @@ exports = module.exports = function() {
   
   
   function prompt(req, res, next) {
-    console.log('PROMPT PASSWORD');
     if (req.user) {
-      console.log('PROMPT PASSWORD FOR USER');
-      console.log(req.user)
       res.locals.user = req.user;
     }
+    // TODO:
     //res.locals.csrfToken = req.csrfToken();
     
     res.render('login/password', function(err, str) {

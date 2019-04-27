@@ -13,7 +13,7 @@ exports = module.exports = function(verifyHandler, promptHandler) {
   var express = require('express');
   var router = new express.Router();
   
-  //router.get('/', promptHandler);
+  router.get('/', promptHandler);
   router.post('/', verifyHandler);
   
   return router;
