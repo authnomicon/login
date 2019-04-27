@@ -7,7 +7,7 @@ exports = module.exports = function(verify) {
   return new Strategy(verify);
 };
 
-exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
+exports['@implements'] = 'x-http://i.bixbyjs.org/http/auth/Scheme';
 exports['@scheme'] = 'state';
 exports['@require'] = [
   './verify'
