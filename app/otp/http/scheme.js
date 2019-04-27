@@ -4,7 +4,7 @@ exports = module.exports = function(otp, fetch) {
   return new Strategy({ passReqToCallback: true }, otp, fetch);
 };
 
-exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
+exports['@implements'] = 'x-http://i.bixbyjs.org/http/auth/Scheme';
 exports['@scheme'] = 'otp';
 exports['@require'] = [
   'http://schemas.authnomicon.org/js/cs/otp',
