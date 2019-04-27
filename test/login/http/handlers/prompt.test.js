@@ -73,8 +73,7 @@ describe('login/http/handlers/prompt', function() {
           .res(function(res) {
             response = res;
           })
-          .render(function(res, v) {
-            view = v;
+          .end(function(res) {
             done();
           })
           .dispatch();
@@ -99,7 +98,7 @@ describe('login/http/handlers/prompt', function() {
       
       it('should render', function() {
         expect(response.statusCode).to.equal(200);
-        expect(view).to.equal('login');
+        expect(response).to.render('login');
       });
     }); // prompting
     

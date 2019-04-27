@@ -42,12 +42,19 @@ describe('otp/http/handlers/prompt', function() {
       };
     }
     
+    function authenticate(method) {
+      return function(req, res, next) {
+        req.authInfo = { method: method };
+        next();
+      };
+    }
+    
     
     describe('prompting', function() {
       var request, response, view;
       
       before(function(done) {
-        var handler = factory(csrfProtection, ceremony);
+        var handler = factory(csrfProtection, authenticate, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
@@ -58,8 +65,7 @@ describe('otp/http/handlers/prompt', function() {
             response = res;
             res.locals = {};
           })
-          .render(function(res, v) {
-            view = v;
+          .end(function() {
             done();
           })
           .dispatch();
@@ -69,9 +75,15 @@ describe('otp/http/handlers/prompt', function() {
         expect(request.csrfToken()).to.equal('xxxxxxxx');
       });
       
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: 'session'
+        });
+      });
+      
       it('should render', function() {
         expect(response.statusCode).to.equal(200);
-        expect(view).to.equal('login/otp');
+        expect(response).to.render('login/otp');
       });
     }); // prompting
     

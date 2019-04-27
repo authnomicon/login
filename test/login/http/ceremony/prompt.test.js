@@ -36,8 +36,7 @@ describe('login/http/ceremony/prompt', function() {
             response = res;
             res.locals = {};
           })
-          .render(function(res, v) {
-            view = v;
+          .end(function() {
             done();
           })
           .dispatch();
@@ -51,7 +50,7 @@ describe('login/http/ceremony/prompt', function() {
       
       it('should render', function() {
         expect(response.statusCode).to.equal(200);
-        expect(view).to.equal('login');
+        expect(response).to.render('login');
       });
     }); // default behavior
     
