@@ -17,15 +17,14 @@ describe('password/http/service', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
-  describe('create', function() {
+  it('should construct handler', function() {
+    function promptHandler() {};
     function verifyHandler() {};
-    
-    var service = factory(verifyHandler);
   
-    it('should construct handler', function() {
-      expect(service).to.be.a('function');
-      expect(service.length).to.equal(3);
-    });
+    var service = factory(promptHandler, verifyHandler);
+    
+    expect(service).to.be.a('function');
+    expect(service.length).to.equal(3);
   });
   
 });

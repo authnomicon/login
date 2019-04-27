@@ -9,7 +9,7 @@
  * framework).  Use of HTML allows the application to present a user interface
  * of its own design.
  */
-exports = module.exports = function(verifyHandler, promptHandler) {
+exports = module.exports = function(promptHandler, verifyHandler) {
   var express = require('express');
   var router = new express.Router();
   
@@ -22,6 +22,6 @@ exports = module.exports = function(verifyHandler, promptHandler) {
 exports['@implements'] = 'http://i.bixbyjs.org/http/Service';
 exports['@path'] = '/login/password';
 exports['@require'] = [
-  './handlers/verify',
-  './handlers/prompt'
+  './handlers/prompt',
+  './handlers/verify'
 ];
