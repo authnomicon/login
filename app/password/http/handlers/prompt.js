@@ -1,4 +1,4 @@
-exports = module.exports = function() {
+exports = module.exports = function(csrfProtection) {
   var path = require('path')
     , ejs = require('ejs');
   
@@ -7,8 +7,7 @@ exports = module.exports = function() {
     if (req.user) {
       res.locals.user = req.user;
     }
-    // TODO:
-    //res.locals.csrfToken = req.csrfToken();
+    res.locals.csrfToken = req.csrfToken();
     
     res.render('login/password', function(err, str) {
       if (err && err.view) {
@@ -27,8 +26,11 @@ exports = module.exports = function() {
   
   
   return [
+    csrfProtection(),
     prompt
   ];
 };
 
-exports['@require'] = [];
+exports['@require'] = [
+  'http://i.bixbyjs.org/http/middleware/csrfProtection'
+];

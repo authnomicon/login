@@ -8,11 +8,19 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   
   return [
     parse('application/x-www-form-urlencoded'),
+    csrfProtection(),
+    authenticate('password')
+  ];
+  
+  /*
+  return [
+    parse('application/x-www-form-urlencoded'),
     ceremony('login/password',
       csrfProtection(),
       authenticate('password'),
     { through: 'login' })
   ];
+  */
 };
 
 exports['@require'] = [

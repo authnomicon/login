@@ -18,7 +18,7 @@ describe('password/http/handlers/verify', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
-  describe('handler', function() {
+  describe.skip('handler', function() {
     var manager = new flowstate.Manager();
     manager.use('login', {
       resume:  [
