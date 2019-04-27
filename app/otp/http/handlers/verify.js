@@ -2,19 +2,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   var errors = require('http-errors');
   
   
-  return [
-    parse('application/x-www-form-urlencoded'),
-    ceremony('login/otp',
-      csrfProtection(),
-      //authenticate('otp'),
-      function(req, res, next) {
-        if (req.body.otp == '123') {
-          req.user = { id: '1', displayName: 'joe'}
-          return next();
-        }
-        
-        return next(new errors.Unauthorized('Invalid otp'));
-      },
+  /*
       function unauthorizedErrorHandler(err, req, res, next) {
         if (err.status !== 401) { return next(err); }
         
@@ -23,6 +11,14 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
         res.prompt();
         // TODO: Have some maxAttempt limit
       },
+  */
+  
+  
+  return [
+    parse('application/x-www-form-urlencoded'),
+    ceremony('login/otp',
+      csrfProtection(),
+      authenticate('otp'),
     { through: 'login' })
   ];
 };

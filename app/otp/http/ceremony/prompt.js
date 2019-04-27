@@ -4,6 +4,9 @@ exports = module.exports = function() {
   
   
   function prompt(req, res, next) {
+    if (req.user) {
+      res.locals.user = req.user;
+    }
     res.locals.csrfToken = req.csrfToken();
     
     res.render('login/otp', function(err, str) {
