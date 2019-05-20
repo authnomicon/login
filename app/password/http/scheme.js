@@ -16,7 +16,7 @@ exports = module.exports = function(verify) {
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
-exports['@scheme'] = 'password';
+exports['@scheme'] = 'www-password';
 exports['@require'] = [
   './scheme/verify'
 ];
