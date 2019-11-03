@@ -14,7 +14,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   return [
     parse('application/x-www-form-urlencoded'),
     csrfProtection(),
-    authenticate('password'),
+    authenticate('www-password', { session: true }),
     goHome
   ];
   
