@@ -13,7 +13,21 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
       },
   */
   
+  function goHome(req, res, next) {
+    console.log('OTP AUTHENTICATED!');
+    //res.redirect('/')
+  }
   
+  return [
+    parse('application/x-www-form-urlencoded'),
+    csrfProtection(),
+    authenticate('session'),
+    authenticate('www-otp'),
+    goHome
+  ];
+  
+  
+  /*
   return [
     parse('application/x-www-form-urlencoded'),
     ceremony('login/otp',
@@ -21,6 +35,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
       authenticate('otp'),
     { through: 'login' })
   ];
+  */
 };
 
 exports['@require'] = [
