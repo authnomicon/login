@@ -25,9 +25,10 @@
   "assembly": {
     "namespace": "org.authnomicon/login",
     "components": [
+      "password/http/service"
+    ],
+    "x_components": [
       "authenticatorservice",
-      "login/http/service",
-      "login/http/ceremony",
       "password/http/service",
       "password/http/scheme",
       "otp/http/service",
