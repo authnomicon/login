@@ -75,11 +75,13 @@ describe('otp/http/handlers/prompt', function() {
         expect(request.csrfToken()).to.equal('xxxxxxxx');
       });
       
+      /*
       it('should authenticate', function() {
         expect(request.authInfo).to.deep.equal({
           method: 'session'
         });
       });
+      */
       
       it('should render', function() {
         expect(response.statusCode).to.equal(200);

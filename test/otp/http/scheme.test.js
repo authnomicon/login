@@ -7,7 +7,7 @@ var factory = require('../../../app/otp/http/scheme');
 var Strategy = require('passport-otp');
 
 
-describe('otp/http/scheme', function() {
+describe.skip('otp/http/scheme', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');

@@ -5,7 +5,7 @@ exports = module.exports = function(otp, fetch) {
 };
 
 exports['@implements'] = 'x-http://i.bixbyjs.org/http/auth/Scheme';
-exports['@scheme'] = 'otp';
+exports['@scheme'] = 'www-otp';
 exports['@require'] = [
   'http://schemas.authnomicon.org/js/cs/otp',
   './scheme/fetch'

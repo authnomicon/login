@@ -1,8 +1,31 @@
-exports = module.exports = function(verify, authenticatorsDir) {
+exports = module.exports = function(sd, verify, authenticatorsDir) {
 
-  return function(req, uid, cb) {
-    console.log('AUTH THIS!');
-    console.log(uid);
+  return function(req, uid, otp, cb) {
+    /*
+    // TODO: Look up the authenticator service for this user.
+    //  user should resolve to service pointer.
+    // TODO: bind the connection to the user?
+    
+    var type = 'otp-enrollments';
+    var url = 'https://foo.example.com'
+    
+    sd.createConnection(type, { url: url }, function() {
+      this.list(uid, function(err, authnrs) {
+        
+      });
+      */
+      
+      /*
+      this.verify(username, password, function(err, user) {
+        if (err) { return cb(err); }
+        if (!user) { return cb(null, false); }
+        return cb(null, user);
+      });
+      */
+    //});
+    
+    //return;
+    
     
     var user = { id: '1' }
     var authnr = { algorithm: 'totp' };
@@ -50,6 +73,7 @@ exports = module.exports = function(verify, authenticatorsDir) {
 };
 
 exports['@require'] = [
+  'http://i.bixbyjs.org/sd'
   //'http://schemas.authnomicon.org/js/login/mfa/opt/authy/otp/verify',
   //'http://schemas.authnomicon.org/js/login/mfa/opt/authy/UserAuthenticatorsDirectory'
 ];
