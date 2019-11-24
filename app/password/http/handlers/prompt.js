@@ -1,4 +1,4 @@
-exports = module.exports = function(csrfProtection) {
+exports = module.exports = function(csrfProtection, ceremony) {
   var path = require('path')
     , ejs = require('ejs');
   
@@ -26,11 +26,24 @@ exports = module.exports = function(csrfProtection) {
   
   
   return [
+    ceremony('login',
+      csrfProtection(),
+      prompt
+    ),
+    // Should GET requests that error with a state destroy the state?  I think not
+    // There needs to be an option for it (external?) that does, for eg OAuth
+    //errorLogging()
+  ];
+  
+  /*
+  return [
     csrfProtection(),
     prompt
   ];
+  */
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/csrfProtection'
+  'http://i.bixbyjs.org/http/middleware/csrfProtection',
+  'http://i.bixbyjs.org/http/middleware/ceremony'
 ];

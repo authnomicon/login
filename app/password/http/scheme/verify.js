@@ -1,10 +1,35 @@
-exports = module.exports = function(cs, ds) {
+exports = module.exports = function(Passwords, Users /*cs, ds*/) {
   
   return function(username, password, realm, cb) {
     if (typeof realm == 'function') {
       cb = realm;
       realm = undefined;
     }
+    
+    
+    
+    Passwords.verify(username, password, function(err, user) {
+      console.log(err);
+      console.log(user);
+      
+      // TODO: Might not always have user object from credential service.
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      
+      Users.find(username, function(err, user) {
+        console.log(err);
+        console.log(user);
+        
+        
+        return cb(null, user);
+      });
+      
+    });
+    
+    
+    
+    // FIXME: remove below here
+    return;
     
     // TODO: resolve the realm, if known.  actually, pass it down, and resolve it to
     //       a service inside cs and 
@@ -42,6 +67,8 @@ exports = module.exports = function(cs, ds) {
 };
 
 exports['@require'] = [
-  'http://schemas.authnomicon.org/js/cs/password',
-  'http://schemas.authnomicon.org/js/ds'
+  'http://i.authnomicon.org/credentials/PasswordService',
+  'http://i.authnomicon.org/directory/UserRepository'
+  //'http://schemas.authnomicon.org/js/cs/password',
+  //'http://schemas.authnomicon.org/js/ds'
 ];

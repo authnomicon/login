@@ -15,6 +15,9 @@
 	<input type="password" name="password"/>
 	</div>
 	<div>
+  <% if (typeof returnTo !== 'undefined') { %>
+    <input type="hidden" name="return_to" value="<%= returnTo %>"/>
+  <% } %>
   <% if (typeof state !== 'undefined') { %>
     <input type="hidden" name="state" value="<%= state %>"/>
   <% } %>
