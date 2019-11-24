@@ -4,6 +4,9 @@ exports = module.exports = function(csrfProtection, ceremony) {
   
   
   function prompt(req, res, next) {
+    console.log('PROMPTING LOGIN!!!');
+    console.log(req.state)
+    
     if (req.user) {
       res.locals.user = req.user;
     }
@@ -26,7 +29,7 @@ exports = module.exports = function(csrfProtection, ceremony) {
   
   
   return [
-    ceremony('login',
+    ceremony(
       csrfProtection(),
       prompt
     ),
