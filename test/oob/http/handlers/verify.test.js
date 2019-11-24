@@ -7,7 +7,7 @@ var flowstate = require('flowstate');
 var factory = require('../../../../app/oob/http/handlers/verify');
 
 
-describe('oob/http/handlers/verify', function() {
+describe.skip('oob/http/handlers/verify', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
