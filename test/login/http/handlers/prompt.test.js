@@ -7,7 +7,7 @@ var flowstate = require('flowstate');
 var factory = require('../../../../app/login/http/handlers/prompt');
 
 
-describe('login/http/handlers/prompt', function() {
+describe.skip('login/http/handlers/prompt', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
