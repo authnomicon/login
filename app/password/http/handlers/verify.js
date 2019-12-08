@@ -14,10 +14,6 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     next()
   }
   
-  function goHome(req, res, next) {
-    res.redirect('/')
-  }
-  
   function estSession(req, res, next) {
     console.log('EST SESSION!');
     console.log(req.user)
@@ -37,8 +33,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
       csrfProtection(),
       authenticate('www-password', { session: false }),
       estSession
-    ),
-    goHome
+    )
   ];
   
   /*
