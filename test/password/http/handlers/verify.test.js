@@ -5,6 +5,7 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 var flowstate = require('flowstate');
 var factory = require('../../../../app/password/http/handlers/verify');
+var utils = require('../../../utils');
 
 
 describe('password/http/handlers/verify', function() {
@@ -18,7 +19,7 @@ describe('password/http/handlers/verify', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
-  describe.skip('handler', function() {
+  describe('handler', function() {
     var manager = new flowstate.Manager();
     manager.use('login', {
       resume:  [
@@ -28,8 +29,12 @@ describe('password/http/handlers/verify', function() {
       ]
     })
     
-    function ceremony(name) {
-      return manager.flow.apply(manager, arguments);
+    function ceremony(stack) {
+      var stack = Array.prototype.slice.call(arguments, 0);
+      
+      return function(req, res, next) {
+        utils.dispatch(stack)(null, req, res, next);
+      };
     }
     
     function parse(type) {
@@ -52,6 +57,12 @@ describe('password/http/handlers/verify', function() {
     
     function authenticate(method) {
       return function(req, res, next) {
+        req.login = function(user, cb) {
+          process.nextTick(function() {
+            cb();
+          });
+        };
+        
         req.authInfo = { method: method };
         next();
       };
@@ -71,8 +82,8 @@ describe('password/http/handlers/verify', function() {
           .res(function(res) {
             response = res;
           })
-          .end(function() {
-            done();
+          .next(function(err) {
+            done(err);
           })
           .dispatch();
       });
@@ -87,22 +98,8 @@ describe('password/http/handlers/verify', function() {
       
       it('should authenticate', function() {
         expect(request.authInfo).to.deep.equal({
-          method: 'password'
+          method: 'www-password'
         });
-      });
-      
-      it('should set yieldState', function() {
-        expect(request.yieldState).to.deep.equal({
-          name: 'login/password'
-        });
-        expect(request.yieldState.isComplete()).to.equal(true);
-      });
-      
-      it('should set state', function() {
-        expect(request.state).to.deep.equal({
-          name: 'login'
-        });
-        expect(request.state.isComplete()).to.equal(false);
       });
       
       it('should resume', function() {
