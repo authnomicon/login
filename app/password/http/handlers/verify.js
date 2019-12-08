@@ -31,8 +31,8 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   
   return [
     parse('application/x-www-form-urlencoded'),
-    ceremony('login/password',
-    //ceremony(
+    //ceremony('login/password',
+    ceremony(
       logIt,
       csrfProtection(),
       authenticate('www-password', { session: false }),
