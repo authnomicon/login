@@ -7,10 +7,10 @@
 exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   
   function logIt(req, res, next) {
-    console.log('GO HOME');
-    console.log(req.query);
-    console.log(req.body);
-    console.log(req.state);
+    //console.log('GO HOME');
+    //console.log(req.query);
+    //console.log(req.body);
+    //console.log(req.state);
     next()
   }
   
