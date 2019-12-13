@@ -6,18 +6,7 @@
  */
 exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   
-  function logIt(req, res, next) {
-    //console.log('GO HOME');
-    //console.log(req.query);
-    //console.log(req.body);
-    //console.log(req.state);
-    next()
-  }
-  
-  function estSession(req, res, next) {
-    console.log('EST SESSION!');
-    console.log(req.user)
-    
+  function establishSession(req, res, next) {
     req.login(req.user, function(err) {
       if (err) { return next(err); }
       return next();
@@ -27,12 +16,10 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   
   return [
     parse('application/x-www-form-urlencoded'),
-    //ceremony('login/password',
     ceremony(
-      logIt,
       csrfProtection(),
       authenticate('www-password', { session: false }),
-      estSession
+      establishSession
     )
   ];
   
