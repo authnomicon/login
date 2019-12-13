@@ -3,7 +3,6 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var flowstate = require('flowstate');
 var factory = require('../../../../app/password/http/handlers/verify');
 var utils = require('../../../utils');
 
@@ -20,14 +19,6 @@ describe('password/http/handlers/verify', function() {
   });
   
   describe('handler', function() {
-    var manager = new flowstate.Manager();
-    manager.use('login', {
-      resume:  [
-        function(req, res, next) {
-          res.end();
-        }
-      ]
-    })
     
     function ceremony(stack) {
       var stack = Array.prototype.slice.call(arguments, 0);
@@ -47,10 +38,8 @@ describe('password/http/handlers/verify', function() {
     
     function csrfProtection() {
       return function(req, res, next) {
-        req.csrfToken = function() {
-          return 'xxxxxxxx';
-        };
-        
+        req.__ = req.__ || {};
+        req.__.csrfToken = req.body._csrf;
         next();
       };
     }
@@ -59,17 +48,19 @@ describe('password/http/handlers/verify', function() {
       return function(req, res, next) {
         req.login = function(user, cb) {
           process.nextTick(function() {
+            req.session.user = user;
             cb();
           });
         };
         
+        req.user = { id: '248289761001', displayName: 'Jane Doe' };
         req.authInfo = { method: method };
         next();
       };
     }
     
     
-    describe('authenticating', function() {
+    describe('logging in with password', function() {
       var request, response;
       
       before(function(done) {
@@ -78,6 +69,8 @@ describe('password/http/handlers/verify', function() {
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
+            request.body = { _csrf: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql' };
+            request.session = {};
           })
           .res(function(res) {
             response = res;
@@ -92,17 +85,28 @@ describe('password/http/handlers/verify', function() {
         expect(request.__.supportedMediaType).to.equal('application/x-www-form-urlencoded');
       });
       
-      it('should provide CSRF protection', function() {
-        expect(request.csrfToken()).to.equal('xxxxxxxx');
+      it('should protect against CSRF', function() {
+        expect(request.__.csrfToken).to.equal('i8XNjC4b8KVok4uw5RftR38Wgp2BFwql');
       });
       
       it('should authenticate', function() {
+        expect(request.user).to.deep.equal({
+          id: '248289761001',
+          displayName: 'Jane Doe'
+        });
         expect(request.authInfo).to.deep.equal({
           method: 'www-password'
         });
       });
       
-      it('should resume', function() {
+      it('should establish session', function() {
+        expect(request.session.user).to.deep.equal({
+          id: '248289761001',
+          displayName: 'Jane Doe'
+        });
+      });
+      
+      it('should respond', function() {
         expect(response.statusCode).to.equal(200);
       });
     }); // authenticating
