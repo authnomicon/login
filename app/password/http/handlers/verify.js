@@ -19,7 +19,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     ceremony(
       csrfProtection(),
       authenticate('www-password', { session: false }),
-      establishSession
+      [ establishSession ]
     )
   ];
   
