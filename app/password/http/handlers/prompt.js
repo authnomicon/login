@@ -4,12 +4,6 @@ exports = module.exports = function(csrfProtection, ceremony) {
   
   
   function prompt(req, res, next) {
-    console.log('PROMPTING LOGIN!!!');
-    console.log(req.state)
-    
-    if (req.user) {
-      res.locals.user = req.user;
-    }
     res.locals.csrfToken = req.csrfToken();
     
     res.render('login/password', function(err, str) {
@@ -37,13 +31,6 @@ exports = module.exports = function(csrfProtection, ceremony) {
     // There needs to be an option for it (external?) that does, for eg OAuth
     //errorLogging()
   ];
-  
-  /*
-  return [
-    csrfProtection(),
-    prompt
-  ];
-  */
 };
 
 exports['@require'] = [
