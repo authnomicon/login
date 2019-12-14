@@ -109,7 +109,7 @@ describe('password/http/handlers/verify', function() {
       it('should respond', function() {
         expect(response.statusCode).to.equal(200);
       });
-    }); // authenticating
+    }); // logging in with password
     
   }); // handler
   
