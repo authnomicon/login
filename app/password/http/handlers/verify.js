@@ -16,8 +16,8 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   
   return [
     parse('application/x-www-form-urlencoded'),
+    csrfProtection(),
     ceremony(
-      csrfProtection(),
       authenticate('www-password'),
       [ establishSession ]
     )
