@@ -26,8 +26,10 @@ exports = module.exports = function(csrfProtection, authenticate, ceremony) {
 
 
   return [
-    csrfProtection(),
-    prompt
+    ceremony(
+      csrfProtection(),
+      prompt
+    )
   ];
   
   

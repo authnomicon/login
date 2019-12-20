@@ -14,16 +14,21 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   */
   
   function goHome(req, res, next) {
-    console.log('OTP AUTHENTICATED!');
+    delete req.session.authInfo;
+    
+    next();
+    
     //res.redirect('/')
   }
   
   return [
     parse('application/x-www-form-urlencoded'),
     csrfProtection(),
+    ceremony(
     authenticate('session'),
     authenticate('www-otp'),
     goHome
+    )
   ];
   
   
