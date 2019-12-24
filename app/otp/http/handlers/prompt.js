@@ -28,6 +28,7 @@ exports = module.exports = function(csrfProtection, authenticate, ceremony) {
   return [
     ceremony(
       csrfProtection(),
+      // TODO: Put session authentication in here
       prompt
     )
   ];
