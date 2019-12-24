@@ -13,6 +13,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
       },
   */
   
+  // TODO: Clean this up and establish session, with stepped-up method
   function goHome(req, res, next) {
     delete req.session.authInfo;
     
@@ -25,9 +26,9 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     parse('application/x-www-form-urlencoded'),
     csrfProtection(),
     ceremony(
-    authenticate('session'),
-    authenticate('www-otp'),
-    goHome
+      authenticate('session'),
+      authenticate('www-otp'),
+      goHome
     )
   ];
   
