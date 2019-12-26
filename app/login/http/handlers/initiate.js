@@ -3,7 +3,7 @@
  *
  * This component provides an HTTP handler that initiates identifier-first login.
  */
-exports = module.exports = function(ns, parse, UIS, client) {
+exports = module.exports = function(/*ns,*/ parse, UIS, client) {
   
   // https://docs.google.com/presentation/d/1I0pYw5xbxI8w0UuMBmj1q55mixhvV3vFHYgA6Y76Trc/edit#slide=id.gb08776a72_1_22
   
@@ -84,7 +84,7 @@ exports = module.exports = function(ns, parse, UIS, client) {
 };
 
 exports['@require'] = [
-  'http://schemas.authnomicon.org/js/ns',
+  //'http://schemas.authnomicon.org/js/ns',
   'http://i.bixbyjs.org/http/middleware/parse'
   //'http://i.bixbyjs.org/uis',
   //'http://schemas.modulate.io/js/opt/auth0/auth/Client'

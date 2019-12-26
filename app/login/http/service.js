@@ -11,10 +11,7 @@ exports = module.exports = function(promptHandler, initiateHandler) {
   return router;
 };
 
-exports['@implements'] = [
-  'http://i.bixbyjs.org/http/Service',
-  'http://schemas.authnomicon.org/js/login/HTTPService'
-];
+exports['@implements'] = 'http://i.bixbyjs.org/http/Service';
 exports['@path'] = '/login';
 exports['@require'] = [
   './handlers/prompt',
