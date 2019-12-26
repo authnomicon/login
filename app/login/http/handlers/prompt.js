@@ -9,12 +9,7 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
   
   
   function cont(req, res, next) {
-    console.log('LOGIN??');
-    console.log(req.user);
-    console.log(req.state);
-    console.log(req.session);
-    
-    req.state.foo = 'bar';
+    //req.state.foo = 'bar';
     
     // TODO: initialize request with supported challenge types
     var lreq = new Request(req.user)
@@ -23,17 +18,11 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
     lreq.session = req.session;
     
     function ondecision(result, scope) {
-      console.log('DECISION!');
-      console.log(result);
-      
-      res.redirect('/happy')
+      //res.redirect('/happy')
+      next();
     }
     
     function onchallenge(type, options) {
-      console.log('ON CHALLNEGE!!!');
-      console.log(type);
-      console.log(options);
-      
       switch (type) {
       case 'password':
         res.redirect('/login/password');
@@ -50,8 +39,6 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
     }
     
     function onend() {
-      console.log('ON END!...');
-    
       lres.removeListener('decision', ondecision);
       lres.removeListener('__challenge__', onchallenge);
     }
@@ -60,19 +47,7 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
     lres.once('__challenge__', onchallenge);
     lres.once('end', onend);
     
-    
     loginHandler(lreq, lres);
-    
-    
-    return;
-    
-    //if (req.user) {
-    if (0) {
-      res.redirect('/login/otp');
-      return;
-    }
-    
-    res.redirect('/login/password')
   }
   
   

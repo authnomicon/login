@@ -3,11 +3,11 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var flowstate = require('flowstate');
 var factory = require('../../../../app/login/http/handlers/prompt');
+var utils = require('../../../utils');
 
 
-describe.skip('login/http/handlers/prompt', function() {
+describe('login/http/handlers/prompt', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -19,31 +19,20 @@ describe.skip('login/http/handlers/prompt', function() {
   });
   
   describe('handler', function() {
-    var manager = new flowstate.Manager();
-    manager.use('login', {
-      prompt:  [
-        function(req, res, next) {
-          res.render('login');
-        }
-      ]
-    })
     
-    function ceremony(name) {
-      return manager.flow.apply(manager, arguments);
-    }
-    
-    function csrfProtection() {
+    function ceremony(stack) {
+      var stack = Array.prototype.slice.call(arguments, 0);
+      
       return function(req, res, next) {
-        req.csrfToken = function() {
-          return 'xxxxxxxx';
-        };
-        
-        next();
+        utils.dispatch(stack)(null, req, res, next);
       };
     }
     
     function authenticate(method) {
       return function(req, res, next) {
+        if (req.session && req.session.user) {
+          req.user = req.session.user;
+        }
         req.authInfo = { method: method };
         next();
       };
@@ -59,12 +48,49 @@ describe.skip('login/http/handlers/prompt', function() {
     }
     
     
-    
-    describe('prompting', function() {
-      var request, response, view;
+    describe('allowing login', function() {
+      var request, response;
       
       before(function(done) {
-        var handler = factory(csrfProtection, authenticate, errorLogging, ceremony);
+        function loginHandler(req, res) {
+          res.permit();
+        }
+        
+        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        
+        chai.express.handler(handler)
+          .req(function(req) {
+            request = req;
+          })
+          .res(function(res) {
+            response = res;
+          })
+          .next(function(err) {
+            done(err);
+          })
+          .dispatch();
+      });
+      
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: [ 'session', 'anonymous' ]
+        });
+      });
+      
+      it('should respond', function() {
+        expect(response.statusCode).to.equal(200);
+      });
+    }); // allowing login
+    
+    describe('challenging for password', function() {
+      var request, response;
+      
+      before(function(done) {
+        function loginHandler(req, res) {
+          res.challenge('password');
+        }
+        
+        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
@@ -79,28 +105,87 @@ describe.skip('login/http/handlers/prompt', function() {
           .dispatch();
       });
       
-      it('should provide CSRF protection', function() {
-        expect(request.csrfToken()).to.equal('xxxxxxxx');
-      });
-      
-      it.skip('should authenticate', function() {
+      it('should authenticate', function() {
         expect(request.authInfo).to.deep.equal({
-          method: [ 'anonymous' ]
+          method: [ 'session', 'anonymous' ]
         });
       });
       
-      it('should set state', function() {
-        expect(request.state).to.deep.equal({
-          name: 'login'
-        });
-        expect(request.state.isComplete()).to.equal(false);
+      it('should redirect', function() {
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/login/password');
+      });
+    }); // challenging for password
+    
+    describe('challenging for one-time password', function() {
+      var request, response;
+      
+      before(function(done) {
+        function loginHandler(req, res) {
+          res.challenge('otp');
+        }
+        
+        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        
+        chai.express.handler(handler)
+          .req(function(req) {
+            request = req;
+          })
+          .res(function(res) {
+            response = res;
+          })
+          .end(function(res) {
+            done();
+          })
+          .dispatch();
       });
       
-      it('should render', function() {
-        expect(response.statusCode).to.equal(200);
-        expect(response).to.render('login');
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: [ 'session', 'anonymous' ]
+        });
       });
-    }); // prompting
+      
+      it('should redirect', function() {
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/login/otp');
+      });
+    }); // challenging for one-time password
+    
+    describe('challenging for out-of-band device', function() {
+      var request, response;
+      
+      before(function(done) {
+        function loginHandler(req, res) {
+          res.challenge('oob');
+        }
+        
+        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        
+        chai.express.handler(handler)
+          .req(function(req) {
+            request = req;
+          })
+          .res(function(res) {
+            response = res;
+          })
+          .end(function(res) {
+            done();
+          })
+          .dispatch();
+      });
+      
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: [ 'session', 'anonymous' ]
+        });
+      });
+      
+      it('should redirect', function() {
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/login/oob');
+      });
+    }); // challenging for out-of-band device
     
   }); // handler
   
