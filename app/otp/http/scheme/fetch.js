@@ -1,6 +1,24 @@
-exports = module.exports = function(sd, verify, authenticatorsDir) {
+exports = module.exports = function(OTP, sd, verify, authenticatorsDir) {
 
-  return function(req, uid, otp, cb) {
+  return function(req, otp, user, cb) {
+    console.log('OTP FETCH!!!!');
+    console.log(otp);
+    console.log(user);
+    console.log(req.session.authInfo)
+    
+    OTP.verify2(otp, user, { token: req.session.authInfo.token }, function(err, ok) {
+      console.log('OTP VERIFIED!');
+      console.log(err);
+      console.log(ok);
+      
+      if (err) { return cb(err); }
+      return cb(null, ok);
+    });
+    
+    
+    return;
+    
+    
     /*
     // TODO: Look up the authenticator service for this user.
     //  user should resolve to service pointer.
@@ -73,6 +91,7 @@ exports = module.exports = function(sd, verify, authenticatorsDir) {
 };
 
 exports['@require'] = [
+  'http://i.authnomicon.org/credentials/OTPService',
   'http://i.bixbyjs.org/sd'
   //'http://schemas.authnomicon.org/js/login/mfa/opt/authy/otp/verify',
   //'http://schemas.authnomicon.org/js/login/mfa/opt/authy/UserAuthenticatorsDirectory'
