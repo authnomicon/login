@@ -14,7 +14,7 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
     console.log(req.state);
     console.log(req.session);
     
-    req.state.foo = 'bar';
+    //req.state.foo = 'bar';
     
     // TODO: initialize request with supported challenge types
     var lreq = new Request(req.user)
@@ -59,7 +59,6 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
     lres.once('decision', ondecision);
     lres.once('__challenge__', onchallenge);
     lres.once('end', onend);
-    
     
     loginHandler(lreq, lres);
     
