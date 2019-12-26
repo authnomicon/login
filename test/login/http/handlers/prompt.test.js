@@ -48,6 +48,40 @@ describe('login/http/handlers/prompt', function() {
     }
     
     
+    describe('allowing login', function() {
+      var request, response;
+      
+      before(function(done) {
+        function loginHandler(req, res) {
+          res.permit();
+        }
+        
+        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        
+        chai.express.handler(handler)
+          .req(function(req) {
+            request = req;
+          })
+          .res(function(res) {
+            response = res;
+          })
+          .next(function(err) {
+            done(err);
+          })
+          .dispatch();
+      });
+      
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: [ 'session', 'anonymous' ]
+        });
+      });
+      
+      it('should respond', function() {
+        expect(response.statusCode).to.equal(200);
+      });
+    }); // allowing login
+    
     describe('challenging for password', function() {
       var request, response;
       
@@ -77,11 +111,81 @@ describe('login/http/handlers/prompt', function() {
         });
       });
       
-      it('should render', function() {
+      it('should redirect', function() {
         expect(response.statusCode).to.equal(302);
         expect(response.getHeader('Location')).to.equal('/login/password');
       });
     }); // challenging for password
+    
+    describe('challenging for one-time password', function() {
+      var request, response;
+      
+      before(function(done) {
+        function loginHandler(req, res) {
+          res.challenge('otp');
+        }
+        
+        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        
+        chai.express.handler(handler)
+          .req(function(req) {
+            request = req;
+          })
+          .res(function(res) {
+            response = res;
+          })
+          .end(function(res) {
+            done();
+          })
+          .dispatch();
+      });
+      
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: [ 'session', 'anonymous' ]
+        });
+      });
+      
+      it('should redirect', function() {
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/login/otp');
+      });
+    }); // challenging for one-time password
+    
+    describe('challenging for out-of-band device', function() {
+      var request, response;
+      
+      before(function(done) {
+        function loginHandler(req, res) {
+          res.challenge('oob');
+        }
+        
+        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        
+        chai.express.handler(handler)
+          .req(function(req) {
+            request = req;
+          })
+          .res(function(res) {
+            response = res;
+          })
+          .end(function(res) {
+            done();
+          })
+          .dispatch();
+      });
+      
+      it('should authenticate', function() {
+        expect(request.authInfo).to.deep.equal({
+          method: [ 'session', 'anonymous' ]
+        });
+      });
+      
+      it('should redirect', function() {
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/login/oob');
+      });
+    }); // challenging for out-of-band device
     
   }); // handler
   

@@ -9,11 +9,6 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
   
   
   function cont(req, res, next) {
-    console.log('LOGIN??');
-    console.log(req.user);
-    console.log(req.state);
-    console.log(req.session);
-    
     //req.state.foo = 'bar';
     
     // TODO: initialize request with supported challenge types
@@ -23,7 +18,8 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
     lreq.session = req.session;
     
     function ondecision(result, scope) {
-      res.redirect('/happy')
+      //res.redirect('/happy')
+      next();
     }
     
     function onchallenge(type, options) {
