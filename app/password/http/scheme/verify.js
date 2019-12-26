@@ -20,8 +20,9 @@ exports = module.exports = function(Passwords, Users /*cs, ds*/) {
         console.log(err);
         console.log(user);
         
+        var info = { methods: [ 'password' ] };
         
-        return cb(null, user);
+        return cb(null, user, info);
       });
       
     });

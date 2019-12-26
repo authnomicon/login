@@ -15,7 +15,12 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   
   // TODO: Clean this up and establish session, with stepped-up method
   function goHome(req, res, next) {
-    delete req.session.authInfo;
+    // TODO: Pass the info to login as options.
+    if (req.authInfo && req.session && req.session.authInfo) {
+      req.session.authInfo.methods = req.session.authInfo.methods.concat(req.authInfo.methods);
+    }
+    
+    //delete req.session.authInfo;
     
     next();
     
@@ -28,8 +33,8 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     ceremony(
       authenticate('session'),
       authenticate('www-otp'),
-      goHome
-    )
+      goHome,
+    { continue: '/login' })
   ];
   
   

@@ -22,6 +22,10 @@ describe('otp/http/handlers/verify', function() {
     
     function ceremony(stack) {
       var stack = Array.prototype.slice.call(arguments, 0);
+      var options;
+      if (typeof stack[stack.length - 1] == 'object' && !Array.isArray(stack[stack.length - 1])) {
+        options = stack.pop();
+      }
       
       return function(req, res, next) {
         utils.dispatch(stack)(null, req, res, next);

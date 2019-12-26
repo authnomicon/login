@@ -9,6 +9,8 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   function establishSession(req, res, next) {
     req.login(req.user, function(err) {
       if (err) { return next(err); }
+      // TODO: Pass the info to login as options
+      req.session.authInfo = { methods: req.authInfo.methods }
       return next();
     });
   }
@@ -19,8 +21,8 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     csrfProtection(),
     ceremony(
       authenticate('www-password'),
-      [ establishSession ]
-    )
+      [ establishSession ],
+    { continue: '/login' })
   ];
 };
 

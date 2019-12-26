@@ -19,6 +19,7 @@ describe.skip('otp/http/scheme', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
+  /*
   describe('creating scheme', function() {
     var StrategySpy = sinon.spy(Strategy);
     var otp = { verify: function(){} };
@@ -37,5 +38,6 @@ describe.skip('otp/http/scheme', function() {
       expect(strategy).to.be.an.instanceOf(Strategy);
     });
   }); // creating scheme
+  */
   
 });

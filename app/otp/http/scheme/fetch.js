@@ -12,7 +12,9 @@ exports = module.exports = function(OTP, sd, verify, authenticatorsDir) {
       console.log(ok);
       
       if (err) { return cb(err); }
-      return cb(null, ok);
+      
+      var info = { methods: [ 'otp' ] };
+      return cb(null, ok, info);
     });
     
     
