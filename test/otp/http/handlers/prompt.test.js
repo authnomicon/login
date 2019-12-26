@@ -3,8 +3,8 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var flowstate = require('flowstate');
 var factory = require('../../../../app/otp/http/handlers/prompt');
+var utils = require('../../../utils');
 
 
 describe('otp/http/handlers/prompt', function() {
@@ -19,23 +19,19 @@ describe('otp/http/handlers/prompt', function() {
   });
   
   describe('handler', function() {
-    var manager = new flowstate.Manager();
-    manager.use('login/otp', {
-      prompt:  [
-        function(req, res, next) {
-          res.render('login/otp');
-        }
-      ]
-    });
     
-    function ceremony(name) {
-      return manager.flow.apply(manager, arguments);
+    function ceremony(stack) {
+      var stack = Array.prototype.slice.call(arguments, 0);
+      
+      return function(req, res, next) {
+        utils.dispatch(stack)(null, req, res, next);
+      };
     }
     
     function csrfProtection() {
       return function(req, res, next) {
         req.csrfToken = function() {
-          return 'xxxxxxxx';
+          return 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql';
         };
         
         next();
@@ -44,13 +40,14 @@ describe('otp/http/handlers/prompt', function() {
     
     function authenticate(method) {
       return function(req, res, next) {
+        req.user = { id: '248289761001', displayName: 'Jane Doe' };
         req.authInfo = { method: method };
         next();
       };
     }
     
     
-    describe('prompting', function() {
+    describe('prompting for one-time password', function() {
       var request, response, view;
       
       before(function(done) {
@@ -59,7 +56,6 @@ describe('otp/http/handlers/prompt', function() {
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
-            req.query = {};
           })
           .res(function(res) {
             response = res;
@@ -71,8 +67,8 @@ describe('otp/http/handlers/prompt', function() {
           .dispatch();
       });
       
-      it('should provide CSRF protection', function() {
-        expect(request.csrfToken()).to.equal('xxxxxxxx');
+      it('should protect against CSRF', function() {
+        expect(request.csrfToken()).to.equal('i8XNjC4b8KVok4uw5RftR38Wgp2BFwql');
       });
       
       /*
@@ -86,6 +82,9 @@ describe('otp/http/handlers/prompt', function() {
       it('should render', function() {
         expect(response.statusCode).to.equal(200);
         expect(response).to.render('login/otp');
+        expect(response.locals).to.deep.equal({
+          csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
+        });
       });
     }); // prompting
     
