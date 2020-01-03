@@ -52,11 +52,11 @@ describe('login/http/handlers/prompt', function() {
       var request, response;
       
       before(function(done) {
-        function loginHandler(req, res) {
+        function authenticationHandler(req, res) {
           res.permit();
         }
         
-        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        var handler = factory(authenticationHandler, authenticate, errorLogging, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
@@ -86,11 +86,11 @@ describe('login/http/handlers/prompt', function() {
       var request, response;
       
       before(function(done) {
-        function loginHandler(req, res) {
+        function authenticationHandler(req, res) {
           res.challenge('password');
         }
         
-        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        var handler = factory(authenticationHandler, authenticate, errorLogging, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
@@ -121,11 +121,11 @@ describe('login/http/handlers/prompt', function() {
       var request, response;
       
       before(function(done) {
-        function loginHandler(req, res) {
+        function authenticationHandler(req, res) {
           res.challenge('otp');
         }
         
-        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        var handler = factory(authenticationHandler, authenticate, errorLogging, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
@@ -156,11 +156,11 @@ describe('login/http/handlers/prompt', function() {
       var request, response;
       
       before(function(done) {
-        function loginHandler(req, res) {
+        function authenticationHandler(req, res) {
           res.challenge('oob');
         }
         
-        var handler = factory(loginHandler, authenticate, errorLogging, ceremony);
+        var handler = factory(authenticationHandler, authenticate, errorLogging, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
