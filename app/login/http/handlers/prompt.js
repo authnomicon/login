@@ -3,7 +3,7 @@
  *
  * This component provides an HTTP handler that prompts for login.
  */
-exports = module.exports = function(loginHandler, authenticate, errorLogging, ceremony) {
+exports = module.exports = function(authenticationFunc, authenticate, errorLogging, ceremony) {
   var Request = require('../../../../lib/request')
     , Response = require('../../../../lib/response');
   
@@ -47,7 +47,7 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
     lres.once('__challenge__', onchallenge);
     lres.once('end', onend);
     
-    loginHandler(lreq, lres);
+    authenticationFunc(lreq, lres);
   }
   
   
@@ -63,7 +63,7 @@ exports = module.exports = function(loginHandler, authenticate, errorLogging, ce
 };
 
 exports['@require'] = [
-  'http://i.authnomicon.org/login/LoginHandler',
+  'http://i.authnomicon.org/login/authenticationFunc',
   'http://i.bixbyjs.org/http/middleware/authenticate',
   'http://i.bixbyjs.org/http/middleware/errorLogging',
   'http://i.bixbyjs.org/http/middleware/ceremony'
