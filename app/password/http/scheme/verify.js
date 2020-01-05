@@ -69,7 +69,7 @@ exports = module.exports = function(Passwords, Users /*cs, ds*/) {
 
 exports['@require'] = [
   'http://i.authnomicon.org/credentials/PasswordService',
-  'http://i.authnomicon.org/directory/UserRepository'
+  'http://i.authnomicon.org/directory/UserDirectory'
   //'http://schemas.authnomicon.org/js/cs/password',
   //'http://schemas.authnomicon.org/js/ds'
 ];
