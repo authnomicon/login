@@ -17,16 +17,14 @@ describe('oob/http/service', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
-  describe('create', function() {
+  it('should construct service', function() {
     function promptHandler() {};
     function verifyHandler() {};
     
     var service = factory(promptHandler, verifyHandler);
   
-    it('should construct handler', function() {
-      expect(service).to.be.a('function');
-      expect(service.length).to.equal(3);
-    });
+    expect(service).to.be.a('function');
+    expect(service.length).to.equal(3);
   });
   
 });

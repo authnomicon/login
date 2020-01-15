@@ -2,9 +2,9 @@ exports = module.exports = function(promptHandler, verifyHandler) {
   var express = require('express');
   var router = new express.Router();
   
-  router.get('/oob', promptHandler);
-  router.post('/oob', verifyHandler);
-  router.get('/oob/verify', verifyHandler);
+  router.get('/', promptHandler);
+  router.post('/', verifyHandler);
+  router.get('/verify', verifyHandler);
   
   return router;
 };
