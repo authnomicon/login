@@ -58,7 +58,8 @@ describe('otp/http/handlers/verify', function() {
         };
         
         req.user = { id: '248289761001', displayName: 'Jane Doe' };
-        req.authInfo = { method: method };
+        req.authInfo = req.authInfo || { methods: [] };
+        req.authInfo.methods.push(method);
         next();
       };
     }
@@ -99,7 +100,7 @@ describe('otp/http/handlers/verify', function() {
           displayName: 'Jane Doe'
         });
         expect(request.authInfo).to.deep.equal({
-          method: 'www-otp'
+          methods: ['session', 'www-otp']
         });
       });
       

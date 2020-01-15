@@ -40,7 +40,7 @@ describe('password/http/handlers/prompt', function() {
     
     
     describe('prompting for password', function() {
-      var request, response, view;
+      var request, response;
       
       before(function(done) {
         var handler = factory(csrfProtection, ceremony);
@@ -57,10 +57,6 @@ describe('password/http/handlers/prompt', function() {
             done();
           })
           .dispatch();
-      });
-      
-      it('should protect against CSRF', function() {
-        expect(request.csrfToken()).to.equal('i8XNjC4b8KVok4uw5RftR38Wgp2BFwql');
       });
       
       it('should render', function() {
