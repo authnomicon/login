@@ -10,7 +10,9 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     req.login(req.user, function(err) {
       if (err) { return next(err); }
       // TODO: Pass the info to login as options
-      req.session.authInfo = { methods: req.authInfo.methods }
+      //req.session.authInfo = { methods: req.authInfo.methods }
+      req.session.authInfo = req.authInfo;
+      
       return next();
     });
   }

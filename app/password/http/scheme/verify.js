@@ -8,23 +8,19 @@ exports = module.exports = function(Passwords, Users /*cs, ds*/) {
     
     
     
-    Passwords.verify(username, password, function(err, user) {
-      console.log(err);
-      console.log(user);
-      
-      // TODO: Might not always have user object from credential service.
+    Passwords.verify(username, password, function(err, user, info) {
       if (err) { return cb(err); }
       if (!user) { return cb(null, false); }
       
+      info = info || {};
+      info.methods = [ 'password' ];
+      
+      if (typeof user == 'object') { return cb(null, user, info); }
+      
       Users.find(username, function(err, user) {
-        console.log(err);
-        console.log(user);
-        
-        var info = { methods: [ 'password' ] };
-        
+        if (err) { return cb(err); }
         return cb(null, user, info);
       });
-      
     });
     
     
