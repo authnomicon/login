@@ -1,19 +1,12 @@
 exports = module.exports = function(OTP, sd, verify, authenticatorsDir) {
 
   return function(req, otp, user, cb) {
-    console.log('OTP FETCH!!!!');
-    console.log(otp);
-    console.log(user);
-    console.log(req.session.authInfo)
-    
-    OTP.verify2(otp, user, { token: req.session.authInfo.token }, function(err, ok) {
-      console.log('OTP VERIFIED!');
-      console.log(err);
-      console.log(ok);
-      
+    // TODO: clean up authInfo.token persistence
+    OTP.verify2(otp, user, { token: req.session.authInfo.token }, function(err, ok, info) {
       if (err) { return cb(err); }
       
-      var info = { methods: [ 'otp' ] };
+      info = info || {};
+      info.methods = [ 'otp' ];
       return cb(null, ok, info);
     });
     
