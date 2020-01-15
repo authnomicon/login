@@ -3,11 +3,11 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var flowstate = require('flowstate');
 var factory = require('../../../../app/oob/http/handlers/prompt');
+var utils = require('../../../utils');
 
 
-describe.skip('oob/http/handlers/prompt', function() {
+describe('oob/http/handlers/prompt', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -19,31 +19,19 @@ describe.skip('oob/http/handlers/prompt', function() {
   });
   
   describe('handler', function() {
-    var manager = new flowstate.Manager();
-    manager.use('login/oob', {
-      prompt:  [
-        function(req, res, next) {
-          res.render('login/oob');
-        }
-      ]
-    });
     
-    function ceremony(name) {
-      return manager.flow.apply(manager, arguments);
+    function ceremony(stack) {
+      var stack = Array.prototype.slice.call(arguments, 0);
+      
+      return function(req, res, next) {
+        utils.dispatch(stack)(null, req, res, next);
+      };
     }
-    
-    var credentials = {
-      list: function(){}
-    };
-    
-    var oob = {
-      challenge: function(){}
-    };
     
     function csrfProtection() {
       return function(req, res, next) {
         req.csrfToken = function() {
-          return 'xxxxxxxx';
+          return 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql';
         };
         
         next();
@@ -52,34 +40,37 @@ describe.skip('oob/http/handlers/prompt', function() {
     
     function authenticate(method) {
       return function(req, res, next) {
+        req.user = { id: '248289761001', displayName: 'Jane Doe' };
         req.authInfo = { method: method };
         next();
       };
     }
     
+    var OOBService = {
+      challenge: function(){}
+    };
     
-    describe('prompting', function() {
-      var request, response, view;
+    
+    describe('prompting for out-of-band confirmation', function() {
+      var request, response;
       
       before(function() {
-        sinon.stub(credentials, 'list').yields(null, [ { id: '1', channel: 'test' } ]);
-        sinon.stub(oob, 'challenge').yields(null, 't1ck3t');
+        sinon.stub(OOBService, 'challenge').yields(null, '1c266114-a1be-4252-8ad1-04986c5b9ac1');
       });
-    
+      
       after(function() {
-        oob.challenge.restore();
-        credentials.list.restore();
+        OOBService.challenge.restore();
       });
       
       before(function(done) {
-        var handler = factory(credentials, oob, csrfProtection, authenticate, ceremony);
+        var handler = factory(OOBService, csrfProtection, authenticate, ceremony);
         
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
-            req.user = { id: '501' };
-            req.query = {};
             req.state = {};
+            req.session = {};
+            req.session.authInfo = { token: '8d67dc78-7faa-4d41-aabd-67707b374255' };
           })
           .res(function(res) {
             response = res;
@@ -91,55 +82,41 @@ describe.skip('oob/http/handlers/prompt', function() {
           .dispatch();
       });
       
-      it('should provide CSRF protection', function() {
-        expect(request.csrfToken()).to.equal('xxxxxxxx');
-      });
-      
       it('should authenticate', function() {
         expect(request.authInfo).to.deep.equal({
           method: 'session'
         });
       });
       
-      it('should list credentials', function() {
-        expect(credentials.list.callCount).to.equal(1);
-        var call = credentials.list.getCall(0)
-        expect(call.args[0]).to.deep.equal({
-          id: '501'
-        });
-      });
-      
       it('should challenge authenticator', function() {
-        expect(oob.challenge.callCount).to.equal(1);
-        var call = oob.challenge.getCall(0)
-        expect(call.args[0]).to.deep.equal({
-          id: '1',
-          channel: 'test'
-        });
+        expect(OOBService.challenge).to.have.been.calledWith(
+          {
+            id: '248289761001',
+            displayName: 'Jane Doe'
+          },
+          { token: '8d67dc78-7faa-4d41-aabd-67707b374255' }
+        );
       });
       
-      it('should set locals', function() {
-        expect(response.locals).to.deep.equal({
-          credentials: [ {
-            id: '1',
-            channel: 'test',
-          } ]
-        });
-      });
-      
-      it('should set state', function() {
+      it('should save state', function() {
         expect(request.state).to.deep.equal({
-          user: { id: '501' },
-          credential: { id: '1' },
-          ticket: 't1ck3t'
+          ticket: '1c266114-a1be-4252-8ad1-04986c5b9ac1'
         });
       });
       
       it('should render', function() {
         expect(response.statusCode).to.equal(200);
         expect(response).to.render('login/oob');
+        expect(response.locals).to.deep.equal({
+          user: {
+            id: '248289761001',
+            displayName: 'Jane Doe'
+          },
+          csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
+        });
       });
-    }); // prompting
+      
+    }); // prompting for out-of-band confirmation
     
   }); // handler
   
