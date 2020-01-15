@@ -1,13 +1,10 @@
-exports = module.exports = function(credentials, oob, csrfProtection, authenticate, ceremony) {
+exports = module.exports = function(OOB, csrfProtection, authenticate, ceremony) {
   var path = require('path')
+    , ejs = require('ejs')
     , BindingRequiredError = require('../../../../lib/errors/authenticatorbindingrequired')
   
   
-  function initialize(req, res, next) {
-    req.locals = req.locals || {};
-    next();
-  };
-  
+  /*
   function retrieveCredentials(req, res, next) {
     credentials.list(req.user, function(err, creds) {
       if (err) { return next(err); }
@@ -20,15 +17,27 @@ exports = module.exports = function(credentials, oob, csrfProtection, authentica
       next();
     });
   }
+  */
   
+  /*
   function selectCredential(req, res, next) {
     var cred = res.locals.credentials[0];
     
     req.locals.cred = cred;
     next();
   }
+  */
   
   function challenge(req, res, next) {
+    OOB.challenge(req.user, { token: req.session.authInfo.token }, function(err, ticket) {
+      if (err) { return next(err); }
+      
+      req.state.ticket = ticket;
+      next();
+    });
+    
+    
+    /*
     var cred = req.locals.cred;
     
     oob.challenge(cred, function(err, params) {
@@ -44,6 +53,26 @@ exports = module.exports = function(credentials, oob, csrfProtection, authentica
       req.state.ticket = params.ticket;
       next();
     });
+    */
+  }
+  
+  function prompt(req, res, next) {
+    res.locals.user = req.user;
+    res.locals.csrfToken = req.csrfToken();
+    
+    res.render('login/oob', function(err, str) {
+      if (err && err.view) {
+        var view = path.resolve(__dirname, '../views/prompt.ejs');
+        ejs.renderFile(view, res.locals, function(err, str) {
+          if (err) { return next(err); }
+          res.send(str);
+        });
+        return;
+      } else if (err) {
+        return next(err);
+      }
+      res.send(str);
+    });
   }
   
   function bindingRequiredErrorHandler(err, req, res, next) {
@@ -53,20 +82,19 @@ exports = module.exports = function(credentials, oob, csrfProtection, authentica
   }
   
   
-  return ceremony('login/oob',
-    csrfProtection(),
-    authenticate('session'),
-    initialize,
-    retrieveCredentials,
-    selectCredential,
-    challenge,
-    bindingRequiredErrorHandler
-  );
+  return [
+    ceremony(
+      csrfProtection(),
+      authenticate('session'),
+      challenge,
+      prompt,
+      bindingRequiredErrorHandler
+    )
+  ];
 };
 
 exports['@require'] = [
-  'http://schemas.modulate.io/js/login/AuthenticatorService',
-  'http://schemas.authnomicon.org/js/cs/oob',
+  'http://i.authnomicon.org/credentials/OOBService',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/authenticate',
   'http://i.bixbyjs.org/http/middleware/ceremony'
