@@ -4,6 +4,7 @@ exports = module.exports = function(csrfProtection, authenticate, ceremony) {
 
 
   function prompt(req, res, next) {
+    // TODO: make sure this route is authenticated, and remove if statement
     if (req.user) {
       res.locals.user = req.user;
     }
