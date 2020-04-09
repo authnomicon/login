@@ -48,8 +48,11 @@
     "express": "^4.17.1",
     "fluidfactory": "^0.1.0",
     "http-errors": "^1.7.3",
+    "flowstate": "git+https://github.com/jaredhanson/flowstate.git#lazy-methods",
     "passport-local": "^1.0.0",
-    "passport-state": "0.0.2"
+    "passport-state": "0.0.2",
+    "passport-oob": "git+https://github.com/jaredhanson/passport-oob.git",
+    "passport-otp": "git+https://github.com/jaredhanson/passport-otp.git"
   },
   "devDependencies": {
     "make-node": "^0.3.0",
