@@ -11,23 +11,27 @@
  * typically using a cookie, allowing the user to continue navigating the
  * application in an authenticated state.
  *
- * It is recommended that desktop and mobile applications make use of web views
- * when presenting login screens to end-users.  This allows the server to
+ * It is recommended that desktop and mobile applications delegate
+ * authentication to a sign-in service, making use of web views to allow the
+ * service to present login prompts to end-users.  This allows the service to
  * dynamically change the sequence of challenges presented to the end-user,
- * enhancing security posture by, for example, prompting for step-up
- * authentication or obtaining consent.  Allowing the server-side to dynamically
- * render login interfaces reduces coupling of authentication requirements to
- * the client application, allowing new challenges to be introduced without
- * deploying software updates to client systems.
+ * in order to obtain the desired security posture without deploying software
+ * updates to end-user systems.  This technique also avoids exposing the
+ * end-user's credentials to the application.  The sign-in service would
+ * implement a protocol such as OpenID Connect, and make use of this password
+ * authentication service as one of its prompts.
  *
  * Despite this recommendation, it is acknowledged that desktop and mobile
- * applications continue to present native login screens, thus creating a tight
- * coupling with the forms of credentials and challenges they are capable of
- * supporting.  Such applications should not make use of this service, but
- * rather use protocols such as HTTP Authentication or SASL.  Additionally use
- * of access tokens within those protocols is encouraged, in order to attenuate
- * privlidges and lifetime of credentials, and avoid persisting long-lived
- * credentials such as passwords.
+ * applications continue to present native login screens, directly handling end-
+ * user credentials and thus creating a tight coupling with between the
+ * challenges supported and the attainable security posture.  Such applications
+ * do not delegate to a sign-in service and should not make use of this service.
+ * Instead, applications are encouraged to make use of the the [HTTP
+ * Authentication][1] framework, perhaps in conjuction with the [OAuth 2.0][2]
+ * authorization framework and end-user credentials as authorization grants.
+ *
+ * [1]: https://tools.ietf.org/html/rfc7235
+ * [2]: https://tools.ietf.org/html/rfc6749
  *
  * @param {Function|Function[]} promptHandler - Prompt handler.
  * @param {Function|Function[]} verifyHandler - Verify handler.
@@ -35,8 +39,8 @@
  */
 exports = module.exports = function(promptHandler, verifyHandler) {
   var express = require('express');
-  var router = new express.Router();
   
+  var router = new express.Router();
   router.get('/', promptHandler);
   router.post('/', verifyHandler);
   

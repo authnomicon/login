@@ -12,7 +12,7 @@ describe('password/http/service', function() {
   });
   
   it('should be annotated', function() {
-    expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/Service');
+    expect(factory['@provides']).to.equal('http://i.bixbyjs.org/http/Service');
     expect(factory['@path']).to.equal('/login/password');
     expect(factory['@singleton']).to.be.undefined;
   });
