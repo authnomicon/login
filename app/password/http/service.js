@@ -23,9 +23,9 @@
  *
  * Despite this recommendation, it is acknowledged that desktop and mobile
  * applications continue to present native login screens, directly handling end-
- * user credentials and thus creating a tight coupling with between the
- * challenges supported and the attainable security posture.  Such applications
- * do not delegate to a sign-in service and should not make use of this service.
+ * user credentials and thus creating a tight coupling between the challenges
+ * supported and the attainable security posture.  Such applications do not
+ * delegate to a sign-in service and should not make use of this service.
  * Instead, applications are encouraged to make use of the the [HTTP
  * Authentication][1] framework, perhaps in conjuction with the [OAuth 2.0][2]
  * authorization framework and end-user credentials as authorization grants.
