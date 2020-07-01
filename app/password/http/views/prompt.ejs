@@ -22,7 +22,7 @@
     <input type="hidden" name="state" value="<%= state %>"/>
   <% } %>
   <% if (typeof csrfToken !== 'undefined') { %>
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+    <input type="hidden" name="csrf_token" value="<%= csrfToken %>"/>
   <% } %>
 	<input type="submit" value="Submit"/>
 	</div>

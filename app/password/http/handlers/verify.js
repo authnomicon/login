@@ -3,6 +3,11 @@
  *
  * This component provides an HTTP handler that authenticates a username and
  * password.  The credentials are submitted via an HTML form.
+ *
+ * This handler is protected against CSRF, in order to defend against [login
+ * CSRF][1] attacks.
+ *
+ * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
  */
 exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   
@@ -24,7 +29,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     ceremony(
       authenticate('www-password'),
       [ establishSession ],
-    { continue: '/login' })
+    { continue: '/login' })  // TODO: Remvoe "continue"?
   ];
 };
 

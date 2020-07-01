@@ -22,6 +22,9 @@ describe('password/http/handlers/verify', function() {
     
     function ceremony(stack) {
       var stack = Array.prototype.slice.call(arguments, 0);
+      stack.push(function(req, res, next) {
+        res.redirect('/home');
+      });
       
       return function(req, res, next) {
         utils.dispatch(stack)(null, req, res, next);
@@ -39,12 +42,12 @@ describe('password/http/handlers/verify', function() {
     function csrfProtection() {
       return function(req, res, next) {
         req.__ = req.__ || {};
-        req.__.csrfToken = req.body._csrf;
+        req.__.csrfToken = req.body.csrf_token;
         next();
       };
     }
     
-    function authenticate(method) {
+    function authenticate(mechanism) {
       return function(req, res, next) {
         req.login = function(user, cb) {
           process.nextTick(function() {
@@ -54,7 +57,7 @@ describe('password/http/handlers/verify', function() {
         };
         
         req.user = { id: '248289761001', displayName: 'Jane Doe' };
-        req.authInfo = { method: method };
+        req.authInfo = { mechanism: mechanism };
         next();
       };
     }
@@ -69,19 +72,19 @@ describe('password/http/handlers/verify', function() {
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
-            request.body = { _csrf: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql' };
+            request.body = { csrf_token: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql' };
             request.session = {};
           })
           .res(function(res) {
             response = res;
           })
-          .next(function(err) {
-            done(err);
+          .end(function() {
+            done();
           })
           .dispatch();
       });
       
-      it('should parse request body', function() {
+      it('should parse media types', function() {
         expect(request.__.supportedMediaType).to.equal('application/x-www-form-urlencoded');
       });
       
@@ -95,7 +98,7 @@ describe('password/http/handlers/verify', function() {
           displayName: 'Jane Doe'
         });
         expect(request.authInfo).to.deep.equal({
-          method: 'www-password'
+          mechanism: 'www-password'
         });
       });
       
@@ -107,7 +110,8 @@ describe('password/http/handlers/verify', function() {
       });
       
       it('should respond', function() {
-        expect(response.statusCode).to.equal(200);
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/home');
       });
     }); // logging in with password
     
