@@ -1,12 +1,10 @@
 exports = module.exports = function(serializeUser, deserializeUser) {
-  // TODO: Load app-specific plugins that clean up session data beyond login info (shopping cart, etc)
   
   var SessionManager = require('../../../lib/session/manager');
   
+  // TODO: Load app-specific plugins that clean up session data beyond login info (shopping cart, etc)
+  
   var manager = new SessionManager(function(user, cb) {
-    console.log('SESSION SERIALIZE');
-    console.log(user);
-    
     var obj = { id: user.id };
     if (user.username) { obj.username = user.username; }
     if (user.displayName) { obj.displayName = user.displayName; }
