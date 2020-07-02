@@ -240,6 +240,63 @@ describe('password/http/scheme', function() {
       });
     }); // verify
   
-  }); // not verifying username and password
+  }); // encountering error while verifying credentials
+  
+  describe('encountering error while querying directory', function() {
+    var passwords = new Object();
+    passwords.verify = sinon.stub().yieldsAsync(null, true);
+    var users = new Object();
+    users.find = sinon.stub().yieldsAsync(new Error('something went wrong'));
+  
+    var StrategySpy = sinon.spy(Strategy);
+  
+    var factory = $require('../../../app/password/http/scheme',
+      { 'passport-local': StrategySpy });
+    var strategy = factory(passwords, users);
+  
+    it('should construct strategy', function() {
+      expect(StrategySpy).to.have.been.calledOnce;
+    });
+  
+    it('should return strategy', function() {
+      expect(strategy).to.be.an.instanceOf(Strategy);
+    });
+  
+    describe('verify', function() {
+      var error, user, info;
+    
+      before(function(done) {
+        var verify = StrategySpy.args[0][0];
+        verify('jane', 'opensesame', function(e, u, i) {
+          error = e;
+          user = u;
+          info = i;
+          done();
+        });
+      });
+    
+      it('should verify credentials', function() {
+        expect(passwords.verify).to.calledOnceWith('jane', 'opensesame');
+      });
+    
+      it('should query directory', function() {
+        expect(users.find).to.have.been.calledOnceWith('jane');
+      });
+      
+      it('should yield error', function() {
+        expect(error).to.be.an.instanceOf(Error);
+        expect(error.message).to.equal('something went wrong');
+      });
+    
+      it('should not yield user', function() {
+        expect(user).to.be.undefined;
+      });
+    
+      it('should not yield info', function() {
+        expect(info).to.be.undefined;
+      });
+    }); // verify
+  
+  }); // encountering error while querying directory
   
 });

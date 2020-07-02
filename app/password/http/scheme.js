@@ -4,19 +4,35 @@
  * This component provides an HTTP authentication scheme that authenticates an
  * end-user using a username and password.
  *
- * This authentication scheme is intended to be used by web applications using
- * HTML forms (as opposed to user agents using headers defined by the HTTP
- * Authentication framework).
+ * This authentication scheme is intended to be used by sites making use of
+ * HTML forms to present the end-user with an interface for logging in to the
+ * site.
  */
-exports = module.exports = function(verify) {
+exports = module.exports = function(passwords, users) {
   var Strategy = require('passport-local');
   
-  var strategy = new Strategy(verify);
+  var strategy = new Strategy(function(username, password, cb) {
+    
+    passwords.verify(username, password, function(err, user, info) {
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      
+      info = info || {};
+      info.methods = [ 'password' ];
+      
+      if (typeof user == 'object') { return cb(null, user, info); }
+      users.find(username, function(err, user) {
+        if (err) { return cb(err); }
+        return cb(null, user, info);
+      });
+    });
+  });
   return strategy;
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
 exports['@scheme'] = 'www-password';
 exports['@require'] = [
-  './scheme/verify'
+  'http://i.authnomicon.org/credentials/PasswordService',
+  'http://i.authnomicon.org/directory/UserDirectory'
 ];
