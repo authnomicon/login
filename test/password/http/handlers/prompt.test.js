@@ -39,7 +39,7 @@ describe('password/http/handlers/prompt', function() {
     }
     
     
-    describe('prompting for password', function() {
+    describe('challenging for username and password', function() {
       var request, response;
       
       before(function(done) {
@@ -66,7 +66,7 @@ describe('password/http/handlers/prompt', function() {
           csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
         });
       });
-    }); // prompting for password
+    }); // challenging for username and password
     
   }); // handler
   

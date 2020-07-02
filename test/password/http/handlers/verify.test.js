@@ -63,7 +63,7 @@ describe('password/http/handlers/verify', function() {
     }
     
     
-    describe('logging in with password', function() {
+    describe('authenticating username and password', function() {
       var request, response;
       
       before(function(done) {
@@ -72,7 +72,11 @@ describe('password/http/handlers/verify', function() {
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
-            request.body = { csrf_token: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql' };
+            request.body = {
+              username: 'jane',
+              password: 'opensesame',
+              csrf_token: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
+            };
             request.session = {};
           })
           .res(function(res) {
@@ -113,7 +117,7 @@ describe('password/http/handlers/verify', function() {
         expect(response.statusCode).to.equal(302);
         expect(response.getHeader('Location')).to.equal('/home');
       });
-    }); // logging in with password
+    }); // authenticating username and password
     
   }); // handler
   
