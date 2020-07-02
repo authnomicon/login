@@ -4,11 +4,11 @@
  * This component provides an HTTP service that authenticates an end-user using
  * a username and password.
  *
- * This service is intended to be used by web applications where HTML forms are
- * used to present the end-user with an interactive interface for logging in to
- * the application.  The interface is rendered by the web browser being used by
- * the end-user.  After authentication, a login session is established, allowing
- * the user to continue navigating the application in an authenticated state.
+ * This service is intended to be used by sites making use of HTML forms to
+ * present the end-user with an interface for logging in to the site.  The
+ * interface is rendered by the web browser being used by the end-user.  After
+ * authentication, a login session is established, allowing the user to continue
+ * navigating the site in an authenticated state.
  *
  * @param {Function|Function[]} promptHandler - Prompt handler.
  * @param {Function|Function[]} verifyHandler - Verify handler.
