@@ -5,9 +5,12 @@
  * password.  The credentials are submitted via an HTML form.
  *
  * This handler is protected against CSRF, in order to defend against [login
- * CSRF][1] attacks.
+ * CSRF][1] attacks.  Consult [Robust Defenses for Cross-Site Request
+ * Forgery][2] for a thorough analysis of CSRF, including login CSRF, as well
+ * defense mechanisms.
  *
  * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
+ * [2]: https://seclab.stanford.edu/websec/csrf/csrf.pdf
  */
 exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
   
@@ -22,6 +25,10 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     });
   }
   
+  
+  // TODO: Investigate using a cookie-less CSRF protection mechanism, such
+  //       as checking referrer headers, per 
+  //       https://seclab.stanford.edu/websec/csrf/csrf.pdf
   
   return [
     parse('application/x-www-form-urlencoded'),

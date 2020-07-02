@@ -1,3 +1,17 @@
+/**
+ * Password challenge handler.
+ *
+ * This component provides an HTTP handler that challenges the user to
+ * authenticate with a username and password.
+ *
+ * This handler initializes protection against CSRF, in order to defend against
+ * [login CSRF][1] attacks.  Consult [Robust Defenses for Cross-Site Request
+ * Forgery][2] for a thorough analysis of CSRF, including login CSRF, as well
+ * defense mechanisms.
+ *
+ * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
+ * [2]: https://seclab.stanford.edu/websec/csrf/csrf.pdf
+ */
 exports = module.exports = function(csrfProtection, ceremony) {
   var path = require('path')
     , ejs = require('ejs');
