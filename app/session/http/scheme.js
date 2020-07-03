@@ -1,10 +1,9 @@
-exports = module.exports = function(verify) {
+exports = module.exports = function() {
   var Strategy = require('../../../lib/session/strategy');
   
-  var strategy = new Strategy(function(obj, cb) {
+  return new Strategy(function(obj, cb) {
     cb(null, obj);
   });
-  return strategy;
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';

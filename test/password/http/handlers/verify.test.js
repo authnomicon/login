@@ -108,7 +108,7 @@ describe('password/http/handlers/verify', function() {
           displayName: 'Jane Doe'
         });
         expect(request.authInfo).to.deep.equal({
-          mechanism: 'www-password'
+          mechanism: 'x-www-password'
         });
       });
       
@@ -118,7 +118,7 @@ describe('password/http/handlers/verify', function() {
             id: '248289761001',
             displayName: 'Jane Doe'
           },
-          mechanism: 'www-password'
+          mechanism: 'x-www-password'
         });
       });
       

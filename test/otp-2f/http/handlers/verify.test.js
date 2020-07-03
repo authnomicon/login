@@ -100,7 +100,7 @@ describe('otp-2f/http/handlers/verify', function() {
           displayName: 'Jane Doe'
         });
         expect(request.authInfo).to.deep.equal({
-          mechanisms: ['session', 'www-otp-2f']
+          mechanisms: ['session', 'x-www-otp-2f']
         });
       });
       

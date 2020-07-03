@@ -30,7 +30,7 @@ exports = module.exports = function(passwords, users) {
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
-exports['@scheme'] = 'www-password';
+exports['@scheme'] = 'x-www-password';
 exports['@require'] = [
   'http://i.authnomicon.org/credentials/PasswordService',
   'http://i.authnomicon.org/directory/UserDirectory'
