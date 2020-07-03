@@ -18,6 +18,49 @@ describe('session/http/manager', function() {
     expect(factory['@singleton']).to.be.true;
   });
   
+  describe('serializing user with id and username', function() {
+    var ManagerSpy = sinon.spy(Manager);
+    
+    var factory = $require('../../../app/session/http/manager',
+      { '../../../lib/session/manager': ManagerSpy });
+    var manager = factory();
+    
+    it('should construct manager', function() {
+      expect(ManagerSpy).to.have.been.calledOnce;
+    });
+    
+    it('should return manager', function() {
+      expect(manager).to.be.an.instanceOf(Manager);
+    });
+    
+    describe('serialize', function() {
+      var obj;
+      
+      before(function(done) {
+        var user = {
+          id: '703887',
+          username: 'mork.hashimoto',
+          birthday: "0000-01-16",
+        }
+        
+        var serialize = ManagerSpy.args[0][0];
+        serialize(user, function(e, o) {
+          if (e) { return done(e); }
+          obj = o;
+          done();
+        });
+      });
+      
+      it('should yield object', function() {
+        expect(obj).to.deep.equal({
+          id: '703887',
+          username: 'mork.hashimoto'
+        });
+      });
+    }); // serialize
+    
+  }); // serializing user with id and username
+  
   describe('serializing user with id and display name', function() {
     var ManagerSpy = sinon.spy(Manager);
     
@@ -59,6 +102,6 @@ describe('session/http/manager', function() {
       });
     }); // serialize
     
-  }); // serializing user with id and username
+  }); // serializing user with id and display name
   
 });

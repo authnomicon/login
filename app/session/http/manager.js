@@ -7,8 +7,6 @@ exports = module.exports = function() {
     var obj = { id: user.id };
     if (user.username) { obj.username = user.username; }
     if (user.displayName) { obj.displayName = user.displayName; }
-    if (user.name) { obj.name = user.name; }
-    if (user.nickname) { obj.nickname = user.nickname; }
     // TODO: Reduce photos to single URL
     //if (user.photos) { obj.photos = user.photos; }
     return cb(null, obj);
