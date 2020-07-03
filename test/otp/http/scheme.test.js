@@ -67,25 +67,97 @@ describe('otp/http/scheme', function() {
     
   }); // verifying OTP
   
-  /*
-  describe('creating scheme', function() {
+  describe('not verifying OTP', function() {
+    var otps = new Object();
+    otps.verify2 = sinon.stub().yieldsAsync(null, false);
+    
     var StrategySpy = sinon.spy(Strategy);
-    var otp = { verify: function(){} };
-    var fetch = function(){};
     
     var factory = $require('../../../app/otp/http/scheme',
       { 'passport-otp': StrategySpy });
-    var strategy = factory(otp, fetch);
+    var strategy = factory(otps);
     
     it('should construct strategy', function() {
       expect(StrategySpy).to.have.been.calledOnce;
-      expect(StrategySpy).to.have.been.calledWithExactly({ passReqToCallback: true }, otp, fetch);
     });
     
     it('should return strategy', function() {
       expect(strategy).to.be.an.instanceOf(Strategy);
     });
-  }); // creating scheme
-  */
+    
+    describe('verify', function() {
+      var ok, info;
+      
+      before(function(done) {
+        var verify = StrategySpy.args[0][0];
+        verify('123456', { id: '248289761001', displayName: 'Jane Doe' }, function(e, o, i) {
+          if (e) { return done(e); }
+          ok = o;
+          info = i;
+          done();
+        });
+      });
+      
+      it('should verify credentials', function() {
+        expect(otps.verify2).to.calledOnceWith('123456', { id: '248289761001', displayName: 'Jane Doe' });
+      });
+      
+      it('should yield not ok', function() {
+        expect(ok).to.be.false;
+      });
+      
+      it('should not yield info', function() {
+        expect(info).to.be.undefined;
+      });
+    }); // verify
+    
+  }); // not verifying OTP
+  
+  describe('encountering error while verifying OTP', function() {
+    var otps = new Object();
+    otps.verify2 = sinon.stub().yieldsAsync(new Error('something went wrong'));
+    
+    var StrategySpy = sinon.spy(Strategy);
+    
+    var factory = $require('../../../app/otp/http/scheme',
+      { 'passport-otp': StrategySpy });
+    var strategy = factory(otps);
+    
+    it('should construct strategy', function() {
+      expect(StrategySpy).to.have.been.calledOnce;
+    });
+    
+    it('should return strategy', function() {
+      expect(strategy).to.be.an.instanceOf(Strategy);
+    });
+    
+    describe('verify', function() {
+      var error, ok, info;
+      
+      before(function(done) {
+        var verify = StrategySpy.args[0][0];
+        verify('123456', { id: '248289761001', displayName: 'Jane Doe' }, function(e, o, i) {
+          error = e;
+          ok = o;
+          info = i;
+          done();
+        });
+      });
+      
+      it('should yield error', function() {
+        expect(error).to.be.an.instanceOf(Error);
+        expect(error.message).to.equal('something went wrong');
+      });
+      
+      it('should not yield ok', function() {
+        expect(ok).to.be.undefined;
+      });
+      
+      it('should not yield info', function() {
+        expect(info).to.be.undefined;
+      });
+    }); // verify
+    
+  }); // encountering error while verifying OTP
   
 });
