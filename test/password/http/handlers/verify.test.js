@@ -21,7 +21,12 @@ describe('password/http/handlers/verify', function() {
   describe('handler', function() {
     
     function ceremony(stack) {
-      var stack = Array.prototype.slice.call(arguments, 0);
+      var stack = Array.prototype.slice.call(arguments, 0)
+        , options;
+      if (typeof stack[stack.length - 1] == 'object' && !Array.isArray(stack[stack.length - 1])) {
+        options = stack.pop();
+      }
+      
       stack.push(function(req, res, next) {
         res.redirect('/home');
       });
