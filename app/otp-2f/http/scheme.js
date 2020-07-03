@@ -15,7 +15,7 @@ exports = module.exports = function(otps) {
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
-exports['@scheme'] = 'www-otp-2';
+exports['@scheme'] = 'www-otp-2f';
 exports['@require'] = [
   'http://i.authnomicon.org/credentials/OTPService'
 ];

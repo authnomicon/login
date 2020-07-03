@@ -26,7 +26,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     csrfProtection(),
     ceremony(
       authenticate('session'),
-      authenticate('www-otp-2'),
+      authenticate('www-otp-2f'),
       [ reestablishSession ],
     { continue: '/login' })
   ];

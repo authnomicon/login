@@ -21,7 +21,7 @@ exports = module.exports = function(csrfProtection, authenticate, ceremony) {
     res.locals.user = req.user;
     res.locals.csrfToken = req.csrfToken();
   
-    res.render('stepup/otp', function(err, str) {
+    res.render('login/otp-2f', function(err, str) {
       if (err && err.view) {
         var view = path.resolve(__dirname, '../views/prompt.ejs');
         ejs.renderFile(view, res.locals, function(err, str) {

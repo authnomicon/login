@@ -3,11 +3,11 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/otp/http/handlers/verify');
+var factory = require('../../../../app/otp-2f/http/handlers/verify');
 var utils = require('../../../utils');
 
 
-describe('otp/http/handlers/verify', function() {
+describe('otp-2f/http/handlers/verify', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -100,7 +100,7 @@ describe('otp/http/handlers/verify', function() {
           displayName: 'Jane Doe'
         });
         expect(request.authInfo).to.deep.equal({
-          mechanisms: ['session', 'www-otp-2']
+          mechanisms: ['session', 'www-otp-2f']
         });
       });
       

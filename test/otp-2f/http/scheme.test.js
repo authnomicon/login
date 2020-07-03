@@ -3,11 +3,11 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../app/otp/http/scheme');
+var factory = require('../../../app/otp-2f/http/scheme');
 var Strategy = require('passport-otp');
 
 
-describe('otp/http/scheme', function() {
+describe('otp-2f/http/scheme', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -15,7 +15,7 @@ describe('otp/http/scheme', function() {
   
   it('should be annotated', function() {
     expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/auth/Scheme');
-    expect(factory['@scheme']).to.equal('www-otp-2');
+    expect(factory['@scheme']).to.equal('www-otp-2f');
     expect(factory['@singleton']).to.be.undefined;
   });
   
@@ -25,7 +25,7 @@ describe('otp/http/scheme', function() {
     
     var StrategySpy = sinon.spy(Strategy);
     
-    var factory = $require('../../../app/otp/http/scheme',
+    var factory = $require('../../../app/otp-2f/http/scheme',
       { 'passport-otp': StrategySpy });
     var strategy = factory(otps);
     
@@ -73,7 +73,7 @@ describe('otp/http/scheme', function() {
     
     var StrategySpy = sinon.spy(Strategy);
     
-    var factory = $require('../../../app/otp/http/scheme',
+    var factory = $require('../../../app/otp-2f/http/scheme',
       { 'passport-otp': StrategySpy });
     var strategy = factory(otps);
     
@@ -119,7 +119,7 @@ describe('otp/http/scheme', function() {
     
     var StrategySpy = sinon.spy(Strategy);
     
-    var factory = $require('../../../app/otp/http/scheme',
+    var factory = $require('../../../app/otp-2f/http/scheme',
       { 'passport-otp': StrategySpy });
     var strategy = factory(otps);
     

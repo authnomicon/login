@@ -28,8 +28,8 @@
       "login/http/service",
       "password/http/service",
       "password/http/scheme",
-      "otp/http/service",
-      "otp/http/scheme",
+      "otp-2f/http/service",
+      "otp-2f/http/scheme",
       "session/http/manager",
       "session/http/scheme"
     ],

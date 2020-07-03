@@ -3,11 +3,11 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/otp/http/handlers/prompt');
+var factory = require('../../../../app/otp-2f/http/handlers/prompt');
 var utils = require('../../../utils');
 
 
-describe('otp/http/handlers/prompt', function() {
+describe('otp-2f/http/handlers/prompt', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -75,7 +75,7 @@ describe('otp/http/handlers/prompt', function() {
       
       it('should render', function() {
         expect(response.statusCode).to.equal(200);
-        expect(response).to.render('stepup/otp');
+        expect(response).to.render('login/otp-2f');
         expect(response.locals).to.deep.equal({
           user: {
             id: '248289761001',
