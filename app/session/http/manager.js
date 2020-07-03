@@ -1,5 +1,4 @@
-exports = module.exports = function(serializeUser, deserializeUser) {
-  
+exports = module.exports = function() {
   var SessionManager = require('../../../lib/session/manager');
   
   // TODO: Load app-specific plugins that clean up session data beyond login info (shopping cart, etc)
