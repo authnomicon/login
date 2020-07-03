@@ -50,7 +50,7 @@ describe('otp/http/handlers/verify', function() {
     
     function authenticate(method) {
       return function(req, res, next) {
-        req.login = function(user, cb) {
+        req.login = function(user, info, cb) {
           process.nextTick(function() {
             req.session.user = user;
             cb();

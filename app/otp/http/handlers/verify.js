@@ -15,18 +15,10 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   
   // TODO: Clean this up and establish session, with stepped-up method
   function reestablishSession(req, res, next) {
-    // TODO: Pass the info to login as options.
-    if (req.authInfo && req.session && req.session.authInfo) {
-      req.session.authInfo.methods = req.session.authInfo.methods.concat(req.authInfo.methods);
-      
-      if (req.authInfo.complete === true) {
-        delete req.session.authInfo.complete;
-        delete req.session.authInfo.token;
-        delete req.session.authInfo.credentials;
-      }
-    }
-    
-    next();
+    req.login(req.user, req.authInfo, function(err) {
+      if (err) { return next(err); }
+      return next();
+    });
   }
   
   return [
