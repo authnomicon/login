@@ -37,8 +37,8 @@ exports = module.exports = function(csrfProtection, ceremony) {
   
   
   return [
+    csrfProtection(),
     ceremony(
-      csrfProtection(),
       prompt
     ),
     // Should GET requests that error with a state destroy the state?  I think not

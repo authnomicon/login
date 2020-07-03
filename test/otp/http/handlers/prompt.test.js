@@ -38,16 +38,16 @@ describe('otp/http/handlers/prompt', function() {
       };
     }
     
-    function authenticate(method) {
+    function authenticate(mechanism) {
       return function(req, res, next) {
         req.user = { id: '248289761001', displayName: 'Jane Doe' };
-        req.authInfo = { method: method };
+        req.authInfo = { mechanism: mechanism };
         next();
       };
     }
     
     
-    describe('prompting for one-time password', function() {
+    describe('challenging for OTP', function() {
       var request, response;
       
       before(function(done) {
@@ -67,22 +67,24 @@ describe('otp/http/handlers/prompt', function() {
           .dispatch();
       });
       
-      /*
       it('should authenticate', function() {
         expect(request.authInfo).to.deep.equal({
-          method: 'session'
+          mechanism: 'session'
         });
       });
-      */
       
       it('should render', function() {
         expect(response.statusCode).to.equal(200);
-        expect(response).to.render('login/otp');
+        expect(response).to.render('stepup/otp');
         expect(response.locals).to.deep.equal({
+          user: {
+            id: '248289761001',
+            displayName: 'Jane Doe'
+          },
           csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
         });
       });
-    }); // prompting
+    }); // challenging for OTP
     
   }); // handler
   

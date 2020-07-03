@@ -5,7 +5,7 @@ var sinon = require('sinon');
 var factory = require('../../../app/otp/http/service');
 
 
-describe('otp/http/service', function() {
+describe('otp/http/stepup/service', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -13,7 +13,7 @@ describe('otp/http/service', function() {
   
   it('should be annotated', function() {
     expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/Service');
-    expect(factory['@path']).to.equal('/login/otp');
+    expect(factory['@path']).to.equal('/stepup/otp');
     expect(factory['@singleton']).to.be.undefined;
   });
   
