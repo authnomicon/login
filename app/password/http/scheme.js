@@ -11,7 +11,7 @@
 exports = module.exports = function(passwords, users) {
   var Strategy = require('passport-local');
   
-  var strategy = new Strategy(function(username, password, cb) {
+  return new Strategy(function(username, password, cb) {
     
     passwords.verify(username, password, function(err, user, info) {
       if (err) { return cb(err); }
@@ -27,7 +27,6 @@ exports = module.exports = function(passwords, users) {
       });
     });
   });
-  return strategy;
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
