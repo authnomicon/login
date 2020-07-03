@@ -21,8 +21,8 @@ describe('otp/http/handlers/verify', function() {
   describe('handler', function() {
     
     function ceremony(stack) {
-      var stack = Array.prototype.slice.call(arguments, 0);
-      var options;
+      var stack = Array.prototype.slice.call(arguments, 0)
+        , options;
       if (typeof stack[stack.length - 1] == 'object' && !Array.isArray(stack[stack.length - 1])) {
         options = stack.pop();
       }
@@ -43,12 +43,12 @@ describe('otp/http/handlers/verify', function() {
     function csrfProtection() {
       return function(req, res, next) {
         req.__ = req.__ || {};
-        req.__.csrfToken = req.body._csrf;
+        req.__.csrfToken = req.body.csrf_token;
         next();
       };
     }
     
-    function authenticate(method) {
+    function authenticate(mechanisms) {
       return function(req, res, next) {
         req.login = function(user, info, cb) {
           process.nextTick(function() {
@@ -58,8 +58,8 @@ describe('otp/http/handlers/verify', function() {
         };
         
         req.user = { id: '248289761001', displayName: 'Jane Doe' };
-        req.authInfo = req.authInfo || { methods: [] };
-        req.authInfo.methods.push(method);
+        req.authInfo = req.authInfo || { mechanisms: [] };
+        req.authInfo.mechanisms.push(mechanisms);
         next();
       };
     }
@@ -74,7 +74,7 @@ describe('otp/http/handlers/verify', function() {
         chai.express.handler(handler)
           .req(function(req) {
             request = req;
-            request.body = { _csrf: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql' };
+            request.body = { csrf_token: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql' };
             request.session = {};
           })
           .res(function(res) {
@@ -100,7 +100,7 @@ describe('otp/http/handlers/verify', function() {
           displayName: 'Jane Doe'
         });
         expect(request.authInfo).to.deep.equal({
-          methods: ['session', 'www-otp']
+          mechanisms: ['session', 'www-otp-2']
         });
       });
       

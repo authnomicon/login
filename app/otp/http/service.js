@@ -25,7 +25,7 @@ exports = module.exports = function(promptHandler, verifyHandler) {
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/Service';
-exports['@path'] = '/stepup/otp';
+exports['@path'] = '/login/otp-2';
 exports['@require'] = [
   './handlers/prompt',
   './handlers/verify'

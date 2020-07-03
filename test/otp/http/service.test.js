@@ -13,7 +13,7 @@ describe('otp/http/stepup/service', function() {
   
   it('should be annotated', function() {
     expect(factory['@implements']).to.equal('http://i.bixbyjs.org/http/Service');
-    expect(factory['@path']).to.equal('/stepup/otp');
+    expect(factory['@path']).to.equal('/login/otp-2');
     expect(factory['@singleton']).to.be.undefined;
   });
   

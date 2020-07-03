@@ -1,12 +1,21 @@
-exports = module.exports = function(/*otp,*/ fetch) {
+exports = module.exports = function(otps) {
   var Strategy = require('passport-otp');
   
-  return new Strategy({ passReqToCallback: true }, /*otp,*/ fetch);
+  return new Strategy(function(otp, user, cb) {
+    
+    otps.verify2(otp, user, function(err, ok, info) {
+      if (err) { return cb(err); }
+      if (!ok) { return cb(null, false); }
+      
+      info = info || {};
+      info.methods = [ 'otp' ];
+      return cb(null, ok, info);
+    });
+  });
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
-exports['@scheme'] = 'www-otp';
+exports['@scheme'] = 'www-otp-2';
 exports['@require'] = [
-  //'http://schemas.authnomicon.org/js/cs/otp',
-  './scheme/fetch'
+  'http://i.authnomicon.org/credentials/OTPService'
 ];
