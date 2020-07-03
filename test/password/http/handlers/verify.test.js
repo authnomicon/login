@@ -49,9 +49,10 @@ describe('password/http/handlers/verify', function() {
     
     function authenticate(mechanism) {
       return function(req, res, next) {
-        req.login = function(user, cb) {
+        req.login = function(user, info, cb) {
           process.nextTick(function() {
             req.session.user = user;
+            req.session.mechanism = info.mechanism;
             cb();
           });
         };
@@ -107,9 +108,12 @@ describe('password/http/handlers/verify', function() {
       });
       
       it('should establish session', function() {
-        expect(request.session.user).to.deep.equal({
-          id: '248289761001',
-          displayName: 'Jane Doe'
+        expect(request.session).to.deep.equal({
+          user: {
+            id: '248289761001',
+            displayName: 'Jane Doe'
+          },
+          mechanism: 'www-password'
         });
       });
       
