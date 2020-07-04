@@ -3,11 +3,11 @@
 var chai = require('chai');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../app/login/http/handlers/prompt');
-var utils = require('../../../utils');
+var factory = require('../../../app/http/handlers/prompt');
+var utils = require('../../utils');
 
 
-describe('login/http/handlers/prompt', function() {
+describe('http/handlers/prompt', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');

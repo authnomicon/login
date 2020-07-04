@@ -2,7 +2,7 @@
   <b>Failed attempts: <%= failureCount %></b>
 <% } %>
 
-<form action="/login/otp" method="post">
+<form action="/login/otp-2f" method="post">
 	<div>
   <% if (typeof user !== 'undefined') { %>
     <input type="hidden" name="user_id" value="<%= user.id %>"/>

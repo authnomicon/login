@@ -4,8 +4,8 @@
  * This component provides an HTTP handler that prompts for login.
  */
 exports = module.exports = function(authenticationHandler, authenticate, errorLogging, ceremony) {
-  var Request = require('../../../../lib/request')
-    , Response = require('../../../../lib/response');
+  var Request = require('../../../lib/request')
+    , Response = require('../../../lib/response');
   
   
   function cont(req, res, next) {
