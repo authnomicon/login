@@ -31,8 +31,8 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
     csrfProtection(),
     ceremony(
       authenticate('x-www-password'),
-      [ establishSession ],
-    { continue: '/login' })  // TODO: Remvoe "continue"?
+      [ establishSession ]
+    )
   ];
 };
 
