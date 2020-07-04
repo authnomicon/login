@@ -19,9 +19,8 @@ describe('http/service', function() {
   
   it('should construct service', function() {
     function promptHandler() {};
-    function initiateHandler() {};
   
-    var service = factory(promptHandler, initiateHandler);
+    var service = factory(promptHandler);
     
     expect(service).to.be.a('function');
     expect(service.length).to.equal(3);
