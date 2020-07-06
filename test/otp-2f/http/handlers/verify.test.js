@@ -27,6 +27,10 @@ describe('otp-2f/http/handlers/verify', function() {
         options = stack.pop();
       }
       
+      stack.push(function(req, res, next) {
+        res.redirect('/home');
+      });
+      
       return function(req, res, next) {
         utils.dispatch(stack)(null, req, res, next);
       };
@@ -53,6 +57,7 @@ describe('otp-2f/http/handlers/verify', function() {
         req.login = function(user, info, cb) {
           process.nextTick(function() {
             req.session.user = user;
+            req.session.mechanisms = info.mechanisms;
             cb();
           });
         };
@@ -80,8 +85,8 @@ describe('otp-2f/http/handlers/verify', function() {
           .res(function(res) {
             response = res;
           })
-          .next(function(err) {
-            done(err);
+          .end(function() {
+            done();
           })
           .dispatch();
       });
@@ -104,8 +109,19 @@ describe('otp-2f/http/handlers/verify', function() {
         });
       });
       
+      it('should establish session', function() {
+        expect(request.session).to.deep.equal({
+          user: {
+            id: '248289761001',
+            displayName: 'Jane Doe'
+          },
+          mechanisms: ['session', 'x-www-otp-2f']
+        });
+      });
+      
       it('should respond', function() {
-        expect(response.statusCode).to.equal(200);
+        expect(response.statusCode).to.equal(302);
+        expect(response.getHeader('Location')).to.equal('/home');
       });
     }); // logging in with one-time password
     
