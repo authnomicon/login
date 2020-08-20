@@ -30,6 +30,7 @@
       "password/http/scheme",
       "otp-2f/http/service",
       "otp-2f/http/scheme",
+      "publickey/http/service",
       "session/http/manager",
       "session/http/scheme"
     ],
