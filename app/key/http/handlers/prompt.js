@@ -1,5 +1,5 @@
 /**
- * Public key challenge handler.
+ * Security key challenge handler.
  */
 exports = module.exports = function(csrfProtection, ceremony) {
   var path = require('path')
@@ -9,9 +9,10 @@ exports = module.exports = function(csrfProtection, ceremony) {
   function prompt(req, res, next) {
     res.locals.csrfToken = req.csrfToken();
     
-    res.render('login/publickey', function(err, str) {
+    res.render('login/key', function(err, str) {
       if (err && err.view) {
-        var view = path.resolve(__dirname, '../views/prompt.ejs');
+        //var view = path.resolve(__dirname, '../views/prompt.ejs');
+        var view = path.resolve(__dirname, '../views/prompt-u2f.ejs');
         ejs.renderFile(view, res.locals, function(err, str) {
           if (err) { return next(err); }
           res.send(str);

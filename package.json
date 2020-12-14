@@ -30,7 +30,7 @@
       "password/http/scheme",
       "otp-2f/http/service",
       "otp-2f/http/scheme",
-      "publickey/http/service",
+      "key/http/service",
       "session/http/manager",
       "session/http/scheme"
     ],
@@ -47,6 +47,7 @@
     ]
   },
   "dependencies": {
+    "base64url": "^3.0.1",
     "ejs": "^2.7.4",
     "express": "^4.17.1",
     "flowstate": "git+https://github.com/jaredhanson/flowstate.git#lazy-methods",
@@ -55,6 +56,7 @@
     "passport-local": "^1.0.0",
     "passport-oob": "git+https://github.com/jaredhanson/passport-oob.git",
     "passport-otp": "git+https://github.com/jaredhanson/passport-otp.git",
+    "passport-u2f": "git+https://github.com/jaredhanson/passport-u2f.git",
     "passport-state": "0.0.2",
     "pause": "^0.1.0"
   },
