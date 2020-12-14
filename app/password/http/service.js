@@ -1,12 +1,12 @@
 /**
  * Password authentication service.
  *
- * This component provides an HTTP service that authenticates an end-user using
- * a username and password.
+ * This component provides an HTTP service that authenticates a user using a
+ * username and password.
  *
  * This service is intended to be used by sites making use of HTML forms to
- * present the end-user with an interface for logging in to the site.  The
- * interface is rendered by the web browser being used by the end-user.  After
+ * present the user with an interactive interface for logging in to the site.
+ * The interface is rendered by the web browser being used by the user.  After
  * authentication, a login session is established, allowing the user to continue
  * navigating the site in an authenticated state.
  *

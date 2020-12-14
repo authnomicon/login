@@ -12,7 +12,7 @@
  * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
  * [2]: https://seclab.stanford.edu/websec/csrf/csrf.pdf
  */
-exports = module.exports = function(csrfProtection, ceremony) {
+exports = module.exports = function(csrfProtection, state) {
   var path = require('path')
     , ejs = require('ejs');
   
@@ -38,9 +38,8 @@ exports = module.exports = function(csrfProtection, ceremony) {
   
   return [
     csrfProtection(),
-    ceremony(
-      prompt
-    ),
+    state(),
+    prompt
     // Should GET requests that error with a state destroy the state?  I think not
     // There needs to be an option for it (external?) that does, for eg OAuth
     //errorLogging()
@@ -49,5 +48,5 @@ exports = module.exports = function(csrfProtection, ceremony) {
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/ceremony'
+  'http://i.bixbyjs.org/http/middleware/state'
 ];
