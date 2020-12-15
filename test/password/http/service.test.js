@@ -17,7 +17,7 @@ describe('password/http/service', function() {
     expect(factory['@singleton']).to.be.undefined;
   });
   
-  it('should construct service', function() {
+  it('should create service', function() {
     function promptHandler() {};
     function verifyHandler() {};
   
