@@ -55,8 +55,8 @@ describe('password/http/handlers/prompt', function() {
       });
       
       it('should setup middleware', function() {
-        expect(stateSpy).to.be.calledOnce;
         expect(csrfProtectionSpy).to.be.calledOnce;
+        expect(stateSpy).to.be.calledOnce;
       });
       
       it('should render', function() {

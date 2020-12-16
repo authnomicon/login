@@ -20,6 +20,7 @@ exports = module.exports = function(csrfProtection, state) {
   function prompt(req, res, next) {
     res.locals.csrfToken = req.csrfToken();
     
+    // NOTE: This will include locals for state.
     res.render('login/password', function(err, str) {
       if (err && err.view) {
         var view = path.resolve(__dirname, '../views/prompt.ejs');

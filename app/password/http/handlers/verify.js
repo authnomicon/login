@@ -12,13 +12,28 @@
  * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
  * [2]: https://seclab.stanford.edu/websec/csrf/csrf.pdf
  */
-exports = module.exports = function(parse, csrfProtection, authenticate, ceremony) {
+exports = module.exports = function(parse, csrfProtection, authenticate, state) {
   
   function establishSession(req, res, next) {
+    console.log('ESTABLISHING SESSION!');
+    console.log(req.user);
+    console.log(req.authInfo);
+    console.log(req.headers);
+    console.log(req.state);
+    
     req.login(req.user, req.authInfo, function(err) {
       if (err) { return next(err); }
-      return next();
+      // TODO: Consider yeilding state here, for instance an index of the
+      // session that was established, for multi login
+      return res.resumeState(next);
     });
+  }
+  
+  function go(req, res, next) {
+    // TODO: Add an optional service that will be injected here which determines
+    // the default application, and how to redirect to it (OpenID IdP init, etc)
+    
+    res.redirect('/');
   }
   
   
@@ -29,10 +44,10 @@ exports = module.exports = function(parse, csrfProtection, authenticate, ceremon
   return [
     parse('application/x-www-form-urlencoded'),
     csrfProtection(),
-    ceremony(
-      authenticate('x-www-password'),
-      [ establishSession ]
-    )
+    state(),
+    authenticate('x-www-password'),
+    establishSession,
+    go
   ];
 };
 
@@ -40,5 +55,5 @@ exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/parse',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/authenticate',
-  'http://i.bixbyjs.org/http/middleware/ceremony'
+  'http://i.bixbyjs.org/http/middleware/state'
 ];
