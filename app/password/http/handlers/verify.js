@@ -15,12 +15,6 @@
 exports = module.exports = function(parse, csrfProtection, authenticate, state) {
   
   function establishSession(req, res, next) {
-    console.log('ESTABLISHING SESSION!');
-    console.log(req.user);
-    console.log(req.authInfo);
-    console.log(req.headers);
-    console.log(req.state);
-    
     req.login(req.user, req.authInfo, function(err) {
       if (err) { return next(err); }
       // TODO: Consider yeilding state here, for instance an index of the
