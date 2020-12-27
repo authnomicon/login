@@ -1,7 +1,7 @@
 /**
- * Password authentication handler.
+ * Password verification handler.
  *
- * This component provides an HTTP handler that authenticates a username and
+ * This component provides an HTTP handler that verifies a username and
  * password.  The credentials are submitted via an HTML form.
  *
  * This handler is protected against CSRF, in order to defend against [login
