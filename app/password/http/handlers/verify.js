@@ -11,6 +11,8 @@
  *
  * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
  * [2]: https://seclab.stanford.edu/websec/csrf/csrf.pdf
+ *
+ * @returns {Function[]}
  */
 exports = module.exports = function(parse, csrfProtection, authenticate, state) {
   
