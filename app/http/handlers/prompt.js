@@ -3,7 +3,7 @@
  *
  * This component provides an HTTP handler that prompts for login.
  */
-exports = module.exports = function(csrfProtection, ceremony) {
+exports = module.exports = function(csrfProtection, state) {
   
   
   function prompt(req, res, next) {
@@ -22,9 +22,8 @@ exports = module.exports = function(csrfProtection, ceremony) {
   
   return [
     csrfProtection(),
-    ceremony(
-      prompt
-    ),
+    state(),
+    prompt
     // Should GET requests that error with a state destroy the state?  I think not
     // There needs to be an option for it (external?) that does, for eg OAuth
     //errorLogging()
@@ -33,5 +32,5 @@ exports = module.exports = function(csrfProtection, ceremony) {
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/ceremony'
+  'http://i.bixbyjs.org/http/middleware/state'
 ];
