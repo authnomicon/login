@@ -24,7 +24,7 @@ exports = module.exports = function(promptHandler, verifyHandler) {
   return router;
 };
 
-exports['@provides'] = 'http://i.bixbyjs.org/http/Service';
+exports['@implements'] = 'http://i.bixbyjs.org/http/Service';
 exports['@path'] = '/login/password';
 exports['@require'] = [
   './handlers/prompt',

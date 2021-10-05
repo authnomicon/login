@@ -41,7 +41,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, state) 
     parse('application/x-www-form-urlencoded'),
     csrfProtection(),
     state(),
-    authenticate('x-www-password'),
+    authenticate('www-form/password'),
     establishSession,
     go
   ];

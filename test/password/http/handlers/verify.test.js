@@ -91,7 +91,7 @@ describe('password/http/handlers/verify', function() {
       it('should setup middleware', function() {
         expect(parseSpy).to.be.calledOnceWith('application/x-www-form-urlencoded');
         expect(csrfProtectionSpy).to.be.calledOnce;
-        expect(authenticateSpy).to.be.calledOnceWith('x-www-password');
+        expect(authenticateSpy).to.be.calledOnceWith('www-form/password');
         expect(stateSpy).to.be.calledOnce;
       });
       
