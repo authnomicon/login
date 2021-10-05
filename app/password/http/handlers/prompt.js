@@ -20,6 +20,7 @@ exports = module.exports = function(csrfProtection, state) {
   
   
   function prompt(req, res, next) {
+    res.locals.username = req.query.username;
     res.locals.csrfToken = req.csrfToken();
     
     // NOTE: This will include locals for state.
