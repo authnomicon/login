@@ -27,14 +27,14 @@
     "components": [
       "http/service",
       "password/http/service",
-      "password/http/scheme",
+      "password/http/scheme"
+    ],
+    "x_components": [
       "otp-2f/http/service",
       "otp-2f/http/scheme",
       "key/http/service",
       "session/http/manager",
-      "session/http/scheme"
-    ],
-    "x_components": [
+      "session/http/scheme----",
       "authenticatorservice",
       "password/http/service",
       "password/http/scheme",
