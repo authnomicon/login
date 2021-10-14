@@ -13,17 +13,14 @@ exports = module.exports = function(passwords, users) {
   
   return new Strategy(function(username, password, cb) {
     
-    passwords.verify(username, password, function(err, user, info) {
+    passwords.verify(username, password, function(err, user) {
       if (err) { return cb(err); }
       if (!user) { return cb(null, false); }
       
-      info = info || {};
-      info.methods = [ 'password' ];
-      
-      if (typeof user == 'object') { return cb(null, user, info); }
+      if (typeof user == 'object') { return cb(null, user); }
       users.find(username, function(err, user) {
         if (err) { return cb(err); }
-        return cb(null, user, info);
+        return cb(null, user);
       });
     });
   });

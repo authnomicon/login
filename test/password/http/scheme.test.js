@@ -68,9 +68,7 @@ describe('password/http/scheme', function() {
       });
       
       it('should yield info', function() {
-        expect(info).to.deep.equal({
-          methods: [ 'password' ]
-        });
+        expect(info).to.be.undefined;
       });
     }); // verify
     
@@ -125,9 +123,7 @@ describe('password/http/scheme', function() {
       });
       
       it('should yield info', function() {
-        expect(info).to.deep.equal({
-          methods: [ 'password' ]
-        });
+        expect(info).to.be.undefined;
       });
     }); // verify
     
