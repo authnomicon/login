@@ -6,7 +6,7 @@ var sinon = require('sinon');
 var flowstate = require('flowstate');
 var factory = require('../../../../app/oob/http/handlers/verify');
 
-
+/*
 describe.skip('oob/http/handlers/verify', function() {
   
   it('should export factory function', function() {
@@ -181,3 +181,4 @@ describe.skip('oob/http/handlers/verify', function() {
   }); // handler
   
 });
+*/
