@@ -49,20 +49,16 @@ describe('password/http/handlers/prompt', function() {
     describe('challenging for username and password', function() {
       
       it('should render', function(done) {
-        test
-          .res(function(res) {
-            res.locals = {};
-          })
-          .end(function() {
-            expect(this).to.have.status(200);
-            expect(this).to.render('login/password');
-            // TODO: Express this as render.with.locals();
-            expect(this.locals).to.deep.equal({
-              csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
-            });
-            done();
-          })
-          .dispatch();
+        test.end(function() {
+          expect(this).to.have.status(200);
+          expect(this).to.render('login/password');
+          // TODO: Express this as render.with.locals();
+          expect(this.locals).to.deep.equal({
+            csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
+          });
+          done();
+        })
+        .dispatch();
       });
       
     }); // challenging for username and password
