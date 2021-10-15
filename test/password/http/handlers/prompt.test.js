@@ -51,9 +51,7 @@ describe('password/http/handlers/prompt', function() {
       it('should render', function(done) {
         test.end(function() {
           expect(this).to.have.status(200);
-          expect(this).to.render('login/password');
-          // TODO: Express this as render.with.locals();
-          expect(this.locals).to.deep.equal({
+          expect(this).to.render('login/password').with.deep.locals({
             csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
           });
           done();
