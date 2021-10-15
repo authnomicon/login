@@ -49,20 +49,15 @@ describe('password/http/handlers/prompt', function() {
     describe('challenging for username and password', function() {
       
       it('should render', function(done) {
-        var request, response;
-        
         test
-          .req(function(req) {
-            request = req;
-          })
           .res(function(res) {
-            response = res;
             res.locals = {};
           })
           .end(function() {
-            expect(response.statusCode).to.equal(200);
-            expect(response).to.render('login/password');
-            expect(response.locals).to.deep.equal({
+            expect(this).to.have.status(200);
+            expect(this).to.render('login/password');
+            // TODO: Express this as render.with.locals();
+            expect(this.locals).to.deep.equal({
               csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
             });
             done();
