@@ -65,21 +65,20 @@ describe('oob/http/handlers/prompt', function() {
       before(function(done) {
         var handler = factory(OOBService, csrfProtection, authenticate, ceremony);
         
-        chai.express.handler(handler)
-          .req(function(req) {
+        chai.express.use(handler)
+          .request(function(req, res) {
             request = req;
             req.state = {};
             req.session = {};
             req.session.authInfo = { token: '8d67dc78-7faa-4d41-aabd-67707b374255' };
-          })
-          .res(function(res) {
+            
             response = res;
             res.locals = {};
           })
           .end(function() {
             done();
           })
-          .dispatch();
+          .listen();
       });
       
       it('should authenticate', function() {

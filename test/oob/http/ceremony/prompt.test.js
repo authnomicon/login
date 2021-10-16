@@ -25,21 +25,20 @@ describe('oob/http/ceremony/prompt', function() {
       before(function(done) {
         var handler = factory();
         
-        chai.express.handler(handler)
-          .req(function(req) {
+        chai.express.use(handler)
+          .request(function(req, res) {
             request = req;
             req.csrfToken = function() {
               return 'xxxxxxxx';
             }
-          })
-          .res(function(res) {
+            
             response = res;
             res.locals = {};
           })
           .end(function() {
             done();
           })
-          .dispatch();
+          .listen();
       });
       
       it('should set locals', function() {

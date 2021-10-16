@@ -53,18 +53,17 @@ describe('otp-2f/http/handlers/prompt', function() {
       before(function(done) {
         var handler = factory(csrfProtection, authenticate, ceremony);
         
-        chai.express.handler(handler)
-          .req(function(req) {
+        chai.express.use(handler)
+          .request(function(req, res) {
             request = req;
-          })
-          .res(function(res) {
+            
             response = res;
             res.locals = {};
           })
           .end(function() {
             done();
           })
-          .dispatch();
+          .listen();
       });
       
       it('should authenticate', function() {

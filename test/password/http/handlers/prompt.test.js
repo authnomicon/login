@@ -43,7 +43,7 @@ describe('password/http/handlers/prompt', function() {
       expect(csrfProtectionSpy).to.be.calledOnce;
       expect(stateSpy).to.be.calledOnce;
       
-      test = chai.express.handler(handler);
+      test = chai.express.use(handler);
     });
     
     describe('challenging for username and password', function() {
@@ -56,7 +56,7 @@ describe('password/http/handlers/prompt', function() {
           });
           done();
         })
-        .dispatch();
+        .listen();
       });
       
     }); // challenging for username and password

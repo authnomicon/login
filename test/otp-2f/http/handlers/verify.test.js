@@ -76,19 +76,18 @@ describe('otp-2f/http/handlers/verify', function() {
       before(function(done) {
         var handler = factory(parse, csrfProtection, authenticate, ceremony);
         
-        chai.express.handler(handler)
-          .req(function(req) {
+        chai.express.use(handler)
+          .request(function(req, res) {
             request = req;
             request.body = { csrf_token: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql' };
             request.session = {};
-          })
-          .res(function(res) {
+            
             response = res;
           })
           .end(function() {
             done();
           })
-          .dispatch();
+          .listen();
       });
       
       it('should parse request body', function() {

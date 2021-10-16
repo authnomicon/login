@@ -65,8 +65,8 @@ describe('password/http/handlers/verify', function() {
       before(function(done) {
         var handler = factory(parseSpy, csrfProtectionSpy, authenticateSpy, stateSpy);
         
-        chai.express.handler(handler)
-          .req(function(req) {
+        chai.express.use(handler)
+          .request(function(req, res) {
             request = req;
             request.body = {
               username: 'jane',
@@ -74,8 +74,7 @@ describe('password/http/handlers/verify', function() {
               csrf_token: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
             };
             request.session = {};
-          })
-          .res(function(res) {
+            
             response = res;
             
             res.resumeState = sinon.spy(function(cb) {
@@ -85,7 +84,7 @@ describe('password/http/handlers/verify', function() {
           .end(function() {
             done();
           })
-          .dispatch();
+          .listen();
       });
       
       it('should setup middleware', function() {
