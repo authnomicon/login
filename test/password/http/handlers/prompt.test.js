@@ -49,7 +49,7 @@ describe('password/http/handlers/prompt', function() {
     describe('challenging for username and password', function() {
       
       it('should render', function(done) {
-        test.end(function() {
+        test.finish(function() {
           expect(this).to.have.status(200);
           expect(this).to.render('login/password').with.deep.locals({
             csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'

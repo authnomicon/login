@@ -84,7 +84,7 @@ describe('otp-2f/http/handlers/verify', function() {
             
             response = res;
           })
-          .end(function() {
+          .finish(function() {
             done();
           })
           .listen();

@@ -81,7 +81,7 @@ describe('password/http/handlers/verify', function() {
               process.nextTick(cb);
             });
           })
-          .end(function() {
+          .finish(function() {
             done();
           })
           .listen();

@@ -75,7 +75,7 @@ describe('oob/http/handlers/prompt', function() {
             response = res;
             res.locals = {};
           })
-          .end(function() {
+          .finish(function() {
             done();
           })
           .listen();

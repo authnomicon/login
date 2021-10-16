@@ -35,7 +35,7 @@ describe('oob/http/ceremony/prompt', function() {
             response = res;
             res.locals = {};
           })
-          .end(function() {
+          .finish(function() {
             done();
           })
           .listen();

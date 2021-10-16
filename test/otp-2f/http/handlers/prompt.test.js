@@ -60,7 +60,7 @@ describe('otp-2f/http/handlers/prompt', function() {
             response = res;
             res.locals = {};
           })
-          .end(function() {
+          .finish(function() {
             done();
           })
           .listen();
