@@ -30,5 +30,5 @@ exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
 exports['@scheme'] = 'www-form/password';
 exports['@require'] = [
   'http://i.authnomicon.org/credentials/PasswordService',
-  'http://i.authnomicon.org/ds/UserDirectory'
+  'http://i.authnomicon.org/Directory'
 ];
