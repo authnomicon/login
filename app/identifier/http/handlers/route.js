@@ -1,9 +1,6 @@
 exports = module.exports = function(router, parse, csrfProtection, state) {
   
   function route(req, res, next) {
-    console.log('ROUTE');
-    console.log(req.body);
-    
     router(req.body.identifier, res, next);
   }
   
