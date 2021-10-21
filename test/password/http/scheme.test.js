@@ -3,7 +3,7 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../app/password/http/scheme');
+var factory = require('../../../com/password/http/scheme');
 var Strategy = require('passport-local');
 
 
@@ -27,7 +27,7 @@ describe('password/http/scheme', function() {
     
     var StrategySpy = sinon.spy(Strategy);
     
-    var factory = $require('../../../app/password/http/scheme',
+    var factory = $require('../../../com/password/http/scheme',
       { 'passport-local': StrategySpy });
     var strategy = factory(passwords, users);
     
@@ -82,7 +82,7 @@ describe('password/http/scheme', function() {
     
     var StrategySpy = sinon.spy(Strategy);
     
-    var factory = $require('../../../app/password/http/scheme',
+    var factory = $require('../../../com/password/http/scheme',
       { 'passport-local': StrategySpy });
     var strategy = factory(passwords, users);
     
@@ -137,7 +137,7 @@ describe('password/http/scheme', function() {
   
     var StrategySpy = sinon.spy(Strategy);
   
-    var factory = $require('../../../app/password/http/scheme',
+    var factory = $require('../../../com/password/http/scheme',
       { 'passport-local': StrategySpy });
     var strategy = factory(passwords, users);
   
@@ -189,7 +189,7 @@ describe('password/http/scheme', function() {
   
     var StrategySpy = sinon.spy(Strategy);
   
-    var factory = $require('../../../app/password/http/scheme',
+    var factory = $require('../../../com/password/http/scheme',
       { 'passport-local': StrategySpy });
     var strategy = factory(passwords, users);
   
@@ -246,7 +246,7 @@ describe('password/http/scheme', function() {
   
     var StrategySpy = sinon.spy(Strategy);
   
-    var factory = $require('../../../app/password/http/scheme',
+    var factory = $require('../../../com/password/http/scheme',
       { 'passport-local': StrategySpy });
     var strategy = factory(passwords, users);
   
