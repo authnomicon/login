@@ -12,6 +12,7 @@ exports = module.exports = function(csrfProtection, state) {
     res.render('login', function(err, str) {
       if (err && err.view) {
         return res.redirect('/login/password');
+        //return res.redirect('/login/identifier');
       } else if (err) {
         return next(err);
       }
