@@ -33,22 +33,6 @@
       "identifier/http/service",
       "password/http/service",
       "password/http/scheme"
-    ],
-    "x_components": [
-      "otp-2f/http/service",
-      "otp-2f/http/scheme",
-      "key/http/service",
-      "session/http/manager",
-      "session/http/scheme----",
-      "authenticatorservice",
-      "password/http/service",
-      "password/http/scheme",
-      "otp/http/ceremony",
-      "oob/http/service",
-      "oob/http/ceremony",
-      "oob/http/scheme",
-      "http/session/manager",
-      "state/http/scheme"
     ]
   },
   "dependencies": {
