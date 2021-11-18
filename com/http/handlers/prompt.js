@@ -3,7 +3,7 @@
  *
  * This component provides an HTTP handler that prompts for login.
  */
-exports = module.exports = function(csrfProtection, state) {
+exports = module.exports = function(csrfProtection, state, C) {
   
   
   function prompt(req, res, next) {
@@ -11,8 +11,7 @@ exports = module.exports = function(csrfProtection, state) {
     
     res.render('login', function(err, str) {
       if (err && err.view) {
-        return res.redirect('/login/password');
-        //return res.redirect('/login/identifier');
+        return next();
       } else if (err) {
         return next(err);
       }
@@ -20,11 +19,24 @@ exports = module.exports = function(csrfProtection, state) {
     });
   }
   
+  function redirect(req, res, next) {
+    C.create('http://i.authnomicon.org/login/IdentifierRouter')
+      .then(function() {
+        return res.redirect('/login/identifier');
+      }, function(error) {
+        if (error.code == 'IMPLEMENTATION_NOT_FOUND' && error.interface == 'http://i.authnomicon.org/login/IdentifierRouter') {
+          return res.redirect('/login/password');
+        }
+        return next(error);
+      });
+  }
+  
   
   return [
     csrfProtection(),
     state(),
-    prompt
+    prompt,
+    redirect
     // Should GET requests that error with a state destroy the state?  I think not
     // There needs to be an option for it (external?) that does, for eg OAuth
     //errorLogging()
@@ -33,5 +45,6 @@ exports = module.exports = function(csrfProtection, state) {
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/state'
+  'http://i.bixbyjs.org/http/middleware/state',
+  '!container'
 ];
