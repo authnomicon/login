@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.0.2] - 2021-11-18
 ### Changed
 
 - If a `login` view is not found, `/login` endpoint will redirect to
@@ -15,5 +17,6 @@ it will redirect to `/login/password` as before.
 
 - Initial release.
 
-[Unreleased]: https://github.com/authnomicon/login/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/authnomicon/login/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/authnomicon/login/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/authnomicon/login/releases/tag/v0.0.1
