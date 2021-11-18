@@ -21,9 +21,13 @@ exports = module.exports = function(parse, csrfProtection, authenticate, state) 
       if (err) { return next(err); }
       // TODO: Consider yeilding state here, for instance an index of the
       // session that was established, for multi login
+      // NOTE: Yes, do that.
       return res.resumeState(next);
     });
   }
+  
+  // TODO: Move resume state down here to its own middleware, so we can insert change password, etc
+  //.   will need the sessionselector of the just logged in user for this.
   
   function go(req, res, next) {
     // TODO: Add an optional service that will be injected here which determines
