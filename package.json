@@ -1,6 +1,6 @@
 {
   "name": "@authnomicon/login",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Login components for the Authnomicon project.",
   "author": {
     "name": "Jared Hanson",
