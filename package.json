@@ -32,7 +32,8 @@
       "http/service",
       "identifier/http/service",
       "password/http/service",
-      "password/http/scheme"
+      "password/http/scheme",
+      "signup/http/service"
     ]
   },
   "directories": {
