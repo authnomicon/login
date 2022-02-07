@@ -29,15 +29,15 @@
   "assembly": {
     "namespace": "org.authnomicon/login",
     "components": [
-      "http/service",
-      "http/prompt",
-      "identifier/http/service",
-      "password/http/service",
-      "password/http/scheme",
-      "session/select/http/service",
-      "session/select/http/prompt",
+      "login/http/service",
+      "login/http/prompt",
+      "login/identifier/http/service",
+      "login/password/http/service",
+      "login/password/http/scheme",
       "logout/http/service",
       "logout/http/prompt",
+      "session/select/http/service",
+      "session/select/http/prompt",
       "signup/http/service"
     ]
   },
