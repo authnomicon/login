@@ -19,6 +19,7 @@ describe('@authnomicon/login', function() {
         'session/select/http/service',
         'session/select/http/prompt',
         'logout/http/service',
+        'logout/http/prompt',
         'signup/http/service'
       ]);
     });
