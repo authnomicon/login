@@ -8,15 +8,13 @@ describe('http/service', function() {
   
   it('should be annotated', function() {
     expect(factory['@implements']).to.deep.equal('http://i.bixbyjs.org/http/Service');
-    expect(factory['@path']).to.equal('/');
+    expect(factory['@path']).to.equal('/login');
   });
   
   it('should construct service', function() {
     function promptHandler() {};
-    function logoutPromptHandler() {};
-    function logoutActionHandler() {};
   
-    var service = factory(promptHandler, logoutPromptHandler, logoutActionHandler);
+    var service = factory(promptHandler);
     
     expect(service).to.be.a('function');
     expect(service.length).to.equal(3);

@@ -1,21 +1,17 @@
 /**
  * Login service.
  */
-exports = module.exports = function(promptHandler, logoutPromptHandler, logoutActionHandler) {
+exports = module.exports = function(promptHandler) {
   var express = require('express');
   
   var router = new express.Router();
-  router.get('/login', promptHandler);
-  router.get('/logout', logoutPromptHandler);
-  router.post('/logout', logoutActionHandler);
+  router.get('/', promptHandler);
   
   return router;
 };
 
 exports['@implements'] = 'http://i.bixbyjs.org/http/Service';
-exports['@path'] = '/';
+exports['@path'] = '/login';
 exports['@require'] = [
-  './handlers/prompt',
-  './handlers/logout/prompt',
-  './handlers/logout/action'
+  './handlers/prompt'
 ];
