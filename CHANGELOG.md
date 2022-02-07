@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added login prompt.  Moved from [`@authnomicon/prompts`](https://github.com/authnomicon/prompts).
 - Added select-account prompt.  Moved from [`@authnomicon/prompts`](https://github.com/authnomicon/prompts).
 
+### Changed
+- `/logout` endpoint moved to distinct service named `logout/http/service`.
+
 ## [0.0.3] - 2021-12-02
 ### Added
 - Added `/logout` endpoint.

@@ -18,6 +18,7 @@ describe('@authnomicon/login', function() {
         'password/http/scheme',
         'session/select/http/service',
         'session/select/http/prompt',
+        'logout/http/service',
         'signup/http/service'
       ]);
     });
