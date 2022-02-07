@@ -3,10 +3,10 @@
 var expect = require('chai').expect;
 var chai = require('chai');
 var sinon = require('sinon');
-var factory = require('../../../../com/password/http/handlers/prompt');
+var factory = require('../../../../com/login/http/handlers/prompt');
 
 
-describe('password/http/handlers/prompt', function() {
+describe('http/handlers/prompt', function() {
   
   var handler;
   
@@ -43,7 +43,7 @@ describe('password/http/handlers/prompt', function() {
     chai.express.use(handler)
       .finish(function() {
         expect(this).to.have.status(200);
-        expect(this).to.render('login/password').with.deep.locals({
+        expect(this).to.render('login').with.deep.locals({
           csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
         });
         done();
