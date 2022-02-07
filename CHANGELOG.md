@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added `/signup` endpoint.  Moved from [`@authnomicon/account`](https://github.com/authnomicon/account).
 - Added `/account/select` endpoint.  Moved from [`@authnomicon/account`](https://github.com/authnomicon/account).
+- Added login prompt.  Moved from [`@authnomicon/prompts`](https://github.com/authnomicon/prompts).
 
 ## [0.0.3] - 2021-12-02
 ### Added

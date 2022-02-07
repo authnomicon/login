@@ -30,6 +30,7 @@
     "namespace": "org.authnomicon/login",
     "components": [
       "http/service",
+      "http/prompt",
       "identifier/http/service",
       "password/http/service",
       "password/http/scheme",
