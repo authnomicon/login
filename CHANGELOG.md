@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added select-account prompt.  Moved from [`@authnomicon/prompts`](https://github.com/authnomicon/prompts).
 
 ### Changed
+- Moved `http/service`, and associated files, to `login/http/service`.
+- Moved `identifier/http/service`, and associated files, to `login/identifier/http/service`.
+- Moved `password/http/service`, and associated files, to `login/password/http/service`.
 - `/logout` endpoint moved to distinct service named `logout/http/service`.
 
 ## [0.0.3] - 2021-12-02
