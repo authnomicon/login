@@ -1,8 +1,9 @@
 /**
- * Password verification handler.
+ * Password response handler.
  *
  * This component provides an HTTP handler that verifies a username and
- * password.  The credentials are submitted via an HTML form.
+ * password.  The credentials are submitted via an HTML form in response to a
+ * password prompt.
  *
  * This handler is protected against CSRF, in order to defend against [login
  * CSRF][1] attacks.  Consult [Robust Defenses for Cross-Site Request
@@ -14,7 +15,7 @@
  *
  * @returns {Function[]}
  */
-exports = module.exports = function(parse, csrfProtection, authenticate, state) {
+exports = module.exports = function(csrfProtection, authenticate, state, scheme) {
   
   function establishSession(req, res, next) {
     req.login(req.user, req.authInfo, function(err) {
@@ -42,18 +43,19 @@ exports = module.exports = function(parse, csrfProtection, authenticate, state) 
   //       https://seclab.stanford.edu/websec/csrf/csrf.pdf
   
   return [
-    parse('application/x-www-form-urlencoded'),
+    require('body-parser').urlencoded({ extended: false }),
     csrfProtection(),
     state(),
-    authenticate('www-form/password'),
+    //authenticate('www-form/password'),
+    authenticate(scheme),
     establishSession,
     go
   ];
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/parse',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/authenticate',
-  'http://i.bixbyjs.org/http/middleware/state'
+  'http://i.bixbyjs.org/http/middleware/state',
+  '../scheme'
 ];

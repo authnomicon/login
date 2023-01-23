@@ -1,3 +1,5 @@
+var Strategy = require('passport-local');
+
 /**
  * Password authentication scheme.
  *
@@ -9,7 +11,6 @@
  * site.
  */
 exports = module.exports = function(passwords, users) {
-  var Strategy = require('passport-local');
   
   return new Strategy(function(username, password, cb) {
     
@@ -26,8 +27,6 @@ exports = module.exports = function(passwords, users) {
   });
 };
 
-exports['@implements'] = 'http://i.bixbyjs.org/http/auth/Scheme';
-exports['@scheme'] = 'www-form/password';
 exports['@require'] = [
   'http://i.authnomicon.org/credentials/PasswordService',
   'http://i.authnomicon.org/Directory'
