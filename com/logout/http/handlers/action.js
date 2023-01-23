@@ -1,4 +1,4 @@
-exports = module.exports = function(parse, csrfProtection, authenticate, state) {
+exports = module.exports = function(csrfProtection, authenticate, state) {
   
   function logout(req, res, next) {
     // TODO: Check the confirm parameter
@@ -14,7 +14,7 @@ exports = module.exports = function(parse, csrfProtection, authenticate, state) 
   
   
   return [
-    parse('application/x-www-form-urlencoded'),
+    require('body-parser').urlencoded({ extended: false }),
     csrfProtection(),
     state(),
     authenticate('session'),
@@ -24,7 +24,6 @@ exports = module.exports = function(parse, csrfProtection, authenticate, state) 
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/parse',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/authenticate',
   'http://i.bixbyjs.org/http/middleware/state'
