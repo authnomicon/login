@@ -1,4 +1,4 @@
-exports = module.exports = function(parse, csrfProtection, authenticate, state, session) {
+exports = module.exports = function(parse, csrfProtection, authenticate, state) {
   
   function select(req, res, next) {
     var s = req.body.selected_session;
@@ -11,7 +11,6 @@ exports = module.exports = function(parse, csrfProtection, authenticate, state, 
   
   
   return [
-    session(),
     parse('application/x-www-form-urlencoded'),
     csrfProtection(),
     state(),
@@ -25,6 +24,5 @@ exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/parse',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/authenticate',
-  'http://i.bixbyjs.org/http/middleware/state',
-  'http://i.bixbyjs.org/http/middleware/session'
+  'http://i.bixbyjs.org/http/middleware/state'
 ];
