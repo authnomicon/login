@@ -1,4 +1,4 @@
-exports = module.exports = function(router, parse, csrfProtection, state) {
+exports = module.exports = function(router, csrfProtection, state) {
   
   function route(req, res, next) {
     router(req.body.identifier, res, next);
@@ -7,7 +7,7 @@ exports = module.exports = function(router, parse, csrfProtection, state) {
   
   
   return [
-    parse('application/x-www-form-urlencoded'),
+    require('body-parser').urlencoded({ extended: false }),
     csrfProtection(),
     state(),
     route
@@ -16,7 +16,6 @@ exports = module.exports = function(router, parse, csrfProtection, state) {
 
 exports['@require'] = [
   '../router',
-  'http://i.bixbyjs.org/http/middleware/parse',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/state'
 ];
