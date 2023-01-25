@@ -14,7 +14,7 @@
  *
  * @returns {Function[]}
  */
-exports = module.exports = function(csrfProtection, state) {
+exports = module.exports = function(state) {
   var path = require('path')
     , ejs = require('ejs');
   
@@ -43,7 +43,7 @@ exports = module.exports = function(csrfProtection, state) {
   
   
   return [
-    csrfProtection(),
+    require('csurf')(),
     state(),
     prompt
     // Should GET requests that error with a state destroy the state?  I think not
@@ -53,6 +53,5 @@ exports = module.exports = function(csrfProtection, state) {
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/state'
 ];
