@@ -17,7 +17,7 @@ exports = module.exports = function(csrfProtection, authenticate, state) {
     require('body-parser').urlencoded({ extended: false }),
     csrfProtection(),
     state(),
-    authenticate('session'),
+    authenticator.authenticate('session'),
     logout,
     goHome
   ];
@@ -25,6 +25,6 @@ exports = module.exports = function(csrfProtection, authenticate, state) {
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/authenticate',
+  'module:@authnomicon/session.Authenticator',
   'http://i.bixbyjs.org/http/middleware/state'
 ];
