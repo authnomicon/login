@@ -1,4 +1,4 @@
-exports = module.exports = function(csrfProtection, authenticate, state) {
+exports = module.exports = function(csrfProtection, authenticator, state) {
   
   function select(req, res, next) {
     var s = req.body.selected_session;
@@ -22,6 +22,6 @@ exports = module.exports = function(csrfProtection, authenticate, state) {
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/authenticate',
+  'module:@authnomicon/session.Authenticator',
   'http://i.bixbyjs.org/http/middleware/state'
 ];

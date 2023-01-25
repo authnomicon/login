@@ -1,4 +1,4 @@
-exports = module.exports = function(csrfProtection, authenticate, state) {
+exports = module.exports = function(csrfProtection, authenticator, state) {
   var path = require('path')
     , ejs = require('ejs')
     , merge = require('utils-merge');
@@ -43,13 +43,13 @@ exports = module.exports = function(csrfProtection, authenticate, state) {
   return [
     csrfProtection(),
     state(),
-    authenticate('session', { multi: true }),
+    authenticator.authenticate('session', { multi: true }),
     prompt
   ];
 };
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/authenticate',
+  'module:@authnomicon/session.Authenticator',
   'http://i.bixbyjs.org/http/middleware/state'
 ];
