@@ -1,4 +1,4 @@
-exports = module.exports = function(csrfProtection, authenticate, state) {
+exports = module.exports = function(csrfProtection, authenticator, state) {
   
   function logout(req, res, next) {
     // TODO: Check the confirm parameter
