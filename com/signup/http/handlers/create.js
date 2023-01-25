@@ -1,4 +1,4 @@
-exports = module.exports = function(passwords, csrfProtection, authenticate, state) {
+exports = module.exports = function(passwords, csrfProtection, authenticator, state) {
   
   // TODO: Make this handle a realm parameter, to mirror HTTP Basic auth
   function register(req, res, next) {
@@ -25,7 +25,7 @@ exports = module.exports = function(passwords, csrfProtection, authenticate, sta
     require('body-parser').urlencoded({ extended: false }),
     csrfProtection(),
     state(),
-    authenticate('anonymous'),
+    authenticator.authenticate('anonymous'),
     register,
     redirect
   ];
@@ -34,6 +34,6 @@ exports = module.exports = function(passwords, csrfProtection, authenticate, sta
 exports['@require'] = [
   'http://i.authnomicon.org/credentials/PasswordService',
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/authenticate',
+  'module:@authnomicon/session.Authenticator',
   'http://i.bixbyjs.org/http/middleware/state'
 ];
