@@ -1,4 +1,4 @@
-exports = module.exports = function(csrfProtection, authenticator, state) {
+exports = module.exports = function(authenticator, state) {
   
   function select(req, res, next) {
     var s = req.body.selected_session;
@@ -12,7 +12,7 @@ exports = module.exports = function(csrfProtection, authenticator, state) {
   
   return [
     require('body-parser').urlencoded({ extended: false }),
-    csrfProtection(),
+    require('csurf')({ value: function(req){ return req.body && req.body.csrf_token; } }),
     state(),
     //authenticate('anonymous'),
     select,
@@ -21,7 +21,6 @@ exports = module.exports = function(csrfProtection, authenticator, state) {
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'module:@authnomicon/session.Authenticator',
   'http://i.bixbyjs.org/http/middleware/state'
 ];
