@@ -1,4 +1,4 @@
-exports = module.exports = function(csrfProtection, state) {
+exports = module.exports = function(state) {
   var path = require('path')
     , ejs = require('ejs');
 
@@ -23,13 +23,12 @@ exports = module.exports = function(csrfProtection, state) {
   
   
   return [
-    csrfProtection(),
+    require('csurf')(),
     state(),
     prompt
   ];
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/state'
 ];

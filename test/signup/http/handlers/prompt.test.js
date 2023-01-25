@@ -26,26 +26,25 @@ describe('signup/http/handlers/prompt', function() {
       };
     }
     
-    var csrfProtectionSpy;
     var stateSpy;
     
-    csrfProtectionSpy = sinon.spy(csrfProtection);
     stateSpy = sinon.spy(state);
     
-    handler = factory(csrfProtectionSpy, stateSpy);
+    handler = factory(stateSpy);
     
-    expect(csrfProtectionSpy).to.be.calledOnce;
     expect(stateSpy).to.be.calledOnce;
   });
   
   it('should prompt to create account', function(done) {
     
     chai.express.use(handler)
+      .request(function(req, res) {
+        req.session = {};
+      })
       .finish(function() {
         expect(this).to.have.status(200);
-        expect(this).to.render('account/signup').with.deep.locals({
-          csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
-        });
+        expect(this).to.render('account/signup');
+        expect(this).to.include.locals([ 'csrfToken' ]);
         done();
       })
       .listen();
