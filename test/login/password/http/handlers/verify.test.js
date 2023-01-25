@@ -11,13 +11,6 @@ describe('password/http/handlers/verify', function() {
   var handler;
 
   before(function() {
-  
-    function csrfProtection() {
-      return function(req, res, next) {
-        next();
-      };
-    }
-  
     function authenticate(mechanism) {
       return function(req, res, next) {
         req.login = function(user, info, cb) {
@@ -40,13 +33,11 @@ describe('password/http/handlers/verify', function() {
       };
     }
     
-    var csrfProtectionSpy = sinon.spy(csrfProtection);
     var authenticateSpy = sinon.spy(authenticate);
     var stateSpy = sinon.spy(state);
     
-    handler = factory(csrfProtectionSpy, { authenticate: authenticateSpy }, stateSpy);
+    handler = factory({ authenticate: authenticateSpy }, stateSpy);
     
-    expect(csrfProtectionSpy).to.be.calledOnce;
     // TODO: Put this back
     //expect(authenticateSpy).to.be.calledOnceWith('www-form/password');
     expect(stateSpy).to.be.calledOnce;
@@ -56,12 +47,15 @@ describe('password/http/handlers/verify', function() {
     
     chai.express.use(handler)
       .request(function(req, res) {
+        req.method = 'POST';
         req.body = {
           username: 'jane',
           password: 'opensesame',
-          csrf_token: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
+          csrf_token: '3aev7m03-1WTaAw4lJ_GWEMkjwFBu_lwNWG8'
         };
-        req.session = {};
+        req.session = {
+          csrfSecret: 'zbVXAFVVUSXO0_ZZLBYVP9ue'
+        };
         
         res.resumeState = sinon.spy(function(cb) {
           process.nextTick(cb);
@@ -69,6 +63,7 @@ describe('password/http/handlers/verify', function() {
       })
       .finish(function() {
         expect(this.req.session).to.deep.equal({
+          csrfSecret: 'zbVXAFVVUSXO0_ZZLBYVP9ue',
           user: {
             id: '248289761001',
             displayName: 'Jane Doe'
