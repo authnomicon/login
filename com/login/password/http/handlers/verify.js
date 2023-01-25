@@ -15,9 +15,10 @@
  *
  * @returns {Function[]}
  */
-exports = module.exports = function(csrfProtection, authenticate, state, scheme) {
+exports = module.exports = function(csrfProtection, authenticator, state, scheme) {
   
   function establishSession(req, res, next) {
+    // TODO: is login call necessary here?  passport should cover it
     req.login(req.user, req.authInfo, function(err) {
       if (err) { return next(err); }
       // TODO: Consider yeilding state here, for instance an index of the
@@ -47,7 +48,7 @@ exports = module.exports = function(csrfProtection, authenticate, state, scheme)
     csrfProtection(),
     state(),
     //authenticate('www-form/password'),
-    authenticate(scheme),
+    authenticator.authenticate(scheme),
     establishSession,
     go
   ];
@@ -55,7 +56,7 @@ exports = module.exports = function(csrfProtection, authenticate, state, scheme)
 
 exports['@require'] = [
   'http://i.bixbyjs.org/http/middleware/csrfProtection',
-  'http://i.bixbyjs.org/http/middleware/authenticate',
+  'module:@authnomicon/session.Authenticator',
   'http://i.bixbyjs.org/http/middleware/state',
   '../scheme'
 ];

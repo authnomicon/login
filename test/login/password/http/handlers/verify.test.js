@@ -44,7 +44,7 @@ describe('password/http/handlers/verify', function() {
     var authenticateSpy = sinon.spy(authenticate);
     var stateSpy = sinon.spy(state);
     
-    handler = factory(csrfProtectionSpy, authenticateSpy, stateSpy);
+    handler = factory(csrfProtectionSpy, { authenticate: authenticateSpy }, stateSpy);
     
     expect(csrfProtectionSpy).to.be.calledOnce;
     // TODO: Put this back
