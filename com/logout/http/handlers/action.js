@@ -1,4 +1,4 @@
-exports = module.exports = function(csrfProtection, authenticator, state) {
+exports = module.exports = function(authenticator, state) {
   
   function logout(req, res, next) {
     // TODO: Check the confirm parameter
@@ -15,7 +15,7 @@ exports = module.exports = function(csrfProtection, authenticator, state) {
   
   return [
     require('body-parser').urlencoded({ extended: false }),
-    csrfProtection(),
+    require('csurf')({ value: function(req){ return req.body && req.body.csrf_token; } }),
     state(),
     authenticator.authenticate('session'),
     logout,
@@ -24,7 +24,6 @@ exports = module.exports = function(csrfProtection, authenticator, state) {
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'module:@authnomicon/session.Authenticator',
   'http://i.bixbyjs.org/http/middleware/state'
 ];
