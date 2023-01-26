@@ -11,41 +11,31 @@ describe('http/handlers/prompt', function() {
   var handler;
   
   before(function() {
-    function csrfProtection() {
-      return function(req, res, next) {
-        req.csrfToken = function() {
-          return 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql';
-        };
-        next();
-      };
-    }
-    
     function state() {
       return function(req, res, next) {
         next();
       };
     }
     
-    var csrfProtectionSpy;
     var stateSpy;
     
-    csrfProtectionSpy = sinon.spy(csrfProtection);
     stateSpy = sinon.spy(state);
     
-    handler = factory(csrfProtectionSpy, stateSpy);
+    handler = factory(stateSpy);
     
-    expect(csrfProtectionSpy).to.be.calledOnce;
     expect(stateSpy).to.be.calledOnce;
   });
   
   it('should prompt for username and password', function(done) {
     
     chai.express.use(handler)
+      .request(function(req, res) {
+        req.session = {};
+      })
       .finish(function() {
         expect(this).to.have.status(200);
-        expect(this).to.render('login').with.deep.locals({
-          csrfToken: 'i8XNjC4b8KVok4uw5RftR38Wgp2BFwql'
-        });
+        expect(this).to.render('login');
+        expect(this).to.include.locals([ 'csrfToken' ]);
         done();
       })
       .listen();

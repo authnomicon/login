@@ -3,7 +3,7 @@
  *
  * This component provides an HTTP handler that prompts for login.
  */
-exports = module.exports = function(csrfProtection, state, C) {
+exports = module.exports = function(state, C) {
   
   
   function prompt(req, res, next) {
@@ -33,7 +33,7 @@ exports = module.exports = function(csrfProtection, state, C) {
   
   
   return [
-    csrfProtection(),
+    require('csurf')(),
     state(),
     prompt,
     redirect
@@ -44,7 +44,6 @@ exports = module.exports = function(csrfProtection, state, C) {
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/csrfProtection',
   'http://i.bixbyjs.org/http/middleware/state',
   '!container'
 ];
