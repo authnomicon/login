@@ -1,4 +1,4 @@
-exports = module.exports = function(state) {
+exports = module.exports = function(store) {
   var path = require('path')
     , ejs = require('ejs');
 
@@ -24,11 +24,11 @@ exports = module.exports = function(state) {
   
   return [
     require('csurf')(),
-    state(),
+    require('flowstate')({ store: store }),
     prompt
   ];
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/state'
+  'module:flowstate.Store'
 ];
