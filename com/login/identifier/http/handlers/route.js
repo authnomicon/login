@@ -1,4 +1,4 @@
-exports = module.exports = function(router, state) {
+exports = module.exports = function(router, store) {
   
   function route(req, res, next) {
     router(req.body.identifier, res, next);
@@ -9,12 +9,12 @@ exports = module.exports = function(router, state) {
   return [
     require('body-parser').urlencoded({ extended: false }),
     require('csurf')({ value: function(req){ return req.body && req.body.csrf_token; } }),
-    state(),
+    require('flowstate')({ store: store }),
     route
   ];
 };
 
 exports['@require'] = [
   '../router',
-  'http://i.bixbyjs.org/http/middleware/state'
+  'module:flowstate.Store'
 ];
