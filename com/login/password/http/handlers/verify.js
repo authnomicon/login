@@ -15,7 +15,7 @@
  *
  * @returns {Function[]}
  */
-exports = module.exports = function(authenticator, store, scheme) {
+exports = module.exports = function(scheme, authenticator, store) {
   
   function establishSession(req, res, next) {
     // TODO: is login call necessary here?  passport should cover it
@@ -55,7 +55,7 @@ exports = module.exports = function(authenticator, store, scheme) {
 };
 
 exports['@require'] = [
+  '../scheme',
   'module:@authnomicon/session.Authenticator',
-  'module:flowstate.Store',
-  '../scheme'
+  'module:flowstate.Store'
 ];

@@ -38,7 +38,7 @@ describe('password/http/handlers/verify', function() {
     var authenticateSpy = sinon.spy(authenticate);
     //var stateSpy = sinon.spy(state);
     
-    handler = factory({ authenticate: authenticateSpy }, undefined);
+    handler = factory(undefined, { authenticate: authenticateSpy }, undefined);
     
     // TODO: Put this back
     //expect(authenticateSpy).to.be.calledOnceWith('www-form/password');
