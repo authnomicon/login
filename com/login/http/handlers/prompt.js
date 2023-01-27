@@ -3,7 +3,7 @@
  *
  * This component provides an HTTP handler that prompts for login.
  */
-exports = module.exports = function(state, C) {
+exports = module.exports = function(store, C) {
   
   
   function prompt(req, res, next) {
@@ -34,7 +34,7 @@ exports = module.exports = function(state, C) {
   
   return [
     require('csurf')(),
-    state(),
+    require('flowstate')({ store: store }),
     prompt,
     redirect
     // Should GET requests that error with a state destroy the state?  I think not
@@ -44,6 +44,6 @@ exports = module.exports = function(state, C) {
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/state',
+  'module:flowstate.Store',
   '!container'
 ];
