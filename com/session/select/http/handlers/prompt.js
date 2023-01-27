@@ -1,4 +1,4 @@
-exports = module.exports = function(authenticator, state) {
+exports = module.exports = function(authenticator, store) {
   var path = require('path')
     , ejs = require('ejs')
     , merge = require('utils-merge');
@@ -42,7 +42,7 @@ exports = module.exports = function(authenticator, state) {
   
   return [
     require('csurf')(),
-    state(),
+    require('flowstate')({ store: store }),
     authenticator.authenticate('session', { multi: true }),
     prompt
   ];
@@ -50,5 +50,5 @@ exports = module.exports = function(authenticator, state) {
 
 exports['@require'] = [
   'module:@authnomicon/session.Authenticator',
-  'http://i.bixbyjs.org/http/middleware/state'
+  'module:flowstate.Store'
 ];
