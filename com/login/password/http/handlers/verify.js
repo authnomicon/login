@@ -15,7 +15,7 @@
  *
  * @returns {Function[]}
  */
-exports = module.exports = function(authenticator, state, scheme) {
+exports = module.exports = function(authenticator, store, scheme) {
   
   function establishSession(req, res, next) {
     // TODO: is login call necessary here?  passport should cover it
@@ -46,7 +46,7 @@ exports = module.exports = function(authenticator, state, scheme) {
   return [
     require('body-parser').urlencoded({ extended: false }),
     require('csurf')({ value: function(req){ return req.body && req.body.csrf_token; } }),
-    state(),
+    require('flowstate')({ store: store }),
     //authenticate('www-form/password'),
     authenticator.authenticate(scheme),
     establishSession,
@@ -56,6 +56,6 @@ exports = module.exports = function(authenticator, state, scheme) {
 
 exports['@require'] = [
   'module:@authnomicon/session.Authenticator',
-  'http://i.bixbyjs.org/http/middleware/state',
+  'module:flowstate.Store',
   '../scheme'
 ];

@@ -14,7 +14,7 @@
  *
  * @returns {Function[]}
  */
-exports = module.exports = function(state) {
+exports = module.exports = function(store) {
   var path = require('path')
     , ejs = require('ejs');
   
@@ -44,7 +44,7 @@ exports = module.exports = function(state) {
   
   return [
     require('csurf')(),
-    state(),
+    require('flowstate')({ store: store }),
     prompt
     // Should GET requests that error with a state destroy the state?  I think not
     // There needs to be an option for it (external?) that does, for eg OAuth
@@ -53,5 +53,5 @@ exports = module.exports = function(state) {
 };
 
 exports['@require'] = [
-  'http://i.bixbyjs.org/http/middleware/state'
+  'module:flowstate.Store'
 ];

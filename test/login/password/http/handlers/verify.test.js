@@ -27,26 +27,29 @@ describe('password/http/handlers/verify', function() {
       };
     }
     
+    /*
     function state() {
       return function(req, res, next) {
         next();
       };
     }
+    */
     
     var authenticateSpy = sinon.spy(authenticate);
-    var stateSpy = sinon.spy(state);
+    //var stateSpy = sinon.spy(state);
     
-    handler = factory({ authenticate: authenticateSpy }, stateSpy);
+    handler = factory({ authenticate: authenticateSpy }, undefined);
     
     // TODO: Put this back
     //expect(authenticateSpy).to.be.calledOnceWith('www-form/password');
-    expect(stateSpy).to.be.calledOnce;
+    //expect(stateSpy).to.be.calledOnce;
   });
   
   it('verifying username and password', function(done) {
     
     chai.express.use(handler)
       .request(function(req, res) {
+        req.connection = {};
         req.method = 'POST';
         req.body = {
           username: 'jane',

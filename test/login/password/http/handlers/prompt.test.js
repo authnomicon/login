@@ -17,19 +17,20 @@ describe('password/http/handlers/prompt', function() {
       };
     }
     
-    var stateSpy;
+    //var stateSpy;
     
-    stateSpy = sinon.spy(state);
+    //stateSpy = sinon.spy(state);
     
-    handler = factory(stateSpy);
+    handler = factory(undefined);
     
-    expect(stateSpy).to.be.calledOnce;
+    //expect(stateSpy).to.be.calledOnce;
   });
   
   it('should prompt for username and password', function(done) {
     
     chai.express.use(handler)
       .request(function(req, res) {
+        req.connection = {};
         req.session = {};
       })
       .finish(function() {
