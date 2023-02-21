@@ -20,11 +20,14 @@ exports = module.exports = function(scheme, authenticator, store) {
   function establishSession(req, res, next) {
     // TODO: is login call necessary here?  passport should cover it
     req.login(req.user, req.authInfo, function(err) {
+    //req.login(req.user, req.authInfo, function(err, selector) {
       if (err) { return next(err); }
+      
       // TODO: Consider yeilding state here, for instance an index of the
       // session that was established, for multi login
       // NOTE: Yes, do that.
       return res.resumeState(next);
+      //return res.resumeState({ selectedSession: selector }, next);
     });
   }
   
