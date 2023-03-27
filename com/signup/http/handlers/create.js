@@ -25,7 +25,8 @@ exports = module.exports = function(passwords, authenticator, store) {
     require('body-parser').urlencoded({ extended: false }),
     require('csurf')({ value: function(req){ return req.body && req.body.csrf_token; } }),
     require('flowstate')({ store: store }),
-    authenticator.authenticate('anonymous'),
+    //authenticator.authenticate('anonymous'),
+    authenticator.initialize(),
     register,
     redirect
   ];
