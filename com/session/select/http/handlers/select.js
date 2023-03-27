@@ -1,8 +1,8 @@
 exports = module.exports = function(authenticator, store) {
   
-  function select(req, res, next) {
-    var s = req.body.selected_session;
-    return res.resumeState({ selectedSession: s }, next);
+  function resumeOr(req, res, next) {
+    var s = req.body.select_session;
+    return res.resumeState({ select_session: s }, next);
   }
   
   function redirect(req, res, next) {
@@ -15,7 +15,7 @@ exports = module.exports = function(authenticator, store) {
     require('csurf')({ value: function(req){ return req.body && req.body.csrf_token; } }),
     require('flowstate')({ store: store }),
     //authenticate('anonymous'),
-    select,
+    resumeOr,
     redirect
   ];
 };
