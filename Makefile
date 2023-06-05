@@ -25,5 +25,10 @@ clobber: clean
 apidoc: $(SOURCES)
 	jsdoc $(JSDOCFLAGS) -d wwwhtml $^
 
+# npm install swagger-jsdoc --no-save
+openapi: $(SOURCES) node_modules/.bin/swagger-jsdoc
+	node_modules/.bin/swagger-jsdoc -d etc/openapi.yaml -o openapi.yaml $(SOURCES)
+	
+
 
 .PHONY: clean clobber
