@@ -59,6 +59,6 @@ exports = module.exports = function(scheme, authenticator, store) {
 
 exports['@require'] = [
   '../scheme',
-  'module:@authnomicon/session.Authenticator',
+  'module:authnomicon.WebAuthenticator',
   'module:flowstate.Store'
 ];

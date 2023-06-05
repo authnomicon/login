@@ -25,8 +25,7 @@ exports = module.exports = function(passwords, authenticator, store) {
     require('body-parser').urlencoded({ extended: false }),
     require('csurf')({ value: function(req){ return req.body && req.body.csrf_token; } }),
     require('flowstate')({ store: store }),
-    //authenticator.authenticate('anonymous'),
-    authenticator.initialize(),
+    authenticator.authenticate('anonymous'),
     register,
     redirect
   ];
@@ -34,6 +33,6 @@ exports = module.exports = function(passwords, authenticator, store) {
 
 exports['@require'] = [
   'http://i.authnomicon.org/credentials/PasswordService',
-  'module:@authnomicon/session.Authenticator',
+  'module:authnomicon.WebAuthenticator',
   'module:flowstate.Store'
 ];
