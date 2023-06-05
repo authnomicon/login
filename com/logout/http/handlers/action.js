@@ -2,9 +2,10 @@ exports = module.exports = function(authenticator, store) {
   
   function logout(req, res, next) {
     // TODO: Check the confirm parameter
-    // TODO: Async logout?
-    req.logout();
-    return res.resumeState(next);
+    req.logout(function(err) {
+      if (err) { return next(err); }
+      return res.resumeState(next);
+    });
   }
   
   function goHome(req, res, next) {
