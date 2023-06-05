@@ -1,3 +1,6 @@
+// Module dependencies.
+var express = require('express');
+
 /**
  * Password authentication service.
  *
@@ -15,9 +18,7 @@
  * @returns {Function}
  */
 exports = module.exports = function(promptHandler, verifyHandler) {
-  var express = require('express');
-  
-  var router = new express.Router();
+  var router = express.Router();
   router.get('/', promptHandler);
   router.post('/', verifyHandler);
   
