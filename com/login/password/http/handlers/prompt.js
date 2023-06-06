@@ -14,6 +14,16 @@
  * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
  * [2]: https://seclab.stanford.edu/websec/csrf/csrf.pdf
  *
+ * @openapi
+ * /login/password:
+ *   get:
+ *     summary: Prompt the user to log in using a username and password
+ *     responses:
+ *       "200":
+ *         description: Prompt.
+ *         content:
+ *           text/html:
+ *
  * @param {flowstate.Store} store - State store for per-request state.
  * @returns {express.Handler}
  */
