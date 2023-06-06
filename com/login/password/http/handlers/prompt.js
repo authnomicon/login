@@ -1,18 +1,21 @@
 /**
- * Password challenge handler.
+ * Create password challenge handler.
  *
- * This component provides an HTTP handler that challenges the user to
- * authenticate with a username and password.
+ * Returns an HTTP handler that challenges the user to autenticate with a
+ * username and password.  The challenge is rendered via HTML and the response
+ * will be submitted to the `verify` handler via an HTML form.
  *
- * This handler initializes protection against CSRF, in order to defend against
- * [login CSRF][1] attacks.  Consult [Robust Defenses for Cross-Site Request
- * Forgery][2] for a thorough analysis of CSRF, including login CSRF, as well
- * defense mechanisms.
+ * To defined against [login CSRF][1] attacks, this handler initializes a
+ * pre-session and includes a CSRF token in the HTML form.  The CSRF token is
+ * verified by the `verify` handler.  Consult [Robust Defenses for Cross-Site
+ * Request Forgery][2] for a thorough analysis of CSRF, including login CSRF, as
+ * well defense mechanisms.
  *
  * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
  * [2]: https://seclab.stanford.edu/websec/csrf/csrf.pdf
  *
- * @returns {Function[]}
+ * @param {flowstate.Store} store - State store for per-request state.
+ * @returns {express.Handler}
  */
 exports = module.exports = function(store) {
   var path = require('path')
