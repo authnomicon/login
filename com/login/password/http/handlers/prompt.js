@@ -8,7 +8,7 @@ var path = require('path')
  * username and password.  The challenge is rendered via HTML and the response
  * will be submitted to the `verify` handler via an HTML form.
  *
- * To defined against [login CSRF][1] attacks, this handler initializes a
+ * To defend against [login CSRF][1] attacks, this handler initializes
  * pre-session and includes a CSRF token in the HTML form.  The CSRF token is
  * verified by the `verify` handler.  Consult [Robust Defenses for Cross-Site
  * Request Forgery][2] for a thorough analysis of CSRF, including login CSRF, as
@@ -34,7 +34,7 @@ exports = module.exports = function(store) {
   
   function prompt(req, res, next) {
     if (req.query && req.query.username) {
-      res.locals.username = req.query && req.query.username;
+      res.locals.username = req.query.username;
     }
     res.locals.csrfToken = req.csrfToken();
     

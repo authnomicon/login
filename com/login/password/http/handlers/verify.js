@@ -1,19 +1,23 @@
 /**
- * Password response handler.
+ * Create password verification handler.
  *
- * This component provides an HTTP handler that verifies a username and
- * password.  The credentials are submitted via an HTML form in response to a
- * password prompt.
+ * Returns an HTTP handler that authenticates the user by verifying a username
+ * and password.  The credentials are submitted via an HTML form which was
+ * rendered by the `prompt` handler.
  *
- * This handler is protected against CSRF, in order to defend against [login
- * CSRF][1] attacks.  Consult [Robust Defenses for Cross-Site Request
- * Forgery][2] for a thorough analysis of CSRF, including login CSRF, as well
- * defense mechanisms.
+ * To defend against [login CSRF][1] attacks, this handler verifies a CSRF
+ * token.  Consult [Robust Defenses for Cross-Site Request Forgery][2] for a
+ * thorough analysis of CSRF, including login CSRF, as well defense mechanisms.
  *
  * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
  * [2]: https://seclab.stanford.edu/websec/csrf/csrf.pdf
  *
- * @returns {Function[]}
+ * @param {passport.Strategy} scheme - Authentication scheme that authenticates
+ *          a user by verifying a username and password.
+ * @param {authnomicon.WebAuthenticator} authenticator - Authenticator for
+ *          authenticating and managing web sessions.
+ * @param {flowstate.Store} store - State store for per-request state.
+ * @returns {express.Handler}
  */
 exports = module.exports = function(scheme, authenticator, store) {
   
