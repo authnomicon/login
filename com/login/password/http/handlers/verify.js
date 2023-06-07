@@ -54,7 +54,6 @@ exports = module.exports = function(scheme, authenticator, store) {
     require('body-parser').urlencoded({ extended: false }),
     require('csurf')({ value: function(req){ return req.body && req.body.csrf_token; } }),
     require('flowstate')({ store: store }),
-    //authenticate('www-form/password'),
     authenticator.authenticate(scheme),
     establishSession,
     go
