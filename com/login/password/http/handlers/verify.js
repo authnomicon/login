@@ -12,6 +12,24 @@
  * [1]: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#login-csrf
  * [2]: https://seclab.stanford.edu/websec/csrf/csrf.pdf
  *
+ * @openapi
+ * /login/password:
+ *   post:
+ *     summary: Log in using a username and password
+ *     requestBody:
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: number
+ *     responses:
+ *       "302":
+ *         description: Redirect.
+ *
  * @param {passport.Strategy} scheme - Authentication scheme that authenticates
  *          a user by verifying a username and password.
  * @param {authnomicon.WebAuthenticator} authenticator - Authenticator for
