@@ -1,3 +1,6 @@
+var path = require('path')
+  , ejs = require('ejs');
+
 /**
  * Create password challenge handler.
  *
@@ -28,9 +31,6 @@
  * @returns {express.Handler}
  */
 exports = module.exports = function(store) {
-  var path = require('path')
-    , ejs = require('ejs');
-  
   
   function prompt(req, res, next) {
     if (req.query && req.query.username) {
