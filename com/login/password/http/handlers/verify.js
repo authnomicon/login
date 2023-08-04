@@ -80,6 +80,6 @@ exports = module.exports = function(scheme, authenticator, store) {
 
 exports['@require'] = [
   '../scheme',
-  'module:authnomicon.WebAuthenticator',
+  'module:passport.Authenticator',
   'module:flowstate.Store'
 ];
