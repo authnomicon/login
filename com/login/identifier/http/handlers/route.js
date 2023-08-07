@@ -16,6 +16,6 @@ exports = module.exports = function(router, store) {
 };
 
 exports['@require'] = [
-  '../router',
+  'module:@authnomicon/login.IdentifierRouter',
   'module:flowstate.Store'
 ];
