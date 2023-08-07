@@ -1,6 +1,6 @@
 exports = module.exports = function(container) {
   
-  return container.create('http://i.authnomicon.org/login/IdentifierRouter')
+  return container.create('module:@authnomicon/login.IdentifierRouter')
     .catch(function(err) {
       
       return function(identifier, res, next) {

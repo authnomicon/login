@@ -20,7 +20,7 @@ exports = module.exports = function(store, C) {
   }
   
   function redirect(req, res, next) {
-    C.create('http://i.authnomicon.org/login/IdentifierRouter')
+    C.create('module:@authnomicon/login.IdentifierRouter')
       .then(function() {
         return res.redirect('/login/identifier');
       }, function(error) {
