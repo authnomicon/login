@@ -28,6 +28,6 @@ exports = module.exports = function(passwords, users) {
 };
 
 exports['@require'] = [
-  'http://i.authnomicon.org/credentials/PasswordService',
+  'module:@authnomicon/credentials.PasswordStore',
   'module:@authnomicon/core.Directory'
 ];
