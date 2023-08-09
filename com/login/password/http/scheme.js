@@ -29,5 +29,5 @@ exports = module.exports = function(passwords, users) {
 
 exports['@require'] = [
   'http://i.authnomicon.org/credentials/PasswordService',
-  'http://i.authnomicon.org/Directory'
+  'module:@authnomicon/core.Directory'
 ];
