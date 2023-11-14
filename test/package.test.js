@@ -16,7 +16,6 @@ describe('@authnomicon/login', function() {
         'login/http/prompt',
         'login/identifier/http/service',
         'login/password/http/service',
-        'logout/http/service',
         'logout/http/prompt',
         'session/select/http/service',
         'session/select/http/prompt',
