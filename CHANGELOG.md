@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5] - 2023-11-27
+### Removed
+- Removed `/logout` endpoint.  Moved to [`@authnomicon/logout`](https://github.com/authnomicon/logout).
+
 ## [0.0.4] - 2023-10-20
 
 TODO: Review this for accuracy.
