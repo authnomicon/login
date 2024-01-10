@@ -27,7 +27,7 @@ var path = require('path')
  *         content:
  *           text/html:
  *
- * @param {flowstate.Store} store - State store for per-request state.
+ * @param {flowstate.Store} store - Per-request state store.
  * @returns {express.RequestHandler[]}
  */
 exports = module.exports = function(store) {

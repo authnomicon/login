@@ -30,12 +30,11 @@
  *       "302":
  *         description: Redirect.
  *
- * @param {passport.Strategy} scheme - Authentication scheme that authenticates
- *          a user by verifying a username and password.
- * @param {authnomicon.WebAuthenticator} authenticator - Authenticator for
- *          authenticating and managing web sessions.
- * @param {flowstate.Store} store - State store for per-request state.
- * @returns {express.Handler}
+ * @param {passport.Strategy} scheme - Authentication scheme that verifies a
+ *          username and password submitted via an HTML form.
+ * @param {passport.Authenticator} authenticator - Request authenticator.
+ * @param {flowstate.Store} store - Per-request state store.
+ * @returns {express.RequestHandler[]}
  */
 exports = module.exports = function(scheme, authenticator, store) {
   
