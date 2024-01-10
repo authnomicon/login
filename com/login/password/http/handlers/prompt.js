@@ -8,7 +8,7 @@ var path = require('path')
  * username and password.  The challenge is rendered via HTML and the response
  * will be submitted to the `verify` handler via an HTML form.
  *
- * To defend against [login CSRF][1] attacks, this handler initializes
+ * To defend against [login CSRF][1] attacks, this handler initializes a
  * pre-session and includes a CSRF token in the HTML form.  The CSRF token is
  * verified by the `verify` handler.  Consult [Robust Defenses for Cross-Site
  * Request Forgery][2] for a thorough analysis of CSRF, including login CSRF, as
@@ -28,7 +28,7 @@ var path = require('path')
  *           text/html:
  *
  * @param {flowstate.Store} store - State store for per-request state.
- * @returns {express.Handler}
+ * @returns {express.RequestHandler[]}
  */
 exports = module.exports = function(store) {
   
@@ -38,7 +38,6 @@ exports = module.exports = function(store) {
     }
     res.locals.csrfToken = req.csrfToken();
     
-    // NOTE: This will include locals for state.
     res.render('login/password', function(err, str) {
       if (err && err.view) {
         var view = path.resolve(__dirname, '../views/prompt.ejs');
