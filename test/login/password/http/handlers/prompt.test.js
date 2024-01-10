@@ -2,36 +2,39 @@
 
 var expect = require('chai').expect;
 var chai = require('chai');
+var $require = require('proxyquire');
 var sinon = require('sinon');
 var factory = require('../../../../../com/login/password/http/handlers/prompt');
 
 
 describe('password/http/handlers/prompt', function() {
   
-  var handler;
-  
-  before(function() {
-    function state() {
-      return function(req, res, next) {
-        next();
-      };
-    }
+  it('should create handler', function() {
+    var csurfSpy = sinon.spy();
+    var flowstateSpy = sinon.spy();
+    var factory = $require('../../../../../com/login/password/http/handlers/prompt', {
+      'csurf': csurfSpy,
+      'flowstate': flowstateSpy
+    });
     
-    //var stateSpy;
+    var store = new Object();
+    var handler = factory(store);
     
-    //stateSpy = sinon.spy(state);
-    
-    handler = factory(undefined);
-    
-    //expect(stateSpy).to.be.calledOnce;
+    expect(handler).to.be.an('array');
+    expect(csurfSpy).to.be.calledOnce;
+    expect(csurfSpy).to.be.calledBefore(flowstateSpy);
+    expect(flowstateSpy).to.be.calledOnce;
+    expect(flowstateSpy).to.be.calledWith({ store: store });
   });
   
-  it('should prompt for username and password', function(done) {
+  it('should render', function(done) {
+    var store = new Object();
+    var handler = factory(store);
     
     chai.express.use(handler)
       .request(function(req, res) {
-        req.connection = {};
         req.session = {};
+        req.connection = {};
       })
       .finish(function() {
         expect(this).to.have.status(200);
@@ -41,6 +44,6 @@ describe('password/http/handlers/prompt', function() {
       })
       .listen();
     
-  }); // should prompt for username and password
+  }); // should render
   
 });
