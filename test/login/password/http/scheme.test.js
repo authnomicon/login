@@ -72,57 +72,31 @@ describe('password/http/scheme', function() {
     });
   }); // should verify username and password using credential store with directory capability
   
-  describe('not verifying username and password', function() {
+  it('should not verify incorrect username and password', function(done) {
     var passwords = new Object();
     passwords.verify = sinon.stub().yieldsAsync(null, false);
     var users = new Object();
     users.find = sinon.stub().yieldsAsync(null, { id: '248289761001', displayName: 'Jane Doe' });
   
     var StrategySpy = sinon.spy(Strategy);
-  
     var factory = $require('../../../../com/login/password/http/scheme',
       { 'passport-local': StrategySpy });
-    var strategy = factory(passwords, users);
+      
+    var scheme = factory(passwords, users);
+    expect(StrategySpy).to.have.been.calledOnce;
+    expect(scheme).to.be.an.instanceOf(Strategy);
   
-    it('should construct strategy', function() {
-      expect(StrategySpy).to.have.been.calledOnce;
+    var verify = StrategySpy.args[0][0];
+    verify('jane', 'opensesame', function(err, user, info) {
+      if (err) { return done(err); }
+      
+      expect(passwords.verify).to.calledOnceWith('jane', 'opensesame');
+      expect(users.find).to.not.have.been.called;
+      expect(user).to.equal(false);
+      expect(info).to.be.undefined;
+      done();
     });
-  
-    it('should return strategy', function() {
-      expect(strategy).to.be.an.instanceOf(Strategy);
-    });
-  
-    describe('verify', function() {
-      var user, info;
-    
-      before(function(done) {
-        var verify = StrategySpy.args[0][0];
-        verify('jane', 'opensesame', function(e, u, i) {
-          if (e) { return done(e); }
-          user = u;
-          info = i;
-          done();
-        });
-      });
-    
-      it('should verify credentials', function() {
-        expect(passwords.verify).to.calledOnceWith('jane', 'opensesame');
-      });
-    
-      it('should not query directory', function() {
-        expect(users.find).to.not.have.been.called;
-      });
-    
-      it('should not yield user', function() {
-        expect(user).to.equal(false);
-      });
-    
-      it('should not yield info', function() {
-        expect(info).to.be.undefined;
-      });
-    }); // verify
-  
-  }); // not verifying username and password
+  }); // should not verify incorrect username and password
   
   describe('encountering error while verifying credentials', function() {
     var passwords = new Object();
