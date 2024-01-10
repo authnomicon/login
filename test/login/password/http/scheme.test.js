@@ -43,60 +43,34 @@ describe('password/http/scheme', function() {
     });
   }); // should verify username and password
   
-  describe('verifying username and password using credential service with directory capability', function() {
+  it('should verify username and password using credential store with directory capability', function(done) {
     var passwords = new Object();
     passwords.verify = sinon.stub().yieldsAsync(null, { id: '248289761001', displayName: 'Jane Doe' });
     var users = new Object();
     users.find = sinon.spy();
     
     var StrategySpy = sinon.spy(Strategy);
-    
     var factory = $require('../../../../com/login/password/http/scheme',
       { 'passport-local': StrategySpy });
-    var strategy = factory(passwords, users);
+      
+    var scheme = factory(passwords, users);
+    expect(StrategySpy).to.have.been.calledOnce;
+    expect(scheme).to.be.an.instanceOf(Strategy);
     
-    it('should construct strategy', function() {
-      expect(StrategySpy).to.have.been.calledOnce;
+    var verify = StrategySpy.args[0][0];
+    verify('jane', 'opensesame', function(err, user, info) {
+      if (err) { return done(err); }
+      
+      expect(passwords.verify).to.have.been.calledOnceWith('jane', 'opensesame');
+      expect(users.find).to.not.have.been.called;
+      expect(user).to.deep.equal({
+        id: '248289761001',
+        displayName: 'Jane Doe'
+      });
+      expect(info).to.be.undefined;
+      done();
     });
-    
-    it('should return strategy', function() {
-      expect(strategy).to.be.an.instanceOf(Strategy);
-    });
-    
-    describe('verify', function() {
-      var user, info;
-      
-      before(function(done) {
-        var verify = StrategySpy.args[0][0];
-        verify('jane', 'opensesame', function(e, u, i) {
-          if (e) { return done(e); }
-          user = u;
-          info = i;
-          done();
-        });
-      });
-      
-      it('should verify credentials', function() {
-        expect(passwords.verify).to.calledOnceWith('jane', 'opensesame');
-      });
-      
-      it('should not query directory', function() {
-        expect(users.find).to.not.have.been.called;
-      });
-      
-      it('should yield user', function() {
-        expect(user).to.deep.equal({
-          id: '248289761001',
-          displayName: 'Jane Doe'
-        });
-      });
-      
-      it('should yield info', function() {
-        expect(info).to.be.undefined;
-      });
-    }); // verify
-    
-  }); // verifying username and password using credential service with directory capability
+  }); // should verify username and password using credential store with directory capability
   
   describe('not verifying username and password', function() {
     var passwords = new Object();
