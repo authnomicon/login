@@ -14,60 +14,34 @@ describe('password/http/scheme', function() {
     expect(factory['@implements']).to.be.undefined;
   });
   
-  describe('verifying username and password', function() {
+  it('should verify username and password', function(done) {
     var passwords = new Object();
     passwords.verify = sinon.stub().yieldsAsync(null, true);
     var users = new Object();
     users.find = sinon.stub().yieldsAsync(null, { id: '248289761001', displayName: 'Jane Doe' });
     
     var StrategySpy = sinon.spy(Strategy);
-    
     var factory = $require('../../../../com/login/password/http/scheme',
       { 'passport-local': StrategySpy });
-    var strategy = factory(passwords, users);
     
-    it('should construct strategy', function() {
-      expect(StrategySpy).to.have.been.calledOnce;
+    var scheme = factory(passwords, users);
+    expect(StrategySpy).to.have.been.calledOnce;
+    expect(scheme).to.be.an.instanceOf(Strategy);
+    
+    var verify = StrategySpy.args[0][0];
+    verify('jane', 'opensesame', function(err, user, info) {
+      if (err) { return done(err); }
+          
+      expect(passwords.verify).to.have.been.calledOnceWith('jane', 'opensesame');
+      expect(users.find).to.have.been.calledOnceWith('jane');
+      expect(user).to.deep.equal({
+        id: '248289761001',
+        displayName: 'Jane Doe'
+      });
+      expect(info).to.be.undefined;
+      done();
     });
-    
-    it('should return strategy', function() {
-      expect(strategy).to.be.an.instanceOf(Strategy);
-    });
-    
-    describe('verify', function() {
-      var user, info;
-      
-      before(function(done) {
-        var verify = StrategySpy.args[0][0];
-        verify('jane', 'opensesame', function(e, u, i) {
-          if (e) { return done(e); }
-          user = u;
-          info = i;
-          done();
-        });
-      });
-      
-      it('should verify credentials', function() {
-        expect(passwords.verify).to.calledOnceWith('jane', 'opensesame');
-      });
-      
-      it('should query directory', function() {
-        expect(users.find).to.have.been.calledOnceWith('jane');
-      });
-      
-      it('should yield user', function() {
-        expect(user).to.deep.equal({
-          id: '248289761001',
-          displayName: 'Jane Doe'
-        });
-      });
-      
-      it('should yield info', function() {
-        expect(info).to.be.undefined;
-      });
-    }); // verify
-    
-  }); // verifying username and password
+  }); // should verify username and password
   
   describe('verifying username and password using credential service with directory capability', function() {
     var passwords = new Object();
