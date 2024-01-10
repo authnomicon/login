@@ -17,12 +17,12 @@ var express = require('express');
  * applications that lack the concept of an origin are advised to use an
  * alternative service that provides authentication capabilities.  Such service
  * is beyond the scope of this package, but developers are encouraged to adopt
- * suitable standardized protocols such as OpenID Connect and OAuth 2.0.
+ * suitable standardized protocols such as OpenID Connect.
  *
- * @param {express.Handler} promptHandler - Handler which prompts the user to
- *          authenticate by rendering an HTML page.
- * @param {express.Handler} verifyHandler - Handler which verifies the user's
- *          credentials submitted via an HTML form.
+ * @param {express.RequestHandler} promptHandler - Handler which prompts the
+ *          user to authenticate using a password.
+ * @param {express.RequestHandler} verifyHandler - Handler which verifies the user's
+ *          password.
  * @returns {express.Router}
  */
 exports = module.exports = function(promptHandler, verifyHandler) {
