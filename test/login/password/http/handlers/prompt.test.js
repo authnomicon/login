@@ -27,42 +27,46 @@ describe('password/http/handlers/prompt', function() {
     expect(flowstateSpy).to.be.calledWith({ store: store });
   });
   
-  it('should render', function(done) {
-    var store = new Object();
-    var handler = factory(store);
-    
-    chai.express.use(handler)
-      .request(function(req, res) {
-        req.session = {};
-        req.connection = {};
-      })
-      .finish(function() {
-        expect(this).to.have.status(200);
-        expect(this).to.render('login/password');
-        expect(this).to.include.locals([ 'csrfToken' ]);
-        done();
-      })
-      .listen();
-  }); // should render
+  describe('handler', function() {
   
-  it('should render with username', function(done) {
-    var store = new Object();
-    var handler = factory(store);
+    it('should render', function(done) {
+      var store = new Object();
+      var handler = factory(store);
     
-    chai.express.use(handler)
-      .request(function(req, res) {
-        req.query = { username: 'jane' };
-        req.session = {};
-        req.connection = {};
-      })
-      .finish(function() {
-        expect(this).to.have.status(200);
-        expect(this).to.render('login/password');
-        expect(this).to.include.locals([ 'username', 'csrfToken' ]);
-        expect(this.locals.username).to.equal('jane');
-        done();
-      })
-      .listen();
-  }); // should render with username
+      chai.express.use(handler)
+        .request(function(req, res) {
+          req.session = {};
+          req.connection = {};
+        })
+        .finish(function() {
+          expect(this).to.have.status(200);
+          expect(this).to.render('login/password');
+          expect(this).to.include.locals([ 'csrfToken' ]);
+          done();
+        })
+        .listen();
+    }); // should render
+  
+    it('should render with username', function(done) {
+      var store = new Object();
+      var handler = factory(store);
+    
+      chai.express.use(handler)
+        .request(function(req, res) {
+          req.query = { username: 'jane' };
+          req.session = {};
+          req.connection = {};
+        })
+        .finish(function() {
+          expect(this).to.have.status(200);
+          expect(this).to.render('login/password');
+          expect(this).to.include.locals([ 'username', 'csrfToken' ]);
+          expect(this.locals.username).to.equal('jane');
+          done();
+        })
+        .listen();
+    }); // should render with username
+  
+  }); // handler
   
 });
