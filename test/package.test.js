@@ -14,7 +14,7 @@ describe('@authnomicon/login', function() {
         'locals/flowurl',
         'login/http/service',
         'login/http/prompt',
-        'login/identifier/http/service',
+        'identifier/service',
         'password/service',
         'logout/http/prompt',
         'session/select/http/service',
