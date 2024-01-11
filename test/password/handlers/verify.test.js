@@ -7,7 +7,7 @@ var sinon = require('sinon');
 var factory = require('../../../com/password/handlers/verify');
 
 
-describe('password/http/handlers/verify', function() {
+describe('password/handlers/verify', function() {
   
   it('should create handler', function() {
     var bodyParserSpy = sinon.spy();

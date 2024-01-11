@@ -7,7 +7,7 @@ var sinon = require('sinon');
 var factory = require('../../../com/password/handlers/prompt');
 
 
-describe('password/http/handlers/prompt', function() {
+describe('password/handlers/prompt', function() {
   
   it('should create handler', function() {
     var csurfSpy = sinon.spy();

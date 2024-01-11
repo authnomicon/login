@@ -7,7 +7,7 @@ var factory = require('../../com/password/scheme');
 var Strategy = require('passport-local');
 
 
-describe('password/http/scheme', function() {
+describe('password/scheme', function() {
   
   it('should be annotated', function() {
     expect(factory['@singleton']).to.be.undefined;
