@@ -38,6 +38,9 @@
  */
 exports = module.exports = function(scheme, authenticator, store) {
   
+  // TODO: Port this session selection related code into passport and
+  // passport-multilogin, and remove the dead code here.
+  /*
   function establishSession(req, res, next) {
     // TODO: is login call necessary here?  passport should cover it
     req.login(req.user, req.authInfo, function(err) {
@@ -51,11 +54,16 @@ exports = module.exports = function(scheme, authenticator, store) {
       //return res.resumeState({ selectedSession: selector }, next);
     });
   }
+  */
   
   // TODO: Move resume state down here to its own middleware, so we can insert change password, etc
   //.   will need the sessionselector of the just logged in user for this.
   
-  function go(req, res, next) {
+  function resume(req, res, next) {
+    res.resumeState(next);
+  }
+  
+  function redirect(req, res, next) {
     // TODO: Add an optional service that will be injected here which determines
     // the default application, and how to redirect to it (OpenID IdP init, etc)
     
@@ -72,8 +80,8 @@ exports = module.exports = function(scheme, authenticator, store) {
     require('csurf')({ value: function(req){ return req.body && req.body.csrf_token; } }),
     require('flowstate')({ store: store }),
     authenticator.authenticate(scheme),
-    establishSession,
-    go
+    resume,
+    redirect
   ];
 };
 
