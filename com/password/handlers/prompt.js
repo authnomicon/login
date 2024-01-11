@@ -1,3 +1,4 @@
+// Module dependencies.
 var path = require('path')
   , ejs = require('ejs');
 

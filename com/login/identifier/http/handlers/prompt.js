@@ -1,12 +1,12 @@
+// Module dependencies.
+var path = require('path')
+  , ejs = require('ejs');
+
 exports = module.exports = function(store) {
-  var path = require('path')
-    , ejs = require('ejs');
-  
   
   function prompt(req, res, next) {
     res.locals.csrfToken = req.csrfToken();
     
-    // NOTE: This will include locals for state.
     res.render('login/identifier', function(err, str) {
       if (err && err.view) {
         var view = path.resolve(__dirname, '../views/prompt.ejs');
