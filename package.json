@@ -33,6 +33,7 @@
       "login/http/service",
       "login/http/prompt",
       "identifier/service",
+      "password/prompt",
       "password/service",
       "logout/http/prompt",
       "session/select/http/service",
@@ -48,7 +49,8 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "flowstate": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "utils-merge": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^4.3.4",

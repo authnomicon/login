@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 HTTP semantics.
 
 ### Changed
+- `IdentifierRouter` component now accepts `identifier, cb` arguments and
+invokes `cb` with `err, prompt, options`, decoupling it from underlying HTTP
+semantics.
 - Moved `login/password/http/service`, and associated files, to `password/service`.
 - Moved `login/identifier/http/service`, and associated files, to `identifier/service`.
 

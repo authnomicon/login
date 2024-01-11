@@ -1,3 +1,6 @@
+// Module dependencies.
+var merge = require('utils-merge');
+
 /**
  * Create identifier routing handler.
  *
@@ -8,10 +11,17 @@
  * @param {flowstate.Store} store - Per-request state store.
  * @returns {express.RequestHandler[]}
  */
-exports = module.exports = function(router, store) {
+exports = module.exports = function(prompts, router, store) {
   
   function route(req, res, next) {
-    router(req.body.identifier, res, next);
+    router(req.body.identifier, function(err, prompt, options) {
+      if (err) { return next(err); }
+      
+      if (options) {
+        merge(res.locals, options);
+      }
+      prompts.dispatch(prompt, req, res, next);
+    });
   }
   
   
@@ -25,6 +35,7 @@ exports = module.exports = function(router, store) {
 };
 
 exports['@require'] = [
+  'http://i.authnomicon.org/prompts/http/Router',
   'module:@authnomicon/login.IdentifierRouter',
   'module:flowstate.Store'
 ];
