@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Moved `login/password/http/service`, and associated files, to `password/service`.
+- Moved `login/identifier/http/service`, and associated files, to `identifier/service`.
 
 ### Fixed
 - No longer double-calling `req#login()` when authenticating with a username and password.
