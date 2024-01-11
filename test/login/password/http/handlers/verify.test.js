@@ -50,6 +50,36 @@ describe('password/http/handlers/verify', function() {
     var noopStateStore = new Object();
     
     
+    it('should resume state if available', function(done) {
+      var handler = factory(undefined, mockAuthenticator, noopStateStore);
+      
+      chai.express.use(handler)
+        .request(function(req, res) {
+          req.method = 'POST';
+          req.body = {
+            username: 'jane',
+            password: 'opensesame',
+            return_to: '/logged-in',
+            csrf_token: '3aev7m03-1WTaAw4lJ_GWEMkjwFBu_lwNWG8'
+          };
+          req.session = {
+            csrfSecret: 'zbVXAFVVUSXO0_ZZLBYVP9ue'
+          };
+          req.connection = {};
+        })
+        .finish(function() {
+          expect(this.req.user).to.deep.equal({
+            id: '248289761001',
+            displayName: 'Jane Doe'
+          });
+          
+          expect(this.statusCode).to.equal(302);
+          expect(this.getHeader('Location')).to.equal('/logged-in');
+          done();
+        })
+        .listen();
+    }); // should resume state if available
+    
     it('should redirect as final handler', function(done) {
       var handler = factory(undefined, mockAuthenticator, noopStateStore);
       
