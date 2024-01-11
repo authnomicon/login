@@ -20,8 +20,6 @@ describe('password/prompt', function() {
       var handler = factory();
     
       chai.express.use(handler)
-        .request(function(req, res) {
-        })
         .finish(function() {
           expect(this.statusCode).to.equal(302);
           expect(this.getHeader('Location')).to.equal('/login/password');

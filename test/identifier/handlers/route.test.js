@@ -108,6 +108,30 @@ describe('identifier/handlers/route', function() {
         .listen();
     }); // should route to prompt with options
     
+    it('should error when encountering an error while routing identifier', function(done) {
+      var router = sinon.stub().yieldsAsync(new Error('something went wrong'));
+      var handler = factory(undefined, router, noopStateStore);
+      
+      chai.express.use(handler)
+        .request(function(req, res) {
+          req.method = 'POST';
+          req.body = {
+            identifier: 'jane',
+            csrf_token: '3aev7m03-1WTaAw4lJ_GWEMkjwFBu_lwNWG8'
+          };
+          req.session = {
+            csrfSecret: 'zbVXAFVVUSXO0_ZZLBYVP9ue'
+          };
+          req.connection = {};
+        })
+        .next(function(err) {
+          expect(err).to.be.an.instanceOf(Error);
+          expect(err.message).to.equal('something went wrong');
+          done();
+        })
+        .listen();
+    }); // should error when encountering an error while routing identifier
+    
   }); // handler
   
 });
