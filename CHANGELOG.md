@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- `password/prompt` component, for decoupling password prompts from underlying
+HTTP semantics.
+
 ### Changed
 - Moved `login/password/http/service`, and associated files, to `password/service`.
 - Moved `login/identifier/http/service`, and associated files, to `identifier/service`.
