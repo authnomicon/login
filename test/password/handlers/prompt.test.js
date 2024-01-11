@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var chai = require('chai');
 var $require = require('proxyquire');
 var sinon = require('sinon');
-var factory = require('../../../../../com/login/password/http/handlers/prompt');
+var factory = require('../../../com/password/handlers/prompt');
 
 
 describe('password/http/handlers/prompt', function() {
@@ -12,7 +12,7 @@ describe('password/http/handlers/prompt', function() {
   it('should create handler', function() {
     var csurfSpy = sinon.spy();
     var flowstateSpy = sinon.spy();
-    var factory = $require('../../../../../com/login/password/http/handlers/prompt', {
+    var factory = $require('../../../com/password/handlers/prompt', {
       'csurf': csurfSpy,
       'flowstate': flowstateSpy
     });

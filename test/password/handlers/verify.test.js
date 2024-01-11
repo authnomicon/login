@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var chai = require('chai');
 var $require = require('proxyquire');
 var sinon = require('sinon');
-var factory = require('../../../../../com/login/password/http/handlers/verify');
+var factory = require('../../../com/password/handlers/verify');
 
 
 describe('password/http/handlers/verify', function() {
@@ -13,7 +13,7 @@ describe('password/http/handlers/verify', function() {
     var bodyParserSpy = sinon.spy();
     var csurfSpy = sinon.spy();
     var flowstateSpy = sinon.spy();
-    var factory = $require('../../../../../com/login/password/http/handlers/verify', {
+    var factory = $require('../../../com/password/handlers/verify', {
       'body-parser': { urlencoded: bodyParserSpy },
       'csurf': csurfSpy,
       'flowstate': flowstateSpy

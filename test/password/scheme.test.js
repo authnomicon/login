@@ -3,7 +3,7 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../../com/login/password/http/scheme');
+var factory = require('../../com/password/scheme');
 var Strategy = require('passport-local');
 
 
@@ -21,7 +21,7 @@ describe('password/http/scheme', function() {
     users.find = sinon.stub().yieldsAsync(null, { id: '248289761001', displayName: 'Jane Doe' });
     
     var StrategySpy = sinon.spy(Strategy);
-    var factory = $require('../../../../com/login/password/http/scheme',
+    var factory = $require('../../com/password/scheme',
       { 'passport-local': StrategySpy });
     
     var scheme = factory(passwords, users);
@@ -50,7 +50,7 @@ describe('password/http/scheme', function() {
     users.find = sinon.spy();
     
     var StrategySpy = sinon.spy(Strategy);
-    var factory = $require('../../../../com/login/password/http/scheme',
+    var factory = $require('../../com/password/scheme',
       { 'passport-local': StrategySpy });
       
     var scheme = factory(passwords, users);
@@ -79,7 +79,7 @@ describe('password/http/scheme', function() {
     users.find = sinon.stub().yieldsAsync(null, { id: '248289761001', displayName: 'Jane Doe' });
   
     var StrategySpy = sinon.spy(Strategy);
-    var factory = $require('../../../../com/login/password/http/scheme',
+    var factory = $require('../../com/password/scheme',
       { 'passport-local': StrategySpy });
       
     var scheme = factory(passwords, users);
@@ -105,7 +105,7 @@ describe('password/http/scheme', function() {
     users.find = sinon.stub().yieldsAsync(null, { id: '248289761001', displayName: 'Jane Doe' });
   
     var StrategySpy = sinon.spy(Strategy);
-    var factory = $require('../../../../com/login/password/http/scheme',
+    var factory = $require('../../com/password/scheme',
       { 'passport-local': StrategySpy });
       
     var scheme = factory(passwords, users);
@@ -132,7 +132,7 @@ describe('password/http/scheme', function() {
     users.find = sinon.stub().yieldsAsync(new Error('something went wrong'));
   
     var StrategySpy = sinon.spy(Strategy);
-    var factory = $require('../../../../com/login/password/http/scheme',
+    var factory = $require('../../com/password/scheme',
       { 'passport-local': StrategySpy });
       
     var scheme = factory(passwords, users);
