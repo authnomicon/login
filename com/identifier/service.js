@@ -22,7 +22,7 @@ var express = require('express');
  * @param {express.RequestHandler} promptHandler - Handler which prompts the
  *          user to enter their identifier.
  * @param {express.RequestHandler} routeHandler - Handler which routes the user
- *          to a authentication challenge based on the user's identifier.
+ *          to an authentication challenge based on the user's identifier.
  * @returns {express.Router}
  */
 exports = module.exports = function(promptHandler, routeHandler) {
