@@ -6,8 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- `password/prompt` component, for decoupling password prompts from underlying
-HTTP semantics.
+- Exposed `password/prompt` component which implements `http://i.authnomicon.org/prompts/http/Prompt`,
+for decoupling password prompts from underlying HTTP semantics.
 
 ### Changed
 - `IdentifierRouter` component now accepts `identifier, cb` arguments and
