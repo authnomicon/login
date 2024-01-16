@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Removed
+- Removed `/signup` endpoint.  Moved to [`@authnomicon/signup`](https://github.com/authnomicon/signup).
 - Removed logout prompt.  Moved to [`@authnomicon/logout`](https://github.com/authnomicon/logout).
 
 ## [0.0.6] - 2024-01-12
