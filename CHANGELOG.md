@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- Moved `login/http/prompt`, and associated files, to `prompt`.
 - Moved `login/http/service`, and associated files, to `service`.
 
 ### Removed
