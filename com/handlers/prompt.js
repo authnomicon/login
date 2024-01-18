@@ -5,7 +5,6 @@
  */
 exports = module.exports = function(store, C) {
   
-  
   function prompt(req, res, next) {
     res.locals.csrfToken = req.csrfToken();
     
