@@ -11,7 +11,7 @@ describe('service', function() {
     expect(factory['@path']).to.equal('/login');
   });
   
-  it('should construct service', function() {
+  it('should create service', function() {
     function promptHandler() {};
   
     var service = factory(promptHandler);
