@@ -3,10 +3,10 @@
 var expect = require('chai').expect;
 var chai = require('chai');
 var sinon = require('sinon');
-var factory = require('../../../../com/login/http/handlers/prompt');
+var factory = require('../../com/handlers/prompt');
 
 
-describe('http/handlers/prompt', function() {
+describe('handlers/prompt', function() {
   
   var handler;
   

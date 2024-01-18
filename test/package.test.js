@@ -12,7 +12,7 @@ describe('@authnomicon/login', function() {
       expect(json.assembly.namespace).to.equal('org.authnomicon/login');
       expect(json.assembly.components).to.deep.equal([
         'locals/flowurl',
-        'login/http/service',
+        'service',
         'login/http/prompt',
         'identifier/service',
         'password/prompt',

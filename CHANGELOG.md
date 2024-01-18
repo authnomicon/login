@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Moved `login/http/service`, and associated files, to `service`.
+
 ### Removed
 - Removed `/signup` endpoint.  Moved to [`@authnomicon/signup`](https://github.com/authnomicon/signup).
 - Removed logout prompt.  Moved to [`@authnomicon/logout`](https://github.com/authnomicon/logout).

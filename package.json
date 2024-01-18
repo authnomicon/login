@@ -30,7 +30,7 @@
     "namespace": "org.authnomicon/login",
     "components": [
       "locals/flowurl",
-      "login/http/service",
+      "service",
       "login/http/prompt",
       "identifier/service",
       "password/prompt",
