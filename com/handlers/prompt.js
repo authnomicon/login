@@ -1,7 +1,23 @@
 /**
- * Login prompt.
+ * Create login challenge handler.
  *
- * This component provides an HTTP handler that prompts for login.
+ * Returns an HTTP handler that challenges the user to autenticate.  The
+ * challenge intentionally does not mandate any specific authentication method.
+ * Rather, it allows the application to present its preferred initial prompt
+ * by providing a "login" view.   The challenge is rendered via HTML and the
+ * response will be submitted to a handler for the chosen authentication method.
+ *
+ * If a "login" view is not provided, this handler will redirect the user to
+ * a specific authentication method based on what methods the application
+ * supports.  The methods are selected in the following order:
+ *
+ *   1. Identifer-first:
+ *   2. Password:
+ *
+ * @param {flowstate.Store} store - Per-request state store.
+ * @param {electrolye.Container} C - IoC container used to introspect
+ *          application capabilities.
+ * @returns {express.RequestHandler[]}
  */
 exports = module.exports = function(store, C) {
   
