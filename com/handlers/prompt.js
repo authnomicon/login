@@ -34,7 +34,7 @@ exports = module.exports = function(store, C) {
     });
   }
   
-  function redirect(req, res, next) {
+  function identifierFirstIfSupported(req, res, next) {
     // TODO: Create a C.has() function to test if an interface exists. (???)
     //.  maybe not, because interface may exist, but not createable if service discovery
     // is in use.  Perhaps add a single-leval `creatable()` function
@@ -44,10 +44,14 @@ exports = module.exports = function(store, C) {
         return res.redirect('/login/identifier');
       }, function(error) {
         if (error.code == 'IMPLEMENTATION_NOT_FOUND' && error.interface == 'module:@authnomicon/login.IdentifierRouter') {
-          return res.redirect('/login/password');
+          return next();
         }
         return next(error);
       });
+  }
+  
+  function passwordIfSupported(req, res, next) {
+    return res.redirect('/login/password');
   }
   
   
@@ -55,7 +59,8 @@ exports = module.exports = function(store, C) {
     require('csurf')(),
     require('flowstate')({ store: store }),
     prompt,
-    redirect
+    identifierFirstIfSupported,
+    passwordIfSupported
     // Should GET requests that error with a state destroy the state?  I think not
     // There needs to be an option for it (external?) that does, for eg OAuth
     //errorLogging()
