@@ -109,7 +109,9 @@ describe('handlers/prompt', function() {
         })
         .finish(function() {
           // FIXME: If these assertions fail, the test hangs.
-          //expect(container.create).to.be.calledOnceWith('module:@authnomicon/login.IdentifierRouter');
+          expect(container.create).to.be.calledTwice;
+          expect(container.create.getCall(0)).to.be.calledWith('module:@authnomicon/login.IdentifierRouter');
+          expect(container.create.getCall(1)).to.be.calledWith('module:@authnomicon/credentials.PasswordStore');
           
           expect(this).to.have.status(302);
           expect(this.getHeader('Location')).to.equal('/login/password');
