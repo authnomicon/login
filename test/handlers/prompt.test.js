@@ -47,7 +47,7 @@ describe('handlers/prompt', function() {
         .listen();
     }); // should render
     
-    it('should redirect to identifier-first if supported', function(done) {
+    it('should redirect to identifier-first prompt if supported', function(done) {
       var store = new Object();
       var container = new Object();
       container.create = sinon.stub().withArgs('module:@authnomicon/login.IdentifierRouter').resolves();
@@ -78,7 +78,43 @@ describe('handlers/prompt', function() {
           done();
         })
         .listen();
-    }); // should redirect to identifier-first if supported
+    }); // should redirect to identifier-first prompt if supported
+    
+    it('should redirect to password challenge if supported', function(done) {
+      var store = new Object();
+      var container = new Object();
+      var noIdentifierRouterErr = new Error("Cannot find implementation of 'module:@authnomicon/login.IdentifierRouter' required by 'org.authnomicon/login/handlers/prompt'");
+      noIdentifierRouterErr.code = 'IMPLEMENTATION_NOT_FOUND';
+      noIdentifierRouterErr.interface = 'module:@authnomicon/login.IdentifierRouter';
+      container.create = sinon.stub().withArgs('module:@authnomicon/login.IdentifierRouter').rejects(noIdentifierRouterErr);
+      
+      var handler = factory(store, container);
+    
+      chai.express.use(handler)
+        .request(function(req, res) {
+          res.render = sinon.spy(function(view, cb) {
+            process.nextTick(function() {
+              var err = new Error('Failed to lookup view "login" in views directory');
+              err.view = {
+                name: 'login'
+              };
+              return cb(err);
+            });
+          });
+          
+          req.session = {};
+          req.connection = {};
+        })
+        .finish(function() {
+          // FIXME: If these assertions fail, the test hangs.
+          //expect(container.create).to.be.calledOnceWith('module:@authnomicon/login.IdentifierRouter');
+          
+          expect(this).to.have.status(302);
+          expect(this.getHeader('Location')).to.equal('/login/password');
+          done();
+        })
+        .listen();
+    }); // should redirect to password challenge if supported
     
   }); // handler
   

@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed `/signup` endpoint.  Moved to [`@authnomicon/signup`](https://github.com/authnomicon/signup).
 - Removed logout prompt.  Moved to [`@authnomicon/logout`](https://github.com/authnomicon/logout).
 
+### Fixed
+- `GET /login` handler correctly checks if `module:@authnomicon/login.IdentifierRouter`
+interface is implemented before redirecting to `/login/password`.
+
 ## [0.0.6] - 2024-01-12
 ### Added
 - Exposed `password/prompt` component which implements `http://i.authnomicon.org/prompts/http/Prompt`,

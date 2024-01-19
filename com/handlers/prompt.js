@@ -35,11 +35,13 @@ exports = module.exports = function(store, C) {
   }
   
   function redirect(req, res, next) {
+    // TODO: Create a C.has() function to test if an interface exists.
+    
     C.create('module:@authnomicon/login.IdentifierRouter')
       .then(function() {
         return res.redirect('/login/identifier');
       }, function(error) {
-        if (error.code == 'IMPLEMENTATION_NOT_FOUND' && error.interface == 'http://i.authnomicon.org/login/IdentifierRouter') {
+        if (error.code == 'IMPLEMENTATION_NOT_FOUND' && error.interface == 'module:@authnomicon/login.IdentifierRouter') {
           return res.redirect('/login/password');
         }
         return next(error);
