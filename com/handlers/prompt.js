@@ -35,7 +35,9 @@ exports = module.exports = function(store, C) {
   }
   
   function redirect(req, res, next) {
-    // TODO: Create a C.has() function to test if an interface exists.
+    // TODO: Create a C.has() function to test if an interface exists. (???)
+    //.  maybe not, because interface may exist, but not createable if service discovery
+    // is in use.  Perhaps add a single-leval `creatable()` function
     
     C.create('module:@authnomicon/login.IdentifierRouter')
       .then(function() {
