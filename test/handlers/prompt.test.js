@@ -80,6 +80,41 @@ describe('handlers/prompt', function() {
         .listen();
     }); // should redirect to identifier-first prompt if supported
     
+    it('should next with error when identifier router cannot be created', function(done) {
+      var store = new Object();
+      var container = new Object();
+      var failIdentifierRouterErr = new Error("Unable to create component 'app/foo' required by 'app/identifierrouter'");
+      failIdentifierRouterErr.code = 'IMPLEMENTATION_NOT_FOUND';
+      failIdentifierRouterErr.interface = 'app/foo';
+      container.create = sinon.stub().withArgs('module:@authnomicon/login.IdentifierRouter').rejects(failIdentifierRouterErr);
+      
+      var handler = factory(store, container);
+    
+      chai.express.use(handler)
+        .request(function(req, res) {
+          res.render = sinon.spy(function(view, cb) {
+            process.nextTick(function() {
+              var err = new Error('Failed to lookup view "login" in views directory');
+              err.view = {
+                name: 'login'
+              };
+              return cb(err);
+            });
+          });
+          
+          req.session = {};
+          req.connection = {};
+        })
+        .next(function(err) {
+          expect(container.create).to.be.calledOnceWith('module:@authnomicon/login.IdentifierRouter');
+          
+          expect(err).to.be.an.instanceOf(Error);
+          expect(err.message).to.equal("Unable to create component 'app/foo' required by 'app/identifierrouter'");
+          done();
+        })
+        .listen();
+    }); // should next with error when identifier router cannot be created
+    
     it('should redirect to password challenge if supported', function(done) {
       var store = new Object();
       var container = new Object();
