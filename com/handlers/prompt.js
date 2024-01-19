@@ -15,7 +15,7 @@
  *   2. Password:
  *
  * @param {flowstate.Store} store - Per-request state store.
- * @param {electrolye.Container} C - IoC container used to introspect
+ * @param {electrolyte.Container} C - IoC container used to introspect
  *          application capabilities.
  * @returns {express.RequestHandler[]}
  */
@@ -66,6 +66,7 @@ exports = module.exports = function(store, C) {
   function promptError(req, res, next) {
     next(res.locals.error);
   }
+  
   
   return [
     require('csurf')(),
