@@ -11,6 +11,8 @@ interface is implemented prior to redirecting to `/login/password`.  If not, the
 original render error is propagated.
 - Moved `login/http/prompt`, and associated files, to `prompt`.
 - Moved `login/http/service`, and associated files, to `service`.
+- Moved `session/select/http/prompt`, and associated files, to `select-account/prompt`.
+- Moved `session/select/http/service`, and associated files, to `select-account/service`.
 
 ### Removed
 - Removed `/signup` endpoint.  Moved to [`@authnomicon/signup`](https://github.com/authnomicon/signup).

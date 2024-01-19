@@ -35,8 +35,8 @@
       "identifier/service",
       "password/prompt",
       "password/service",
-      "session/select/http/service",
-      "session/select/http/prompt"
+      "select-account/prompt",
+      "select-account/service"
     ]
   },
   "directories": {
