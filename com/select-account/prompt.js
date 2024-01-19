@@ -1,7 +1,7 @@
 exports = module.exports = function() {
   
   return function(req, res, next) {
-    return res.redirect('/account/select');
+    return res.redirect('/login/select-account');
   };
 };
 

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `GET /login` handler checks if `module:@authnomicon/credentials.PasswordStore`
 interface is implemented prior to redirecting to `/login/password`.  If not, the
 original render error is propagated.
+- Moved `/account/select` endpoint to `/login/select-account`.
 - Moved `login/http/prompt`, and associated files, to `prompt`.
 - Moved `login/http/service`, and associated files, to `service`.
 - Moved `session/select/http/prompt`, and associated files, to `select-account/prompt`.
