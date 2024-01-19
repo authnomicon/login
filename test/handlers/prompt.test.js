@@ -120,6 +120,48 @@ describe('handlers/prompt', function() {
         .listen();
     }); // should redirect to password challenge if supported
     
+    it('should next with prompt error if all methods are unsupported', function(done) {
+      var store = new Object();
+      var container = new Object();
+      var noIdentifierRouterErr = new Error("Cannot find implementation of 'module:@authnomicon/login.IdentifierRouter' required by 'org.authnomicon/login/handlers/prompt'");
+      noIdentifierRouterErr.code = 'IMPLEMENTATION_NOT_FOUND';
+      noIdentifierRouterErr.interface = 'module:@authnomicon/login.IdentifierRouter';
+      container.create = sinon.stub()
+      container.create.withArgs('module:@authnomicon/login.IdentifierRouter').rejects(noIdentifierRouterErr);
+      var noPasswordStoreErr = new Error("Cannot find implementation of 'module:@authnomicon/credentials.PasswordStore' required by 'org.authnomicon/login/handlers/prompt'");
+      noPasswordStoreErr.code = 'IMPLEMENTATION_NOT_FOUND';
+      noPasswordStoreErr.interface = 'module:@authnomicon/credentials.PasswordStore';
+      container.create.withArgs('module:@authnomicon/credentials.PasswordStore').rejects(noPasswordStoreErr);
+      
+      var handler = factory(store, container);
+    
+      chai.express.use(handler)
+        .request(function(req, res) {
+          res.render = sinon.spy(function(view, cb) {
+            process.nextTick(function() {
+              var err = new Error('Failed to lookup view "login" in views directory');
+              err.view = {
+                name: 'login'
+              };
+              return cb(err);
+            });
+          });
+          
+          req.session = {};
+          req.connection = {};
+        })
+        .next(function(err) {
+          expect(container.create).to.be.calledTwice;
+          expect(container.create.getCall(0)).to.be.calledWith('module:@authnomicon/login.IdentifierRouter');
+          expect(container.create.getCall(1)).to.be.calledWith('module:@authnomicon/credentials.PasswordStore');
+          
+          expect(err).to.be.an.instanceOf(Error);
+          expect(err.message).to.equal('Failed to lookup view "login" in views directory');
+          done();
+        })
+        .listen();
+    }); // should next with prompt error if all methods are unsupported
+    
   }); // handler
   
 });
