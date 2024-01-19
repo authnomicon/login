@@ -26,6 +26,7 @@ exports = module.exports = function(store, C) {
     
     res.render('login', function(err, str) {
       if (err && err.view) {
+        res.locals.error = err;
         return next();
       } else if (err) {
         return next(err);
@@ -51,16 +52,28 @@ exports = module.exports = function(store, C) {
   }
   
   function passwordIfSupported(req, res, next) {
-    return res.redirect('/login/password');
+    C.create('module:@authnomicon/credentials.PasswordStore')
+      .then(function() {
+        return res.redirect('/login/password');
+      }, function(error) {
+        if (error.code == 'IMPLEMENTATION_NOT_FOUND' && error.interface == 'module:@authnomicon/credentials.PasswordStore') {
+          return next();
+        }
+        return next(error);
+      });
   }
   
+  function promptError(req, res, next) {
+    next(res.locals.error);
+  }
   
   return [
     require('csurf')(),
     require('flowstate')({ store: store }),
     prompt,
     identifierFirstIfSupported,
-    passwordIfSupported
+    passwordIfSupported,
+    promptError
     // Should GET requests that error with a state destroy the state?  I think not
     // There needs to be an option for it (external?) that does, for eg OAuth
     //errorLogging()

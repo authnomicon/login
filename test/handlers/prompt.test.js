@@ -86,7 +86,9 @@ describe('handlers/prompt', function() {
       var noIdentifierRouterErr = new Error("Cannot find implementation of 'module:@authnomicon/login.IdentifierRouter' required by 'org.authnomicon/login/handlers/prompt'");
       noIdentifierRouterErr.code = 'IMPLEMENTATION_NOT_FOUND';
       noIdentifierRouterErr.interface = 'module:@authnomicon/login.IdentifierRouter';
-      container.create = sinon.stub().withArgs('module:@authnomicon/login.IdentifierRouter').rejects(noIdentifierRouterErr);
+      container.create = sinon.stub()
+      container.create.withArgs('module:@authnomicon/login.IdentifierRouter').rejects(noIdentifierRouterErr);
+      container.create.withArgs('module:@authnomicon/credentials.PasswordStore').resolves();
       
       var handler = factory(store, container);
     
