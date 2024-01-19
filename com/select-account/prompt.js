@@ -6,4 +6,4 @@ exports = module.exports = function() {
 };
 
 exports['@implements'] = 'http://i.authnomicon.org/prompts/http/Prompt';
-exports['@name'] = 'select-account';
+exports['@name'] = 'selectAccount';
