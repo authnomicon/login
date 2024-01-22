@@ -1,4 +1,4 @@
-exports = module.exports = function(authenticator, store) {
+exports = module.exports = function(store) {
   
   function resumeOr(req, res, next) {
     var s = req.body.select_session;
