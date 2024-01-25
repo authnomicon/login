@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Support for `identifier` query parameter to `GET /login/identifier` endpoint.
 - Support for `loginHint` option to `login` prompt.
 
 ## [0.0.7] - 2024-01-22

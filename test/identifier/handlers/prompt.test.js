@@ -47,6 +47,26 @@ describe('identifier/handlers/prompt', function() {
         .listen();
     }); // should render
     
+    it('should render with identifier', function(done) {
+      var store = new Object();
+      var handler = factory(store);
+    
+      chai.express.use(handler)
+        .request(function(req, res) {
+          req.query = { identifier: 'janedoe@example.com' };
+          req.session = {};
+          req.connection = {};
+        })
+        .finish(function() {
+          expect(this).to.have.status(200);
+          expect(this).to.render('login/identifier');
+          expect(this).to.include.locals([ 'identifier', 'csrfToken' ]);
+          expect(this.locals.identifier).to.equal('janedoe@example.com');
+          done();
+        })
+        .listen();
+    }); // should render with identifier
+    
   }); // handler
   
 });

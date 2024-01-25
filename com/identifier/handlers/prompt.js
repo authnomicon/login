@@ -15,6 +15,9 @@ var path = require('path')
 exports = module.exports = function(store) {
   
   function prompt(req, res, next) {
+    if (req.query && req.query.identifier) {
+      res.locals.identifier = req.query.identifier;
+    }
     res.locals.csrfToken = req.csrfToken();
     
     res.render('login/identifier', function(err, str) {
