@@ -40,6 +40,9 @@ exports = module.exports = function(store, C) {
     //.  maybe not, because interface may exist, but not createable if service discovery
     // is in use.  Perhaps add a single-leval `creatable()` function
     
+    // TODO: Consider reimplementing this based on introspecting prommpts and
+    // then prompting.
+    
     C.create('module:@authnomicon/login.IdentifierRouter')
       .then(function() {
         return res.redirect('/login/identifier');
