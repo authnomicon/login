@@ -32,6 +32,21 @@ describe('prompt', function() {
         })
         .listen();
     }); // should redirect
+    
+    it('should redirect with login hint', function(done) {
+      var handler = factory();
+    
+      chai.express.use(handler)
+        .request(function(req, res) {
+          res.locals = { loginHint: 'janedoe@example.com' };
+        })
+        .finish(function() {
+          expect(this.statusCode).to.equal(302);
+          expect(this.getHeader('Location')).to.equal('/login?login_hint=janedoe%40example.com');
+          done();
+        })
+        .listen();
+    }); // should redirect with login hint
   
   }); // handler
   
