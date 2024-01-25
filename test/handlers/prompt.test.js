@@ -47,6 +47,26 @@ describe('handlers/prompt', function() {
         .listen();
     }); // should render
     
+    it('should render with login hint', function(done) {
+      var store = new Object();
+      var handler = factory(store);
+    
+      chai.express.use(handler)
+        .request(function(req, res) {
+          req.query = { login_hint: 'janedoe@example.com' };
+          req.session = {};
+          req.connection = {};
+        })
+        .finish(function() {
+          expect(this).to.have.status(200);
+          expect(this).to.render('login');
+          expect(this).to.include.locals([ 'loginHint', 'csrfToken' ]);
+          expect(this.locals.loginHint).to.equal('janedoe@example.com');
+          done();
+        })
+        .listen();
+    }); // should render with login hint
+    
     it('should redirect to identifier-first prompt if supported', function(done) {
       var store = new Object();
       var container = new Object();
@@ -79,6 +99,40 @@ describe('handlers/prompt', function() {
         })
         .listen();
     }); // should redirect to identifier-first prompt if supported
+    
+    it('should redirect to identifier-first prompt with identifier parameter if supported', function(done) {
+      var store = new Object();
+      var container = new Object();
+      container.create = sinon.stub().withArgs('module:@authnomicon/login.IdentifierRouter').resolves();
+      
+      var handler = factory(store, container);
+    
+      chai.express.use(handler)
+        .request(function(req, res) {
+          res.render = sinon.spy(function(view, cb) {
+            process.nextTick(function() {
+              var err = new Error('Failed to lookup view "login" in views directory');
+              err.view = {
+                name: 'login'
+              };
+              return cb(err);
+            });
+          });
+          
+          req.query = { login_hint: 'janedoe@example.com' };
+          req.session = {};
+          req.connection = {};
+        })
+        .finish(function() {
+          // FIXME: If these assertions fail, the test hangs.
+          expect(container.create).to.be.calledOnceWith('module:@authnomicon/login.IdentifierRouter');
+          
+          expect(this).to.have.status(302);
+          expect(this.getHeader('Location')).to.equal('/login/identifier?identifier=janedoe%40example.com');
+          done();
+        })
+        .listen();
+    }); // should redirect to identifier-first prompt with identifier parameter if supported
     
     it('should next with error when identifier router cannot be created', function(done) {
       var store = new Object();
@@ -154,6 +208,47 @@ describe('handlers/prompt', function() {
         })
         .listen();
     }); // should redirect to password challenge if supported
+    
+    it('should redirect to password challenge with username if supported', function(done) {
+      var store = new Object();
+      var container = new Object();
+      var noIdentifierRouterErr = new Error("Cannot find implementation of 'module:@authnomicon/login.IdentifierRouter' required by 'org.authnomicon/login/handlers/prompt'");
+      noIdentifierRouterErr.code = 'IMPLEMENTATION_NOT_FOUND';
+      noIdentifierRouterErr.interface = 'module:@authnomicon/login.IdentifierRouter';
+      container.create = sinon.stub()
+      container.create.withArgs('module:@authnomicon/login.IdentifierRouter').rejects(noIdentifierRouterErr);
+      container.create.withArgs('module:@authnomicon/credentials.PasswordStore').resolves();
+      
+      var handler = factory(store, container);
+    
+      chai.express.use(handler)
+        .request(function(req, res) {
+          res.render = sinon.spy(function(view, cb) {
+            process.nextTick(function() {
+              var err = new Error('Failed to lookup view "login" in views directory');
+              err.view = {
+                name: 'login'
+              };
+              return cb(err);
+            });
+          });
+          
+          req.query = { login_hint: 'jane' };
+          req.session = {};
+          req.connection = {};
+        })
+        .finish(function() {
+          // FIXME: If these assertions fail, the test hangs.
+          expect(container.create).to.be.calledTwice;
+          expect(container.create.getCall(0)).to.be.calledWith('module:@authnomicon/login.IdentifierRouter');
+          expect(container.create.getCall(1)).to.be.calledWith('module:@authnomicon/credentials.PasswordStore');
+          
+          expect(this).to.have.status(302);
+          expect(this.getHeader('Location')).to.equal('/login/password?username=jane');
+          done();
+        })
+        .listen();
+    }); // should redirect to password challenge with username if supported
     
     it('should next with error when password store cannot be created', function(done) {
       var store = new Object();

@@ -1,3 +1,6 @@
+// Module dependencies.
+var url = require('url');
+
 /**
  * Create login challenge handler.
  *
@@ -22,6 +25,9 @@
 exports = module.exports = function(store, C) {
   
   function prompt(req, res, next) {
+    if (req.query && req.query.login_hint) {
+      res.locals.loginHint = req.query.login_hint;
+    }
     res.locals.csrfToken = req.csrfToken();
     
     res.render('login', function(err, str) {
@@ -45,7 +51,11 @@ exports = module.exports = function(store, C) {
     
     C.create('module:@authnomicon/login.IdentifierRouter')
       .then(function() {
-        return res.redirect('/login/identifier');
+        var q = {};
+        if (req.query && req.query.login_hint) {
+          q.identifier = req.query.login_hint;
+        }
+        return res.redirect(url.format({ pathname: '/login/identifier', query: q }));
       }, function(error) {
         if (error.code == 'IMPLEMENTATION_NOT_FOUND' && error.interface == 'module:@authnomicon/login.IdentifierRouter') {
           return next();
@@ -57,7 +67,11 @@ exports = module.exports = function(store, C) {
   function passwordIfSupported(req, res, next) {
     C.create('module:@authnomicon/credentials.PasswordStore')
       .then(function() {
-        return res.redirect('/login/password');
+        var q = {};
+        if (req.query && req.query.login_hint) {
+          q.username = req.query.login_hint;
+        }
+        return res.redirect(url.format({ pathname: '/login/password', query: q }));
       }, function(error) {
         if (error.code == 'IMPLEMENTATION_NOT_FOUND' && error.interface == 'module:@authnomicon/credentials.PasswordStore') {
           return next();
