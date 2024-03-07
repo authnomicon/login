@@ -85,6 +85,7 @@ exports = module.exports = function(scheme, authenticator, store) {
   ];
 };
 
+// Module annotations.
 exports['@require'] = [
   '../scheme',
   'module:passport.Authenticator',

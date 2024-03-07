@@ -65,6 +65,7 @@ exports = module.exports = function(store) {
   ];
 };
 
+// Module annotations.
 exports['@require'] = [
   'module:flowstate.Store'
 ];
