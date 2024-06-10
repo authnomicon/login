@@ -10,7 +10,7 @@ var factory = require('../../com/select-account/prompt');
 describe('select-account/prompt', function() {
   
   it('should be annotated', function() {
-    expect(factory['@implements']).to.deep.equal('http://i.authnomicon.org/prompts/http/Prompt');
+    expect(factory['@implements']).to.deep.equal('module:@authnomicon/prompts.RequestHandler');
     expect(factory['@name']).to.equal('selectAccount');
   });
   

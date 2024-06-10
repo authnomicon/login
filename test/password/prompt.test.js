@@ -10,7 +10,7 @@ var factory = require('../../com/password/prompt');
 describe('password/prompt', function() {
   
   it('should be annotated', function() {
-    expect(factory['@implements']).to.deep.equal('http://i.authnomicon.org/prompts/http/Prompt');
+    expect(factory['@implements']).to.deep.equal('module:@authnomicon/prompts.RequestHandler');
     expect(factory['@name']).to.equal('password');
   });
   
