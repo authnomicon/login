@@ -39,7 +39,7 @@ exports = module.exports = function(prompts, router, store) {
 };
 
 exports['@require'] = [
-  'http://i.authnomicon.org/prompts/http/Router',
+  'module:@authnomicon/prompts.Router',
   'module:@authnomicon/login.IdentifierRouter',
   'module:flowstate.Store'
 ];

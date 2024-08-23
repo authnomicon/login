@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.10] - 2024-08-23
+### Changed
+- Require component implementing `module:@authnomicon/prompts.Router` interface,
+rather than `http://i.authnomicon.org/prompts/http/Router`, in `identifier/handlers/route`.
+
 ## [0.0.9] - 2024-08-23
 ### Changed
 - Renamed `http://i.authnomicon.org/prompts/http/Prompt` interface
